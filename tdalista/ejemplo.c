@@ -3,7 +3,6 @@
 #include "src/cola.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
 bool mostrar_elemento(void *elemento, void *contador)
 {
