@@ -22,16 +22,14 @@ void pruebas_de_creacion()
 	pa2m_afirmar((int*)lista_elemento_en_posicion(lista, 1) == &segundo, "El segundo elemento que inserte, es el segundo en la lista");
 
 	int tercero = 4;
-
 	lista_insertar_en_posicion(lista,&tercero,0);
 	pa2m_afirmar((int*)lista_elemento_en_posicion(lista, 0) == &tercero, "Inserto un elemento en el inicio de la lista y es el primero");
 
 	lista_destruir(lista);
 }
 
+
 int main() {
-
         pruebas_de_creacion();
-
         return pa2m_mostrar_reporte();
 }
