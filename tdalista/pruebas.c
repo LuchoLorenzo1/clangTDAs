@@ -59,6 +59,7 @@ void pruebas_creacion_insercion()
 	lista_destruir(lista);
 }
 
+
 void pruebas_quitar()
 {
 	pa2m_nuevo_grupo("Pruebas de quitar");
