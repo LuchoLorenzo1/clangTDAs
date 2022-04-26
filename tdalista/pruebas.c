@@ -71,25 +71,29 @@ void pruebas_quitar()
 	lista_insertar(lista, &d);
 	lista_insertar(lista, &e);
 
-	lista_quitar(lista);
-
+	int *entero = lista_quitar(lista);
+	pa2m_afirmar(
+		entero == &e,
+		"Quito el ultimo elemento y es el que devuelve la funcion");
 	pa2m_afirmar(
 		lista_elemento_en_posicion(lista, lista_tamanio(lista) - 1) ==
 			&d,
-		"Quito un elemento y el ahora el ultimo elemento es el anteultimo");
+		"Quito el ultimo elemento y ahora el ultimo elemento de la lista es el anteultimo");
+	pa2m_afirmar(
+		lista_tamanio(lista) == 4,
+		"Quito el ultimo elemento y el tamanio de la lista es 1 menos");
 
-	pa2m_afirmar(lista_tamanio(lista) == 4,
-		     "Quito un elemento y el tamanio de la lista es 1 menos");
-
-	lista_quitar_de_posicion(lista, 0);
-
+	entero = (int *)lista_quitar_de_posicion(lista, 0);
+	pa2m_afirmar(entero == &a,
+		     "Quito el primer elemento y es el que devuelve la funcion");
 	pa2m_afirmar(lista_elemento_en_posicion(lista, 0) == &b,
 		     "Quito el primero y el ahora primero es el segundo");
 
 	int f = 28;
 	lista_insertar_en_posicion(lista, &f, 1);
+	entero = (int*)lista_quitar_de_posicion(lista, 1);
 	pa2m_afirmar(
-		(int *)lista_quitar_de_posicion(lista, 1) == &f,
+		entero == &f,
 		"Agrego un elemento, lo quito y devuelve el mismo elemento");
 
 	lista_destruir(lista);

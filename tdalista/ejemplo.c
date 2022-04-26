@@ -12,12 +12,11 @@ bool mostrar_elemento(void *elemento, void *contador)
 	return true;
 }
 
-
 int elemento_es_d(void *_elemento, void *ignorado)
 {
 	char *elemento = _elemento;
 
-	if(elemento && *elemento == 'd')
+	if (elemento && *elemento == 'd')
 		return 0;
 
 	return -1;
@@ -28,7 +27,7 @@ int elemento_es_igual_a(void *_a, void *_b)
 	char *a = _a;
 	char *b = _b;
 
-	if(a && b && *a == *b)
+	if (a && b && *a == *b)
 		return 0;
 
 	return -1;
@@ -45,9 +44,11 @@ void probar_operaciones_lista()
 	lista_insertar_en_posicion(lista, &b, 1);
 	lista_insertar_en_posicion(lista, &w, 3);
 
+
 	char *valor_quitado = lista_quitar_de_posicion(lista, 3);
 	printf("Elementos quitado de la posicion 3 de la lista: %c\n",
 	       *valor_quitado);
+
 
 	printf("Elementos en la lista: ");
 	for (size_t i = 0; i < lista_tamanio(lista); i++)
@@ -76,22 +77,21 @@ void probar_operaciones_lista()
 
 	printf("\n");
 
-
 	printf("Busco el elemento con valor 'd' en la lista: ");
 	char *elemento_d = lista_buscar_elemento(lista, elemento_es_d, NULL);
-	if(elemento_d && *elemento_d == 'd')
+	if (elemento_d && *elemento_d == 'd')
 		printf("ENCONTRADO\n");
 	else
 		printf("NO ENCONTRADO D:\n");
 
 	printf("Busco el elemento con valor 'c' en la lista: ");
 	char buscado = 'c';
-	char *elemento_c = lista_buscar_elemento(lista, elemento_es_igual_a, &buscado);
-	if(elemento_c && elemento_c == &c)
+	char *elemento_c =
+		lista_buscar_elemento(lista, elemento_es_igual_a, &buscado);
+	if (elemento_c && elemento_c == &c)
 		printf("ENCONTRADO\n");
 	else
 		printf("NO ENCONTRADO D:\n");
-
 
 	lista_destruir(lista);
 }
@@ -157,7 +157,6 @@ int main()
 
 	printf("\nEjemplo del destructor de lista (no debería perder memoria)\n");
 	probar_operaciones_destructor_lista();
-
 
 	/* printf("\nEjemplo del uso de cola\n"); */
 	/* probar_operaciones_cola(); */
