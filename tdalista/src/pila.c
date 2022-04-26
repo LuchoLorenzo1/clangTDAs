@@ -36,6 +36,5 @@ bool pila_vacia(pila_t *pila)
 
 void pila_destruir(pila_t *pila)
 {
-	lista_t *lista = (lista_t*)pila;
-	lista_destruir(lista);
+	lista_destruir((lista_t*)pila);
 }
