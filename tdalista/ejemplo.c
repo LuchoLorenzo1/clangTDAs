@@ -159,11 +159,11 @@ int main()
 	probar_operaciones_destructor_lista();
 
 
-	printf("\nEjemplo del uso de cola\n");
-	probar_operaciones_cola();
+	/* printf("\nEjemplo del uso de cola\n"); */
+	/* probar_operaciones_cola(); */
 
-	printf("\nEjemplo del uso de pila\n");
-	probar_operaciones_pila();
+	/* printf("\nEjemplo del uso de pila\n"); */
+	/* probar_operaciones_pila(); */
 
 	return 0;
 }
