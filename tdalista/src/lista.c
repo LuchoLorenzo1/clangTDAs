@@ -34,8 +34,9 @@ lista_t *lista_crear()
 
 lista_t *lista_insertar(lista_t *lista, void *elemento)
 {
-	lista_insertar_en_posicion(lista, elemento, lista->cantidad);
-	return lista;
+	if(!lista)
+		return NULL;
+	return lista_insertar_en_posicion(lista, elemento, lista->cantidad);
 }
 
 lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
@@ -84,18 +85,10 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
 
 void *lista_quitar(lista_t *lista)
 {
-	if (!lista || !lista->nodo_inicio)
+	if (!lista) {
 		return NULL;
-
-	nodo_t *anteultimo_nodo = nodo_en_posicion(lista, lista->cantidad - 2);
-
-	void *elemento = anteultimo_nodo->siguiente->elemento;
-	free(anteultimo_nodo->siguiente);
-
-	anteultimo_nodo->siguiente = NULL;
-	lista->cantidad--;
-
-	return elemento;
+	}
+	return lista_quitar_de_posicion(lista, lista->cantidad - 1);
 }
 
 void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
@@ -114,14 +107,14 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 		lista->nodo_inicio = nodo_posicion;
 
 		if (!lista->nodo_inicio)
-			lista->nodo_fin = lista->nodo_inicio;
+			lista->nodo_fin = NULL;
 
 		lista->cantidad--;
 		return elemento;
 	}
 
 	if (posicion >= lista->cantidad - 1) {
-		nodo_posicion = nodo_en_posicion(lista, lista->cantidad - 1);
+		nodo_posicion = nodo_en_posicion(lista, lista->cantidad - 2);
 
 		void *elemento = lista->nodo_fin->elemento;
 		free(lista->nodo_fin);
@@ -145,13 +138,14 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 
 void *lista_elemento_en_posicion(lista_t *lista, size_t posicion)
 {
-	if (!lista)
+	if (!lista || posicion >= lista->cantidad)
 		return NULL;
 
 	nodo_t *nodo = nodo_en_posicion(lista, posicion);
 
 	if (!nodo)
 		return NULL;
+
 	return nodo->elemento;
 }
 
@@ -187,7 +181,9 @@ void *lista_ultimo(lista_t *lista)
 
 bool lista_vacia(lista_t *lista)
 {
-	return !!lista && !!lista->nodo_inicio;
+	if (!lista)
+		return true;
+	return !lista->cantidad;
 }
 
 size_t lista_tamanio(lista_t *lista)
@@ -203,14 +199,15 @@ void lista_destruir(lista_t *lista)
 		return;
 
 	if (!lista->nodo_inicio) {
-		return;
 		free(lista);
+		return;
 	}
 
 	nodo_t *nodo = lista->nodo_inicio;
+	nodo_t *aux;
 
 	while (nodo) {
-		nodo_t *aux = nodo->siguiente;
+		aux = nodo->siguiente;
 		free(nodo);
 		nodo = aux;
 	}
@@ -229,9 +226,10 @@ void lista_destruir_todo(lista_t *lista, void (*funcion)(void *))
 	}
 
 	nodo_t *nodo = lista->nodo_inicio;
+	nodo_t *aux;
 
 	while (nodo) {
-		nodo_t *aux = nodo->siguiente;
+		aux = nodo->siguiente;
 		funcion(nodo->elemento);
 		free(nodo);
 		nodo = aux;
@@ -257,12 +255,14 @@ lista_iterador_t *lista_iterador_crear(lista_t *lista)
 
 bool lista_iterador_tiene_siguiente(lista_iterador_t *iterador)
 {
+	if (!iterador)
+		return false;
 	return !!iterador->corriente;
 }
 
 bool lista_iterador_avanzar(lista_iterador_t *iterador)
 {
-	if (!iterador || !iterador->corriente)
+	if (!iterador)
 		return false;
 	iterador->corriente = iterador->corriente->siguiente;
 	return true;
@@ -270,6 +270,8 @@ bool lista_iterador_avanzar(lista_iterador_t *iterador)
 
 void *lista_iterador_elemento_actual(lista_iterador_t *iterador)
 {
+	if(!iterador || !iterador->corriente)
+		return NULL;
 	return iterador->corriente->elemento;
 }
 
