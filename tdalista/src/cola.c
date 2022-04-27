@@ -31,7 +31,7 @@ size_t cola_tamanio(cola_t *cola)
 bool cola_vacia(cola_t *cola)
 {
 	lista_t *lista = (lista_t*)cola;
-	return !!lista->nodo_inicio;
+	return !lista->nodo_inicio;
 }
 
 void cola_destruir(cola_t *cola)
