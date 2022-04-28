@@ -1,10 +1,10 @@
 gcc -g -std=c99 -Wall -Wconversion -Wtype-limits -pedantic -Werror -O2 src/*.c pruebas_chanutron-x86_64.o -o pruebas_chanutron
 valgrind --leak-check=full --track-origins=yes --show-reachable=yes --error-exitcode=2 --show-leak-kinds=all --trace-children=yes ./pruebas_chanutron 2>&1
-==17058== Memcheck, a memory error detector
-==17058== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==17058== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
-==17058== Command: ./pruebas_chanutron
-==17058== 
+==16254== Memcheck, a memory error detector
+==16254== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==16254== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==16254== Command: ./pruebas_chanutron
+==16254== 
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -16,15 +16,15 @@ Pruebas con lista vacía
 [32;1m✓ [37;1mBorrar al final de una lista sin elementos devuelve NULL
 [32;1m✓ [37;1mBorrar en una posicion arbitraria de una lista sin elementos devuelve NULL
 [32;1m✓ [37;1mPedir una posicion arbitraria a una lista sin elementos devuelve NULL
-==17059== 
-==17059== HEAP SUMMARY:
-==17059==     in use at exit: 0 bytes in 0 blocks
-==17059==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==17059== 
-==17059== All heap blocks were freed -- no leaks are possible
-==17059== 
-==17059== For lists of detected and suppressed errors, rerun with: -s
-==17059== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16255== 
+==16255== HEAP SUMMARY:
+==16255==     in use at exit: 0 bytes in 0 blocks
+==16255==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==16255== 
+==16255== All heap blocks were freed -- no leaks are possible
+==16255== 
+==16255== For lists of detected and suppressed errors, rerun with: -s
+==16255== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -55,15 +55,15 @@ Pruebas de inserción
 [32;1m✓ [37;1mEl elemento en la posición 5 es el correcto
 [32;1m✓ [37;1mEl elemento en la posición 6 es el correcto
 [32;1m✓ [37;1mEl ultimo elemento es el correcto
-==17060== 
-==17060== HEAP SUMMARY:
-==17060==     in use at exit: 0 bytes in 0 blocks
-==17060==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
-==17060== 
-==17060== All heap blocks were freed -- no leaks are possible
-==17060== 
-==17060== For lists of detected and suppressed errors, rerun with: -s
-==17060== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16256== 
+==16256== HEAP SUMMARY:
+==16256==     in use at exit: 0 bytes in 0 blocks
+==16256==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
+==16256== 
+==16256== All heap blocks were freed -- no leaks are possible
+==16256== 
+==16256== For lists of detected and suppressed errors, rerun with: -s
+==16256== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -82,15 +82,15 @@ Pruebas de borrar un solo elemento
 [32;1m✓ [37;1mAl insertar un elemento la lista debe contener un elemento
 [32;1m✓ [37;1mPuedo borrar un elemento de la lista
 [32;1m✓ [37;1mAl borrar el elemento la lista queda con 0 elementos
-==17061== 
-==17061== HEAP SUMMARY:
-==17061==     in use at exit: 0 bytes in 0 blocks
-==17061==   total heap usage: 4 allocs, 4 frees, 4,152 bytes allocated
-==17061== 
-==17061== All heap blocks were freed -- no leaks are possible
-==17061== 
-==17061== For lists of detected and suppressed errors, rerun with: -s
-==17061== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16257== 
+==16257== HEAP SUMMARY:
+==16257==     in use at exit: 0 bytes in 0 blocks
+==16257==   total heap usage: 4 allocs, 4 frees, 4,152 bytes allocated
+==16257== 
+==16257== All heap blocks were freed -- no leaks are possible
+==16257== 
+==16257== For lists of detected and suppressed errors, rerun with: -s
+==16257== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -117,44 +117,15 @@ Pruebas de borrado en posicion arbitraria
 [32;1m✓ [37;1mPuedo borrar el ultimo elemento
 [32;1m✓ [37;1mLuego de borrar queda la cantidad correcta de elementos en la lista
 [32;1m✓ [37;1mEl ultimo elemento el correcto
-==17062== Invalid read of size 8
-==17062==    at 0x109ED3: lista_destruir (lista.c:210)
-==17062==    by 0x10935D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==  Address 0x4a87278 is 8 bytes inside a block of size 16 free'd
-==17062==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17062==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17062==    by 0x10C32D: pruebas_borrado_posicion_arbitraria (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==    by 0x10935D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==  Block was alloc'd at
-==17062==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17062==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17062==    by 0x10BD98: pruebas_borrado_posicion_arbitraria (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==    by 0x10935D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062== 
-==17062== Invalid free() / delete / delete[] / realloc()
-==17062==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17062==    by 0x109EDB: lista_destruir (lista.c:211)
-==17062==    by 0x10935D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==  Address 0x4a87270 is 0 bytes inside a block of size 16 free'd
-==17062==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17062==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17062==    by 0x10C32D: pruebas_borrado_posicion_arbitraria (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==    by 0x10935D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==  Block was alloc'd at
-==17062==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17062==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17062==    by 0x10BD98: pruebas_borrado_posicion_arbitraria (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062==    by 0x10935D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17062== 
-==17062== 
-==17062== HEAP SUMMARY:
-==17062==     in use at exit: 0 bytes in 0 blocks
-==17062==   total heap usage: 9 allocs, 11 frees, 4,232 bytes allocated
-==17062== 
-==17062== All heap blocks were freed -- no leaks are possible
-==17062== 
-==17062== For lists of detected and suppressed errors, rerun with: -s
-==17062== ERROR SUMMARY: 4 errors from 2 contexts (suppressed: 0 from 0)
+==16258== 
+==16258== HEAP SUMMARY:
+==16258==     in use at exit: 0 bytes in 0 blocks
+==16258==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
+==16258== 
+==16258== All heap blocks were freed -- no leaks are possible
+==16258== 
+==16258== For lists of detected and suppressed errors, rerun with: -s
+==16258== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -174,77 +145,16 @@ Pruebas de insercion y borrado siempre al final
 [32;1m✓ [37;1mPuedo borrar todos los elementos borrando siempre el último
 [32;1m✓ [37;1mLos elementos borrados se encontraban en el orden esperado
 [32;1m✓ [37;1mLa lista quedó vacía después de eliminar todo
-==17063== Invalid write of size 8
-==17063==    at 0x109BC4: lista_insertar_en_posicion (lista.c:70)
-==17063==    by 0x10C83A: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==  Address 0x4a870e8 is 8 bytes inside a block of size 16 free'd
-==17063==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109D2B: lista_quitar_de_posicion (lista.c:105)
-==17063==    by 0x10C6BB: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==  Block was alloc'd at
-==17063==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17063==    by 0x10C5FA: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063== 
 [32;1m✓ [37;1mPuedo volver a insertar varias veces al final de la lista
-==17063== Invalid read of size 8
-==17063==    at 0x109ED3: lista_destruir (lista.c:210)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==  Address 0x4a87138 is 8 bytes inside a block of size 16 free'd
-==17063==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17063==    by 0x10C6BB: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==  Block was alloc'd at
-==17063==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17063==    by 0x10C5FA: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063== 
-==17063== Invalid free() / delete / delete[] / realloc()
-==17063==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109EDB: lista_destruir (lista.c:211)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==  Address 0x4a87130 is 0 bytes inside a block of size 16 free'd
-==17063==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17063==    by 0x10C6BB: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==  Block was alloc'd at
-==17063==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17063==    by 0x10C5FA: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063== 
-==17063== 
-==17063== HEAP SUMMARY:
-==17063==     in use at exit: 304 bytes in 19 blocks
-==17063==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
-==17063== 
-==17063== 288 bytes in 18 blocks are indirectly lost in loss record 1 of 2
-==17063==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17063==    by 0x10C83A: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063== 
-==17063== 304 (16 direct, 288 indirect) bytes in 1 blocks are definitely lost in loss record 2 of 2
-==17063==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17063==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17063==    by 0x10C83A: pruebas_insercion_borrado_al_final (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063==    by 0x10946E: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17063== 
-==17063== LEAK SUMMARY:
-==17063==    definitely lost: 16 bytes in 1 blocks
-==17063==    indirectly lost: 288 bytes in 18 blocks
-==17063==      possibly lost: 0 bytes in 0 blocks
-==17063==    still reachable: 0 bytes in 0 blocks
-==17063==         suppressed: 0 bytes in 0 blocks
-==17063== 
-==17063== For lists of detected and suppressed errors, rerun with: -s
-==17063== ERROR SUMMARY: 40 errors from 4 contexts (suppressed: 0 from 0)
+==16259== 
+==16259== HEAP SUMMARY:
+==16259==     in use at exit: 0 bytes in 0 blocks
+==16259==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
+==16259== 
+==16259== All heap blocks were freed -- no leaks are possible
+==16259== 
+==16259== For lists of detected and suppressed errors, rerun with: -s
+==16259== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -268,15 +178,15 @@ Pruebas de insercion y borrado siempre al inicio
 [32;1m✓ [37;1mLos elementos borrados se encontraban en el orden esperado
 [32;1m✓ [37;1mLa lista quedó vacía después de eliminar todo
 [32;1m✓ [37;1mPuedo volver a insertar varias veces al inicio de la lista
-==17064== 
-==17064== HEAP SUMMARY:
-==17064==     in use at exit: 0 bytes in 0 blocks
-==17064==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
-==17064== 
-==17064== All heap blocks were freed -- no leaks are possible
-==17064== 
-==17064== For lists of detected and suppressed errors, rerun with: -s
-==17064== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16260== 
+==16260== HEAP SUMMARY:
+==16260==     in use at exit: 0 bytes in 0 blocks
+==16260==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
+==16260== 
+==16260== All heap blocks were freed -- no leaks are possible
+==16260== 
+==16260== For lists of detected and suppressed errors, rerun with: -s
+==16260== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -311,15 +221,15 @@ Pruebas con NULL
 [32;1m✓ [37;1mEs un error insertar al inicio de una lista nula
 [32;1m✓ [37;1mUn iterador de una lista nula es nulo
 [32;1m✓ [37;1mRecorrer una lista nulo con el iterador interno recorre 0 elementos
-==17065== 
-==17065== HEAP SUMMARY:
-==17065==     in use at exit: 0 bytes in 0 blocks
-==17065==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17065== 
-==17065== All heap blocks were freed -- no leaks are possible
-==17065== 
-==17065== For lists of detected and suppressed errors, rerun with: -s
-==17065== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16261== 
+==16261== HEAP SUMMARY:
+==16261==     in use at exit: 0 bytes in 0 blocks
+==16261==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16261== 
+==16261== All heap blocks were freed -- no leaks are possible
+==16261== 
+==16261== For lists of detected and suppressed errors, rerun with: -s
+==16261== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -347,61 +257,16 @@ Pruebas con muchos elementos
 [32;1m✓ [37;1mSe pueden insertar exitosamente 5k elementos en la lista
 [32;1m✓ [37;1mSe pueden borrar 1k elementos del inicio de la lista
 [32;1m✓ [37;1mSe pueden borrar 1k elementos del medio de la lista
-==17066== Invalid read of size 8
-==17066==    at 0x109CF0: nodo_en_posicion (lista.c:13)
-==17066==    by 0x109CF0: lista_quitar_de_posicion (lista.c:117)
-==17066==    by 0x10DEDC: pruebas_volumen (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==  Address 0x4ad51a8 is 8 bytes inside a block of size 16 free'd
-==17066==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17066==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17066==    by 0x10DEDC: pruebas_volumen (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==  Block was alloc'd at
-==17066==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17066==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17066==    by 0x10DD20: pruebas_volumen (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066== 
 [32;1m✓ [37;1mSe pueden borrar 3k elementos del final de la lista
-==17066== Invalid read of size 8
-==17066==    at 0x109ED3: lista_destruir (lista.c:210)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==  Address 0x4ad5338 is 8 bytes inside a block of size 16 free'd
-==17066==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17066==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17066==    by 0x10DEDC: pruebas_volumen (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==  Block was alloc'd at
-==17066==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17066==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17066==    by 0x10DD20: pruebas_volumen (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066== 
-==17066== Invalid free() / delete / delete[] / realloc()
-==17066==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17066==    by 0x109EDB: lista_destruir (lista.c:211)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==  Address 0x4ad5330 is 0 bytes inside a block of size 16 free'd
-==17066==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17066==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17066==    by 0x10DEDC: pruebas_volumen (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==  Block was alloc'd at
-==17066==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17066==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17066==    by 0x10DD20: pruebas_volumen (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066==    by 0x10957D: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17066== 
-==17066== 
-==17066== HEAP SUMMARY:
-==17066==     in use at exit: 0 bytes in 0 blocks
-==17066==   total heap usage: 5,002 allocs, 8,002 frees, 84,120 bytes allocated
-==17066== 
-==17066== All heap blocks were freed -- no leaks are possible
-==17066== 
-==17066== For lists of detected and suppressed errors, rerun with: -s
-==17066== ERROR SUMMARY: 8999 errors from 3 contexts (suppressed: 0 from 0)
+==16262== 
+==16262== HEAP SUMMARY:
+==16262==     in use at exit: 0 bytes in 0 blocks
+==16262==   total heap usage: 5,002 allocs, 5,002 frees, 84,120 bytes allocated
+==16262== 
+==16262== All heap blocks were freed -- no leaks are possible
+==16262== 
+==16262== For lists of detected and suppressed errors, rerun with: -s
+==16262== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -441,15 +306,15 @@ Pruebas de insercion en posicion arbitraria
 [32;1m✓ [37;1mEl elemento insertado queda en posición 1
 [32;1m✓ [37;1mEl elemento que estaba en la posición 1 ahora está en la 2
 [32;1m✓ [37;1mEl elemento que estaba en la posición 2 ahora está en la 3
-==17067== 
-==17067== HEAP SUMMARY:
-==17067==     in use at exit: 0 bytes in 0 blocks
-==17067==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
-==17067== 
-==17067== All heap blocks were freed -- no leaks are possible
-==17067== 
-==17067== For lists of detected and suppressed errors, rerun with: -s
-==17067== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16263== 
+==16263== HEAP SUMMARY:
+==16263==     in use at exit: 0 bytes in 0 blocks
+==16263==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==16263== 
+==16263== All heap blocks were freed -- no leaks are possible
+==16263== 
+==16263== For lists of detected and suppressed errors, rerun with: -s
+==16263== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -484,49 +349,40 @@ Pruebas de iterador externo
 [32;1m✓ [37;1mEl iterador de una lista vacía no tiene siguiente
 [32;1m✓ [37;1mEl elemento actual de un iterador de lista vacía siempre es NULL
 [32;1m✓ [37;1mEl elemento actual de un iterador de lista vacía siempre es NULL (otra vez)
-==17068== Invalid read of size 8
-==17068==    at 0x109FC8: lista_iterador_avanzar (lista.c:267)
-==17068==    by 0x10E1EE: pruebas_creacion_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17068==    by 0x10966F: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17068==  Address 0x8 is not stack'd, malloc'd or (recently) free'd
-==17068== 
-[31;1m
-
-ERROR MIENTRAS SE EJECUTABA LA PRUEBA: [33;1m'El iterador de una lista vacía no puede avanzar'
-
-[37;1m==17068== 
-==17068== HEAP SUMMARY:
-==17068==     in use at exit: 40 bytes in 2 blocks
-==17068==   total heap usage: 3 allocs, 1 frees, 4,136 bytes allocated
-==17068== 
-==17068== 16 bytes in 1 blocks are still reachable in loss record 1 of 2
-==17068==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17068==    by 0x109F82: lista_iterador_crear (lista.c:246)
-==17068==    by 0x10E00B: pruebas_creacion_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17068==    by 0x10966F: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17068== 
-==17068== 24 bytes in 1 blocks are still reachable in loss record 2 of 2
-==17068==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17068==    by 0x109AED: lista_crear (lista.c:23)
-==17068==    by 0x10DFE1: pruebas_creacion_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17068==    by 0x10966F: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17068== 
-==17068== LEAK SUMMARY:
-==17068==    definitely lost: 0 bytes in 0 blocks
-==17068==    indirectly lost: 0 bytes in 0 blocks
-==17068==      possibly lost: 0 bytes in 0 blocks
-==17068==    still reachable: 40 bytes in 2 blocks
-==17068==         suppressed: 0 bytes in 0 blocks
-==17068== 
-==17068== For lists of detected and suppressed errors, rerun with: -s
-==17068== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-==17069== Jump to the invalid address stated on the next line
-==17069==    at 0x0: ???
-==17069==    by 0x10A04B: lista_con_cada_elemento (lista.c:295)
-==17069==    by 0x10EA95: pruebas_lista_con_cada_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17069==    by 0x1096EF: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17069==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-==17069== 
+[32;1m✓ [37;1mEl iterador de una lista vacía no puede avanzar
+[32;1m✓ [37;1mEl iterador de una lista vacía no tiene siguiente luego de avanzar
+[32;1m✓ [37;1mEl elemento actual de un iterador de lista vacía siempre es NULL aun despues de avanzar
+[32;1m✓ [37;1mPuedo crear un iterador con una lista no vacía
+[32;1m✓ [37;1mEl iterador de una lista no vacía tiene siguiente
+[32;1m✓ [37;1mEl elemento actual de un iterador de lista no vacía es el primer elemento
+[32;1m✓ [37;1mPuedo avanzar el iterador de una lista no vacía
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve TRUE si no estoy en el último elemento
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve TRUE si no estoy en el último elemento
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve TRUE si no estoy en el último elemento
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve TRUE si no estoy en el último elemento
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve TRUE si no estoy en el último elemento
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve TRUE si no estoy en el último elemento
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve TRUE si no estoy en el último elemento
+[32;1m✓ [37;1mEl elemento actual del iterador es el correcto
+[32;1m✓ [37;1mAvanzar el iterador devuelve FALSE si estoy en el último elemento
+[32;1m✓ [37;1mAl iterar, se iteran exactamente la misma cantidad de elementos de la lista
+[32;1m✓ [37;1mEl elemento actual del iterador es NULL
+==16264== 
+==16264== HEAP SUMMARY:
+==16264==     in use at exit: 0 bytes in 0 blocks
+==16264==   total heap usage: 16 allocs, 16 frees, 4,352 bytes allocated
+==16264== 
+==16264== All heap blocks were freed -- no leaks are possible
+==16264== 
+==16264== For lists of detected and suppressed errors, rerun with: -s
+==16264== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -560,36 +416,26 @@ Pruebas de iterador externo
 [33;1m
 Pruebas de iterador interno
 ===========================[37;1m
-[31;1m
-
-ERROR MIENTRAS SE EJECUTABA LA PRUEBA: [33;1m'No puedo iterar una lista sin función de iteración'
-
-[37;1m==17069== 
-==17069== HEAP SUMMARY:
-==17069==     in use at exit: 152 bytes in 9 blocks
-==17069==   total heap usage: 10 allocs, 1 frees, 4,248 bytes allocated
-==17069== 
-==17069== 24 bytes in 1 blocks are still reachable in loss record 1 of 2
-==17069==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17069==    by 0x109AED: lista_crear (lista.c:23)
-==17069==    by 0x10E9EE: pruebas_lista_con_cada_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17069==    by 0x1096EF: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17069== 
-==17069== 128 bytes in 8 blocks are still reachable in loss record 2 of 2
-==17069==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17069==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17069==    by 0x10EA60: pruebas_lista_con_cada_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17069==    by 0x1096EF: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17069== 
-==17069== LEAK SUMMARY:
-==17069==    definitely lost: 0 bytes in 0 blocks
-==17069==    indirectly lost: 0 bytes in 0 blocks
-==17069==      possibly lost: 0 bytes in 0 blocks
-==17069==    still reachable: 152 bytes in 9 blocks
-==17069==         suppressed: 0 bytes in 0 blocks
-==17069== 
-==17069== For lists of detected and suppressed errors, rerun with: -s
-==17069== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[32;1m✓ [37;1mNo puedo iterar una lista sin función de iteración
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
+[32;1m✓ [37;1mSe iteraron todos los elementos esperados
+[32;1m✓ [37;1mSe iteraron todos los elementos esperados
+==16265== 
+==16265== HEAP SUMMARY:
+==16265==     in use at exit: 0 bytes in 0 blocks
+==16265==   total heap usage: 10 allocs, 10 frees, 4,248 bytes allocated
+==16265== 
+==16265== All heap blocks were freed -- no leaks are possible
+==16265== 
+==16265== For lists of detected and suppressed errors, rerun with: -s
+==16265== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -631,43 +477,43 @@ Pruebas de búsqueda
 [32;1m✓ [37;1mBuscar el ultimo elemento de la lista encuentra el elemento
 [32;1m✓ [37;1mBuscar un elemento la lista encuentra el elemento
 [32;1m✓ [37;1mBuscar un elemento inexistente la lista devuelve NULL
-==17070== Jump to the invalid address stated on the next line
-==17070==    at 0x0: ???
-==17070==    by 0x109DF7: lista_buscar_elemento (lista.c:160)
-==17070==    by 0x10F4C5: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17070==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17070==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-==17070== 
+==16266== Jump to the invalid address stated on the next line
+==16266==    at 0x0: ???
+==16266==    by 0x109E17: lista_buscar_elemento (lista.c:161)
+==16266==    by 0x10F4F5: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16266==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16266==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==16266== 
 [31;1m
 
 ERROR MIENTRAS SE EJECUTABA LA PRUEBA: [33;1m'Buscar un elemento con una función NULL devuelve NULL'
 
-[37;1m==17070== 
-==17070== HEAP SUMMARY:
-==17070==     in use at exit: 184 bytes in 11 blocks
-==17070==   total heap usage: 12 allocs, 1 frees, 4,280 bytes allocated
-==17070== 
-==17070== 24 bytes in 1 blocks are still reachable in loss record 1 of 2
-==17070==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17070==    by 0x109AED: lista_crear (lista.c:23)
-==17070==    by 0x10F154: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17070==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17070== 
-==17070== 160 bytes in 10 blocks are still reachable in loss record 2 of 2
-==17070==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17070==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17070==    by 0x10F266: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17070==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17070== 
-==17070== LEAK SUMMARY:
-==17070==    definitely lost: 0 bytes in 0 blocks
-==17070==    indirectly lost: 0 bytes in 0 blocks
-==17070==      possibly lost: 0 bytes in 0 blocks
-==17070==    still reachable: 184 bytes in 11 blocks
-==17070==         suppressed: 0 bytes in 0 blocks
-==17070== 
-==17070== For lists of detected and suppressed errors, rerun with: -s
-==17070== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[37;1m==16266== 
+==16266== HEAP SUMMARY:
+==16266==     in use at exit: 184 bytes in 11 blocks
+==16266==   total heap usage: 12 allocs, 1 frees, 4,280 bytes allocated
+==16266== 
+==16266== 24 bytes in 1 blocks are still reachable in loss record 1 of 2
+==16266==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==16266==    by 0x109AED: lista_crear (lista.c:23)
+==16266==    by 0x10F184: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16266==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16266== 
+==16266== 160 bytes in 10 blocks are still reachable in loss record 2 of 2
+==16266==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==16266==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
+==16266==    by 0x10F296: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16266==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16266== 
+==16266== LEAK SUMMARY:
+==16266==    definitely lost: 0 bytes in 0 blocks
+==16266==    indirectly lost: 0 bytes in 0 blocks
+==16266==      possibly lost: 0 bytes in 0 blocks
+==16266==    still reachable: 184 bytes in 11 blocks
+==16266==         suppressed: 0 bytes in 0 blocks
+==16266== 
+==16266== For lists of detected and suppressed errors, rerun with: -s
+==16266== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -708,43 +554,43 @@ Pruebas de búsqueda
 Pruebas de destruir todo
 ========================[37;1m
 [32;1m✓ [37;1mDestruir todo destruye todos los elementos
-==17071== Jump to the invalid address stated on the next line
-==17071==    at 0x0: ???
-==17071==    by 0x109F2D: lista_destruir_todo (lista.c:233)
-==17071==    by 0x10F84F: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17071==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17071==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-==17071== 
+==16267== Jump to the invalid address stated on the next line
+==16267==    at 0x0: ???
+==16267==    by 0x109F4D: lista_destruir_todo (lista.c:234)
+==16267==    by 0x10F87F: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16267==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16267==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==16267== 
 [31;1m
 
 FINALIZACION ANORMAL DE LAS PRUEBAS
 
-[37;1m==17071== 
-==17071== HEAP SUMMARY:
-==17071==     in use at exit: 184 bytes in 11 blocks
-==17071==   total heap usage: 23 allocs, 12 frees, 4,464 bytes allocated
-==17071== 
-==17071== 24 bytes in 1 blocks are still reachable in loss record 1 of 2
-==17071==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17071==    by 0x109AED: lista_crear (lista.c:23)
-==17071==    by 0x10F7D0: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17071==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17071== 
-==17071== 160 bytes in 10 blocks are still reachable in loss record 2 of 2
-==17071==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17071==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17071==    by 0x10F83E: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17071==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17071== 
-==17071== LEAK SUMMARY:
-==17071==    definitely lost: 0 bytes in 0 blocks
-==17071==    indirectly lost: 0 bytes in 0 blocks
-==17071==      possibly lost: 0 bytes in 0 blocks
-==17071==    still reachable: 184 bytes in 11 blocks
-==17071==         suppressed: 0 bytes in 0 blocks
-==17071== 
-==17071== For lists of detected and suppressed errors, rerun with: -s
-==17071== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[37;1m==16267== 
+==16267== HEAP SUMMARY:
+==16267==     in use at exit: 184 bytes in 11 blocks
+==16267==   total heap usage: 23 allocs, 12 frees, 4,464 bytes allocated
+==16267== 
+==16267== 24 bytes in 1 blocks are still reachable in loss record 1 of 2
+==16267==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==16267==    by 0x109AED: lista_crear (lista.c:23)
+==16267==    by 0x10F800: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16267==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16267== 
+==16267== 160 bytes in 10 blocks are still reachable in loss record 2 of 2
+==16267==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==16267==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
+==16267==    by 0x10F86E: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16267==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
+==16267== 
+==16267== LEAK SUMMARY:
+==16267==    definitely lost: 0 bytes in 0 blocks
+==16267==    indirectly lost: 0 bytes in 0 blocks
+==16267==      possibly lost: 0 bytes in 0 blocks
+==16267==    still reachable: 184 bytes in 11 blocks
+==16267==         suppressed: 0 bytes in 0 blocks
+==16267== 
+==16267== For lists of detected and suppressed errors, rerun with: -s
+==16267== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -788,15 +634,15 @@ Pruebas de destruir todo
 Pruebas de pila (La implementaste con la lista, ¿No?)
 ======================================================[37;1m
 [32;1m✓ [37;1mPuedo apilar algunos valores en la pila
-==17072== 
-==17072== HEAP SUMMARY:
-==17072==     in use at exit: 0 bytes in 0 blocks
-==17072==   total heap usage: 14 allocs, 14 frees, 4,312 bytes allocated
-==17072== 
-==17072== All heap blocks were freed -- no leaks are possible
-==17072== 
-==17072== For lists of detected and suppressed errors, rerun with: -s
-==17072== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16268== 
+==16268== HEAP SUMMARY:
+==16268==     in use at exit: 0 bytes in 0 blocks
+==16268==   total heap usage: 14 allocs, 14 frees, 4,312 bytes allocated
+==16268== 
+==16268== All heap blocks were freed -- no leaks are possible
+==16268== 
+==16268== For lists of detected and suppressed errors, rerun with: -s
+==16268== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -859,15 +705,15 @@ Pruebas de cola (La implementaste con la lista, ¿No?)
 [32;1m✓ [37;1mPuedo desencolar el elemento
 [32;1m✓ [37;1mEl primer elemento de la cola es el esperado
 [32;1m✓ [37;1mPuedo desencolar el elemento
-==17073== 
-==17073== HEAP SUMMARY:
-==17073==     in use at exit: 0 bytes in 0 blocks
-==17073==   total heap usage: 10 allocs, 10 frees, 4,248 bytes allocated
-==17073== 
-==17073== All heap blocks were freed -- no leaks are possible
-==17073== 
-==17073== For lists of detected and suppressed errors, rerun with: -s
-==17073== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16269== 
+==16269== HEAP SUMMARY:
+==16269==     in use at exit: 0 bytes in 0 blocks
+==16269==   total heap usage: 10 allocs, 10 frees, 4,248 bytes allocated
+==16269== 
+==16269== All heap blocks were freed -- no leaks are possible
+==16269== 
+==16269== For lists of detected and suppressed errors, rerun with: -s
+==16269== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -916,15 +762,15 @@ Pruebas de cola (La implementaste con la lista, ¿No?)
 [33;1m
 ------------ MÁS PRUEBAS DEL TDA LISTA ------------
 ====================================================[37;1m
-==17074== 
-==17074== HEAP SUMMARY:
-==17074==     in use at exit: 0 bytes in 0 blocks
-==17074==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17074== 
-==17074== All heap blocks were freed -- no leaks are possible
-==17074== 
-==17074== For lists of detected and suppressed errors, rerun with: -s
-==17074== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16270== 
+==16270== HEAP SUMMARY:
+==16270==     in use at exit: 0 bytes in 0 blocks
+==16270==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16270== 
+==16270== All heap blocks were freed -- no leaks are possible
+==16270== 
+==16270== For lists of detected and suppressed errors, rerun with: -s
+==16270== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -980,15 +826,15 @@ PRUEBAS DE CREACIÓN Y DESTRUCCIÓN
 Destruir lista NULL no genera error
 ===================================[37;1m
 [32;1m✓ [37;1mSe envia una lista nula a lista_destruir y no se genera error
-==17076== 
-==17076== HEAP SUMMARY:
-==17076==     in use at exit: 0 bytes in 0 blocks
-==17076==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17076== 
-==17076== All heap blocks were freed -- no leaks are possible
-==17076== 
-==17076== For lists of detected and suppressed errors, rerun with: -s
-==17076== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16272== 
+==16272== HEAP SUMMARY:
+==16272==     in use at exit: 0 bytes in 0 blocks
+==16272==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16272== 
+==16272== All heap blocks were freed -- no leaks are possible
+==16272== 
+==16272== For lists of detected and suppressed errors, rerun with: -s
+==16272== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1049,15 +895,15 @@ Pruebas de crear y destruir una lista
 [32;1m✓ [37;1mSe crea la lista.
 [32;1m✓ [37;1mEl tamaño de la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==17077== 
-==17077== HEAP SUMMARY:
-==17077==     in use at exit: 0 bytes in 0 blocks
-==17077==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==17077== 
-==17077== All heap blocks were freed -- no leaks are possible
-==17077== 
-==17077== For lists of detected and suppressed errors, rerun with: -s
-==17077== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16273== 
+==16273== HEAP SUMMARY:
+==16273==     in use at exit: 0 bytes in 0 blocks
+==16273==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==16273== 
+==16273== All heap blocks were freed -- no leaks are possible
+==16273== 
+==16273== For lists of detected and suppressed errors, rerun with: -s
+==16273== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1115,15 +961,15 @@ Destruir lista NULL no genera error
 [33;1m
 Pruebas de crear y destruir una lista
 =====================================[37;1m
-==17075== 
-==17075== HEAP SUMMARY:
-==17075==     in use at exit: 0 bytes in 0 blocks
-==17075==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17075== 
-==17075== All heap blocks were freed -- no leaks are possible
-==17075== 
-==17075== For lists of detected and suppressed errors, rerun with: -s
-==17075== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16271== 
+==16271== HEAP SUMMARY:
+==16271==     in use at exit: 0 bytes in 0 blocks
+==16271==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16271== 
+==16271== All heap blocks were freed -- no leaks are possible
+==16271== 
+==16271== For lists of detected and suppressed errors, rerun with: -s
+==16271== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1182,15 +1028,15 @@ PRUEBAS DE INSERCIÓN
 Lista NULL
 ==========[37;1m
 [32;1m✓ [37;1mNo se puede insertar en una lista inválida.
-==17079== 
-==17079== HEAP SUMMARY:
-==17079==     in use at exit: 0 bytes in 0 blocks
-==17079==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17079== 
-==17079== All heap blocks were freed -- no leaks are possible
-==17079== 
-==17079== For lists of detected and suppressed errors, rerun with: -s
-==17079== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16275== 
+==16275== HEAP SUMMARY:
+==16275==     in use at exit: 0 bytes in 0 blocks
+==16275==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16275== 
+==16275== All heap blocks were freed -- no leaks are possible
+==16275== 
+==16275== For lists of detected and suppressed errors, rerun with: -s
+==16275== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1254,15 +1100,15 @@ Insertar un elemento
 [32;1m✓ [37;1mEs posible insertar un elemento en la lista
 [32;1m✓ [37;1mEs posible insertar un elemento nulo en la lista
 [32;1m✓ [37;1mEs posible insertar un elemento que vive en el heap en la lista
-==17080== 
-==17080== HEAP SUMMARY:
-==17080==     in use at exit: 0 bytes in 0 blocks
-==17080==   total heap usage: 8 allocs, 8 frees, 4,220 bytes allocated
-==17080== 
-==17080== All heap blocks were freed -- no leaks are possible
-==17080== 
-==17080== For lists of detected and suppressed errors, rerun with: -s
-==17080== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16276== 
+==16276== HEAP SUMMARY:
+==16276==     in use at exit: 0 bytes in 0 blocks
+==16276==   total heap usage: 8 allocs, 8 frees, 4,220 bytes allocated
+==16276== 
+==16276== All heap blocks were freed -- no leaks are possible
+==16276== 
+==16276== For lists of detected and suppressed errors, rerun with: -s
+==16276== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1337,15 +1183,15 @@ Insertar varios elementos
 [32;1m✓ [37;1mEl cuarto elemento de la lista es el correcto
 [32;1m✓ [37;1mEl último elemento de la lista es el correcto
 [32;1m✓ [37;1mEl tercer elemento no está en la quinta posición
-==17081== 
-==17081== HEAP SUMMARY:
-==17081==     in use at exit: 0 bytes in 0 blocks
-==17081==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
-==17081== 
-==17081== All heap blocks were freed -- no leaks are possible
-==17081== 
-==17081== For lists of detected and suppressed errors, rerun with: -s
-==17081== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16277== 
+==16277== HEAP SUMMARY:
+==16277==     in use at exit: 0 bytes in 0 blocks
+==16277==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
+==16277== 
+==16277== All heap blocks were freed -- no leaks are possible
+==16277== 
+==16277== For lists of detected and suppressed errors, rerun with: -s
+==16277== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1421,15 +1267,15 @@ Insertar un elemento en posicion
 [32;1m✓ [37;1mEs posible insertar un elemento en la posición 14 de una lista vacía
 [32;1m✓ [37;1mEl elemento no está en la posición 14
 [32;1m✓ [37;1mEl elemento está en la posición 0
-==17082== 
-==17082== HEAP SUMMARY:
-==17082==     in use at exit: 0 bytes in 0 blocks
-==17082==   total heap usage: 10 allocs, 10 frees, 4,260 bytes allocated
-==17082== 
-==17082== All heap blocks were freed -- no leaks are possible
-==17082== 
-==17082== For lists of detected and suppressed errors, rerun with: -s
-==17082== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16278== 
+==16278== HEAP SUMMARY:
+==16278==     in use at exit: 0 bytes in 0 blocks
+==16278==   total heap usage: 10 allocs, 10 frees, 4,260 bytes allocated
+==16278== 
+==16278== All heap blocks were freed -- no leaks are possible
+==16278== 
+==16278== For lists of detected and suppressed errors, rerun with: -s
+==16278== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1523,15 +1369,15 @@ Insertar varios elementos en posicion
 [32;1m✓ [37;1mEse elemento está en la posición correcta de la lista
 [32;1m✓ [37;1mEl elemento anterior es el correcto
 [32;1m✓ [37;1mEl siguiente elemento es el correcto
-==17083== 
-==17083== HEAP SUMMARY:
-==17083==     in use at exit: 0 bytes in 0 blocks
-==17083==   total heap usage: 11 allocs, 11 frees, 4,264 bytes allocated
-==17083== 
-==17083== All heap blocks were freed -- no leaks are possible
-==17083== 
-==17083== For lists of detected and suppressed errors, rerun with: -s
-==17083== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16279== 
+==16279== HEAP SUMMARY:
+==16279==     in use at exit: 0 bytes in 0 blocks
+==16279==   total heap usage: 11 allocs, 11 frees, 4,264 bytes allocated
+==16279== 
+==16279== All heap blocks were freed -- no leaks are possible
+==16279== 
+==16279== For lists of detected and suppressed errors, rerun with: -s
+==16279== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1601,15 +1447,15 @@ Insertar un elemento en posicion
 [33;1m
 Insertar varios elementos en posicion
 =====================================[37;1m
-==17078== 
-==17078== HEAP SUMMARY:
-==17078==     in use at exit: 0 bytes in 0 blocks
-==17078==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17078== 
-==17078== All heap blocks were freed -- no leaks are possible
-==17078== 
-==17078== For lists of detected and suppressed errors, rerun with: -s
-==17078== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16274== 
+==16274== HEAP SUMMARY:
+==16274==     in use at exit: 0 bytes in 0 blocks
+==16274==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16274== 
+==16274== All heap blocks were freed -- no leaks are possible
+==16274== 
+==16274== For lists of detected and suppressed errors, rerun with: -s
+==16274== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1672,15 +1518,15 @@ Lista nula y vacia
 ==================[37;1m
 [32;1m✓ [37;1mNo se puede eliminar de una lista nula
 [32;1m✓ [37;1mNo se puede eliminar de una lista vacía
-==17085== 
-==17085== HEAP SUMMARY:
-==17085==     in use at exit: 0 bytes in 0 blocks
-==17085==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==17085== 
-==17085== All heap blocks were freed -- no leaks are possible
-==17085== 
-==17085== For lists of detected and suppressed errors, rerun with: -s
-==17085== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16281== 
+==16281== HEAP SUMMARY:
+==16281==     in use at exit: 0 bytes in 0 blocks
+==16281==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==16281== 
+==16281== All heap blocks were freed -- no leaks are possible
+==16281== 
+==16281== For lists of detected and suppressed errors, rerun with: -s
+==16281== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1749,15 +1595,15 @@ Eliminar un elemento
 [32;1m✓ [37;1mEs posible eliminar este elemento
 [32;1m✓ [37;1mEl tamaño de la lista ahora es 0
 [32;1m✓ [37;1mLa lista está vacía
-==17086== 
-==17086== HEAP SUMMARY:
-==17086==     in use at exit: 0 bytes in 0 blocks
-==17086==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
-==17086== 
-==17086== All heap blocks were freed -- no leaks are possible
-==17086== 
-==17086== For lists of detected and suppressed errors, rerun with: -s
-==17086== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16282== 
+==16282== HEAP SUMMARY:
+==16282==     in use at exit: 0 bytes in 0 blocks
+==16282==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
+==16282== 
+==16282== All heap blocks were freed -- no leaks are possible
+==16282== 
+==16282== For lists of detected and suppressed errors, rerun with: -s
+==16282== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1833,58 +1679,15 @@ Eliminar varios elementos iguales
 [32;1m✓ [37;1mEs posible eliminar el último elemento
 [32;1m✓ [37;1mEl tamaño de la lista ahora es 0
 [32;1m✓ [37;1mLa lista está vacía
-==17087== Invalid read of size 8
-==17087==    at 0x109ED3: lista_destruir (lista.c:210)
-==17087==    by 0x112793: eliminar_varios_elementos_iguales_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x114E5E: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==  Address 0x4a87138 is 8 bytes inside a block of size 16 free'd
-==17087==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17087==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17087==    by 0x112537: eliminar_varios_elementos_iguales_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x114E5E: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==  Block was alloc'd at
-==17087==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17087==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17087==    by 0x11232A: eliminar_varios_elementos_iguales_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x114E5E: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087== 
-==17087== Invalid free() / delete / delete[] / realloc()
-==17087==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17087==    by 0x109EDB: lista_destruir (lista.c:211)
-==17087==    by 0x112793: eliminar_varios_elementos_iguales_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x114E5E: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==  Address 0x4a87130 is 0 bytes inside a block of size 16 free'd
-==17087==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17087==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17087==    by 0x112537: eliminar_varios_elementos_iguales_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x114E5E: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==  Block was alloc'd at
-==17087==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17087==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17087==    by 0x11232A: eliminar_varios_elementos_iguales_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x114E5E: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17087== 
-==17087== 
-==17087== HEAP SUMMARY:
-==17087==     in use at exit: 0 bytes in 0 blocks
-==17087==   total heap usage: 502 allocs, 1,001 frees, 12,120 bytes allocated
-==17087== 
-==17087== All heap blocks were freed -- no leaks are possible
-==17087== 
-==17087== For lists of detected and suppressed errors, rerun with: -s
-==17087== ERROR SUMMARY: 998 errors from 2 contexts (suppressed: 0 from 0)
+==16283== 
+==16283== HEAP SUMMARY:
+==16283==     in use at exit: 0 bytes in 0 blocks
+==16283==   total heap usage: 502 allocs, 502 frees, 12,120 bytes allocated
+==16283== 
+==16283== All heap blocks were freed -- no leaks are possible
+==16283== 
+==16283== For lists of detected and suppressed errors, rerun with: -s
+==16283== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1979,15 +1782,15 @@ Agregar, eliminar y volver a agregar
 [32;1m✓ [37;1mLa lista tiene 2 elementos
 [32;1m✓ [37;1mSe puede insertar un elemento nuevo en la lista.
 [32;1m✓ [37;1mLa lista tiene 3 elementos
-==17088== 
-==17088== HEAP SUMMARY:
-==17088==     in use at exit: 0 bytes in 0 blocks
-==17088==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
-==17088== 
-==17088== All heap blocks were freed -- no leaks are possible
-==17088== 
-==17088== For lists of detected and suppressed errors, rerun with: -s
-==17088== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16284== 
+==16284== HEAP SUMMARY:
+==16284==     in use at exit: 0 bytes in 0 blocks
+==16284==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
+==16284== 
+==16284== All heap blocks were freed -- no leaks are possible
+==16284== 
+==16284== For lists of detected and suppressed errors, rerun with: -s
+==16284== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2062,15 +1865,15 @@ Lista nula y vacia (ahora con quitar de posicion)
 =================================================[37;1m
 [32;1m✓ [37;1mNo se puede eliminar (con quitar de posición) de una lista nula
 [32;1m✓ [37;1mNo se puede eliminar (con quitar de posición) de una lista vacía
-==17089== 
-==17089== HEAP SUMMARY:
-==17089==     in use at exit: 0 bytes in 0 blocks
-==17089==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==17089== 
-==17089== All heap blocks were freed -- no leaks are possible
-==17089== 
-==17089== For lists of detected and suppressed errors, rerun with: -s
-==17089== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16285== 
+==16285== HEAP SUMMARY:
+==16285==     in use at exit: 0 bytes in 0 blocks
+==16285==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==16285== 
+==16285== All heap blocks were freed -- no leaks are possible
+==16285== 
+==16285== For lists of detected and suppressed errors, rerun with: -s
+==16285== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2151,15 +1954,15 @@ Eliminar un elemento de una posicion valida
 [32;1m✓ [37;1mSe puede eliminar (con quitar de posición) el único elemento de una lista
 [32;1m✓ [37;1mLa cantidad de elementos en la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==17090== 
-==17090== HEAP SUMMARY:
-==17090==     in use at exit: 0 bytes in 0 blocks
-==17090==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
-==17090== 
-==17090== All heap blocks were freed -- no leaks are possible
-==17090== 
-==17090== For lists of detected and suppressed errors, rerun with: -s
-==17090== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16286== 
+==16286== HEAP SUMMARY:
+==16286==     in use at exit: 0 bytes in 0 blocks
+==16286==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
+==16286== 
+==16286== All heap blocks were freed -- no leaks are possible
+==16286== 
+==16286== For lists of detected and suppressed errors, rerun with: -s
+==16286== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2243,58 +2046,15 @@ Eliminar un elemento de una posicion inexistente
 [32;1m✓ [37;1mEliminar un elemento de una posicion inexistente quita el ultimo elemento
 [32;1m✓ [37;1mLa cantidad de elementos en la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==17091== Invalid read of size 8
-==17091==    at 0x109ED3: lista_destruir (lista.c:210)
-==17091==    by 0x113E77: eliminar_un_elemento_de_posicion_inexistente_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x11501D: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==  Address 0x4a870e8 is 8 bytes inside a block of size 16 free'd
-==17091==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17091==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17091==    by 0x113D40: eliminar_un_elemento_de_posicion_inexistente_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x11501D: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==  Block was alloc'd at
-==17091==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17091==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17091==    by 0x113C25: eliminar_un_elemento_de_posicion_inexistente_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x11501D: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091== 
-==17091== Invalid free() / delete / delete[] / realloc()
-==17091==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17091==    by 0x109EDB: lista_destruir (lista.c:211)
-==17091==    by 0x113E77: eliminar_un_elemento_de_posicion_inexistente_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x11501D: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==  Address 0x4a870e0 is 0 bytes inside a block of size 16 free'd
-==17091==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17091==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17091==    by 0x113D40: eliminar_un_elemento_de_posicion_inexistente_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x11501D: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==  Block was alloc'd at
-==17091==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17091==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17091==    by 0x113C25: eliminar_un_elemento_de_posicion_inexistente_de_la_lista (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x11501D: pruebas_eliminacion (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x117B0D: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17091== 
-==17091== 
-==17091== HEAP SUMMARY:
-==17091==     in use at exit: 0 bytes in 0 blocks
-==17091==   total heap usage: 3 allocs, 4 frees, 4,136 bytes allocated
-==17091== 
-==17091== All heap blocks were freed -- no leaks are possible
-==17091== 
-==17091== For lists of detected and suppressed errors, rerun with: -s
-==17091== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==16287== 
+==16287== HEAP SUMMARY:
+==16287==     in use at exit: 0 bytes in 0 blocks
+==16287==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
+==16287== 
+==16287== All heap blocks were freed -- no leaks are possible
+==16287== 
+==16287== For lists of detected and suppressed errors, rerun with: -s
+==16287== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2397,15 +2157,15 @@ Agregar, eliminar y volver a agregar (ahora con quitar de posicion)
 [32;1m✓ [37;1mSe eliminaron todos los elementos de la lista correctamente
 [32;1m✓ [37;1mLa cantidad de elementos en la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==17092== 
-==17092== HEAP SUMMARY:
-==17092==     in use at exit: 0 bytes in 0 blocks
-==17092==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
-==17092== 
-==17092== All heap blocks were freed -- no leaks are possible
-==17092== 
-==17092== For lists of detected and suppressed errors, rerun with: -s
-==17092== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16288== 
+==16288== HEAP SUMMARY:
+==16288==     in use at exit: 0 bytes in 0 blocks
+==16288==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
+==16288== 
+==16288== All heap blocks were freed -- no leaks are possible
+==16288== 
+==16288== For lists of detected and suppressed errors, rerun with: -s
+==16288== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2487,15 +2247,15 @@ Eliminar un elemento de una posicion inexistente
 [33;1m
 Agregar, eliminar y volver a agregar (ahora con quitar de posicion)
 ===================================================================[37;1m
-==17084== 
-==17084== HEAP SUMMARY:
-==17084==     in use at exit: 0 bytes in 0 blocks
-==17084==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17084== 
-==17084== All heap blocks were freed -- no leaks are possible
-==17084== 
-==17084== For lists of detected and suppressed errors, rerun with: -s
-==17084== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16280== 
+==16280== HEAP SUMMARY:
+==16280==     in use at exit: 0 bytes in 0 blocks
+==16280==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16280== 
+==16280== All heap blocks were freed -- no leaks are possible
+==16280== 
+==16280== For lists of detected and suppressed errors, rerun with: -s
+==16280== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2561,15 +2321,15 @@ Lista nula y vacia
 ==================[37;1m
 [32;1m✓ [37;1mEl primer elemento de una lista nula es NULL
 [32;1m✓ [37;1mEl último elemento de una lista nula es NULL
-==17094== 
-==17094== HEAP SUMMARY:
-==17094==     in use at exit: 0 bytes in 0 blocks
-==17094==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17094== 
-==17094== All heap blocks were freed -- no leaks are possible
-==17094== 
-==17094== For lists of detected and suppressed errors, rerun with: -s
-==17094== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16290== 
+==16290== HEAP SUMMARY:
+==16290==     in use at exit: 0 bytes in 0 blocks
+==16290==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16290== 
+==16290== All heap blocks were freed -- no leaks are possible
+==16290== 
+==16290== For lists of detected and suppressed errors, rerun with: -s
+==16290== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2646,102 +2406,17 @@ Lista valida
 [32;1m✓ [37;1mEl último elemento de una lista con un elemento es ese elemento
 [32;1m✓ [37;1mSe inserta un elemento al principio y otro al final. El primer elemento de una lista con dos elemento es el correcto
 [32;1m✓ [37;1mEl último elemento es el correcto
-==17095== Invalid read of size 8
-==17095==    at 0x109E3D: lista_primero (lista.c:172)
-==17095==    by 0x115790: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Address 0x4a870e0 is 0 bytes inside a block of size 16 free'd
-==17095==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17095==    by 0x115761: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Block was alloc'd at
-==17095==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17095==    by 0x11533B: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095== 
-[31;1m✗ [37;1mSe eliminan todos los elementos. El primer elemento de una lista vacía es NULL
-==17095== Invalid read of size 8
-==17095==    at 0x109E61: lista_ultimo (lista.c:179)
-==17095==    by 0x115803: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Address 0x4a87180 is 0 bytes inside a block of size 16 free'd
-==17095==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109D2B: lista_quitar_de_posicion (lista.c:105)
-==17095==    by 0x115769: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Block was alloc'd at
-==17095==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17095==    by 0x115651: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095== 
-[31;1m✗ [37;1mEl último elemento de una lista vacía es NULL
-==17095== Invalid read of size 8
-==17095==    at 0x109ED3: lista_destruir (lista.c:210)
-==17095==    by 0x11585E: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Address 0x4a870e8 is 8 bytes inside a block of size 16 free'd
-==17095==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17095==    by 0x115761: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Block was alloc'd at
-==17095==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17095==    by 0x11533B: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095== 
-==17095== Invalid free() / delete / delete[] / realloc()
-==17095==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109EDB: lista_destruir (lista.c:211)
-==17095==    by 0x11585E: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Address 0x4a870e0 is 0 bytes inside a block of size 16 free'd
-==17095==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17095==    by 0x115761: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==  Block was alloc'd at
-==17095==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17095==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17095==    by 0x11533B: verifico_primero_y_ultimo_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x115A8D: pruebas_primero_y_ultimo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x117C47: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17095== 
-==17095== 
-==17095== HEAP SUMMARY:
-==17095==     in use at exit: 0 bytes in 0 blocks
-==17095==   total heap usage: 6 allocs, 8 frees, 4,184 bytes allocated
-==17095== 
-==17095== All heap blocks were freed -- no leaks are possible
-==17095== 
-==17095== For lists of detected and suppressed errors, rerun with: -s
-==17095== ERROR SUMMARY: 6 errors from 4 contexts (suppressed: 0 from 0)
+[32;1m✓ [37;1mSe eliminan todos los elementos. El primer elemento de una lista vacía es NULL
+[32;1m✓ [37;1mEl último elemento de una lista vacía es NULL
+==16291== 
+==16291== HEAP SUMMARY:
+==16291==     in use at exit: 0 bytes in 0 blocks
+==16291==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==16291== 
+==16291== All heap blocks were freed -- no leaks are possible
+==16291== 
+==16291== For lists of detected and suppressed errors, rerun with: -s
+==16291== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2808,15 +2483,15 @@ Lista nula y vacia
 [33;1m
 Lista valida
 ============[37;1m
-==17093== 
-==17093== HEAP SUMMARY:
-==17093==     in use at exit: 0 bytes in 0 blocks
-==17093==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17093== 
-==17093== All heap blocks were freed -- no leaks are possible
-==17093== 
-==17093== For lists of detected and suppressed errors, rerun with: -s
-==17093== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16289== 
+==16289== HEAP SUMMARY:
+==16289==     in use at exit: 0 bytes in 0 blocks
+==16289==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16289== 
+==16289== All heap blocks were freed -- no leaks are possible
+==16289== 
+==16289== For lists of detected and suppressed errors, rerun with: -s
+==16289== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2885,15 +2560,15 @@ Lista nula y vacia
 ==================[37;1m
 [32;1m✓ [37;1mEl tamaño de una lista nula es 0
 [32;1m✓ [37;1mUna lista nula está vacía
-==17097== 
-==17097== HEAP SUMMARY:
-==17097==     in use at exit: 0 bytes in 0 blocks
-==17097==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17097== 
-==17097== All heap blocks were freed -- no leaks are possible
-==17097== 
-==17097== For lists of detected and suppressed errors, rerun with: -s
-==17097== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16293== 
+==16293== HEAP SUMMARY:
+==16293==     in use at exit: 0 bytes in 0 blocks
+==16293==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16293== 
+==16293== All heap blocks were freed -- no leaks are possible
+==16293== 
+==16293== For lists of detected and suppressed errors, rerun with: -s
+==16293== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2973,58 +2648,15 @@ Lista valida
 [32;1m✓ [37;1mUna lista con un elemento no está vacía
 [32;1m✓ [37;1mSe elimina el otro elemento de la lista. El tamaño de una lista sin elementos es 0
 [32;1m✓ [37;1mUna lista sin elementos está vacía
-==17098== Invalid read of size 8
-==17098==    at 0x109ED3: lista_destruir (lista.c:210)
-==17098==    by 0x11610E: verifico_tamanio_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x11634D: pruebas_tamanio_y_vacia (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x117C39: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==  Address 0x4a87188 is 8 bytes inside a block of size 16 free'd
-==17098==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17098==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17098==    by 0x116025: verifico_tamanio_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x11634D: pruebas_tamanio_y_vacia (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x117C39: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==  Block was alloc'd at
-==17098==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17098==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17098==    by 0x116008: verifico_tamanio_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x11634D: pruebas_tamanio_y_vacia (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x117C39: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098== 
-==17098== Invalid free() / delete / delete[] / realloc()
-==17098==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17098==    by 0x109EDB: lista_destruir (lista.c:211)
-==17098==    by 0x11610E: verifico_tamanio_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x11634D: pruebas_tamanio_y_vacia (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x117C39: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==  Address 0x4a87180 is 0 bytes inside a block of size 16 free'd
-==17098==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17098==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17098==    by 0x116025: verifico_tamanio_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x11634D: pruebas_tamanio_y_vacia (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x117C39: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==  Block was alloc'd at
-==17098==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17098==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17098==    by 0x116008: verifico_tamanio_de_lista_valida (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x11634D: pruebas_tamanio_y_vacia (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x117C39: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17098== 
-==17098== 
-==17098== HEAP SUMMARY:
-==17098==     in use at exit: 0 bytes in 0 blocks
-==17098==   total heap usage: 6 allocs, 8 frees, 4,184 bytes allocated
-==17098== 
-==17098== All heap blocks were freed -- no leaks are possible
-==17098== 
-==17098== For lists of detected and suppressed errors, rerun with: -s
-==17098== ERROR SUMMARY: 4 errors from 2 contexts (suppressed: 0 from 0)
+==16294== 
+==16294== HEAP SUMMARY:
+==16294==     in use at exit: 0 bytes in 0 blocks
+==16294==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==16294== 
+==16294== All heap blocks were freed -- no leaks are possible
+==16294== 
+==16294== For lists of detected and suppressed errors, rerun with: -s
+==16294== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3094,15 +2726,15 @@ Lista nula y vacia
 [33;1m
 Lista valida
 ============[37;1m
-==17096== 
-==17096== HEAP SUMMARY:
-==17096==     in use at exit: 0 bytes in 0 blocks
-==17096==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17096== 
-==17096== All heap blocks were freed -- no leaks are possible
-==17096== 
-==17096== For lists of detected and suppressed errors, rerun with: -s
-==17096== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16292== 
+==16292== HEAP SUMMARY:
+==16292==     in use at exit: 0 bytes in 0 blocks
+==16292==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16292== 
+==16292== All heap blocks were freed -- no leaks are possible
+==16292== 
+==16292== For lists of detected and suppressed errors, rerun with: -s
+==16292== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3173,15 +2805,15 @@ PRUEBAS DEL ITERADOR INTERNO
 Lista nula
 ==========[37;1m
 [32;1m✓ [37;1mIterar una lista nula devuelve 0.
-==17100== 
-==17100== HEAP SUMMARY:
-==17100==     in use at exit: 0 bytes in 0 blocks
-==17100==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17100== 
-==17100== All heap blocks were freed -- no leaks are possible
-==17100== 
-==17100== For lists of detected and suppressed errors, rerun with: -s
-==17100== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16296== 
+==16296== HEAP SUMMARY:
+==16296==     in use at exit: 0 bytes in 0 blocks
+==16296==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16296== 
+==16296== All heap blocks were freed -- no leaks are possible
+==16296== 
+==16296== For lists of detected and suppressed errors, rerun with: -s
+==16296== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3255,15 +2887,15 @@ Lista nula
 Funcion nula
 ============[37;1m
 [32;1m✓ [37;1mNo se puede aplicar una función nula a la lista.
-==17101== 
-==17101== HEAP SUMMARY:
-==17101==     in use at exit: 0 bytes in 0 blocks
-==17101==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==17101== 
-==17101== All heap blocks were freed -- no leaks are possible
-==17101== 
-==17101== For lists of detected and suppressed errors, rerun with: -s
-==17101== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16297== 
+==16297== HEAP SUMMARY:
+==16297==     in use at exit: 0 bytes in 0 blocks
+==16297==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==16297== 
+==16297== All heap blocks were freed -- no leaks are possible
+==16297== 
+==16297== For lists of detected and suppressed errors, rerun with: -s
+==16297== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3340,15 +2972,15 @@ Funcion nula
 Lista vacia
 ===========[37;1m
 [32;1m✓ [37;1mIterar una lista vacía devuelve 0 elementos iterados.
-==17102== 
-==17102== HEAP SUMMARY:
-==17102==     in use at exit: 0 bytes in 0 blocks
-==17102==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==17102== 
-==17102== All heap blocks were freed -- no leaks are possible
-==17102== 
-==17102== For lists of detected and suppressed errors, rerun with: -s
-==17102== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16298== 
+==16298== HEAP SUMMARY:
+==16298==     in use at exit: 0 bytes in 0 blocks
+==16298==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==16298== 
+==16298== All heap blocks were freed -- no leaks are possible
+==16298== 
+==16298== For lists of detected and suppressed errors, rerun with: -s
+==16298== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3428,15 +3060,15 @@ Lista vacia
 Iterar totalmente la lista
 ==========================[37;1m
 [32;1m✓ [37;1mIterar una lista con elementos en su totalidad devuelve la cantidad de elementos de la lista.
-==17103== 
-==17103== HEAP SUMMARY:
-==17103==     in use at exit: 0 bytes in 0 blocks
-==17103==   total heap usage: 5 allocs, 5 frees, 4,168 bytes allocated
-==17103== 
-==17103== All heap blocks were freed -- no leaks are possible
-==17103== 
-==17103== For lists of detected and suppressed errors, rerun with: -s
-==17103== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16299== 
+==16299== HEAP SUMMARY:
+==16299==     in use at exit: 0 bytes in 0 blocks
+==16299==   total heap usage: 5 allocs, 5 frees, 4,168 bytes allocated
+==16299== 
+==16299== All heap blocks were freed -- no leaks are possible
+==16299== 
+==16299== For lists of detected and suppressed errors, rerun with: -s
+==16299== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3523,15 +3155,15 @@ Iterar parcialmente la lista
 [32;1m✓ [37;1mBuscar el tercer elemento de la lista con el it interno devuelve 3 elementos iterados
 [32;1m✓ [37;1mSe inserta un elemento al final. Buscar ese elemento con el it interno devuelve 4 elementos iterados
 [32;1m✓ [37;1mBuscar el tercer elemento de una lista con 4 elementos con el it interno devuelve 3 elementos iterados
-==17104== 
-==17104== HEAP SUMMARY:
-==17104==     in use at exit: 0 bytes in 0 blocks
-==17104==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
-==17104== 
-==17104== All heap blocks were freed -- no leaks are possible
-==17104== 
-==17104== For lists of detected and suppressed errors, rerun with: -s
-==17104== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16300== 
+==16300== HEAP SUMMARY:
+==16300==     in use at exit: 0 bytes in 0 blocks
+==16300==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==16300== 
+==16300== All heap blocks were freed -- no leaks are possible
+==16300== 
+==16300== For lists of detected and suppressed errors, rerun with: -s
+==16300== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3613,15 +3245,15 @@ Iterar totalmente la lista
 [33;1m
 Iterar parcialmente la lista
 ============================[37;1m
-==17099== 
-==17099== HEAP SUMMARY:
-==17099==     in use at exit: 0 bytes in 0 blocks
-==17099==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17099== 
-==17099== All heap blocks were freed -- no leaks are possible
-==17099== 
-==17099== For lists of detected and suppressed errors, rerun with: -s
-==17099== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16295== 
+==16295== HEAP SUMMARY:
+==16295==     in use at exit: 0 bytes in 0 blocks
+==16295==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16295== 
+==16295== All heap blocks were freed -- no leaks are possible
+==16295== 
+==16295== For lists of detected and suppressed errors, rerun with: -s
+==16295== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3699,15 +3331,15 @@ Lista nula
 [32;1m✓ [37;1mNo se puede avanzar un iterador nulo
 [32;1m✓ [37;1mNo se puede verificar el elemento actual de un iterador nulo
 [32;1m✓ [37;1mNo hubo problema al intentar destruir un iterador nulo
-==17106== 
-==17106== HEAP SUMMARY:
-==17106==     in use at exit: 0 bytes in 0 blocks
-==17106==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17106== 
-==17106== All heap blocks were freed -- no leaks are possible
-==17106== 
-==17106== For lists of detected and suppressed errors, rerun with: -s
-==17106== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16302== 
+==16302== HEAP SUMMARY:
+==16302==     in use at exit: 0 bytes in 0 blocks
+==16302==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16302== 
+==16302== All heap blocks were freed -- no leaks are possible
+==16302== 
+==16302== For lists of detected and suppressed errors, rerun with: -s
+==16302== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3794,60 +3426,17 @@ Iterar una lista valida con un iterador externo
 [32;1m✓ [37;1mSe puede avanzar una posición del iterador
 [32;1m✓ [37;1mEl elemento actual es el tercero de la lista
 [32;1m✓ [37;1mEl iterador esta parado sobre un elemento valido
-[31;1m✗ [37;1mAvanzamos a un elemento que no es valido
-[31;1m✗ [37;1mEl iterador ya no esta parado sobre un elemento valido
-==17107== Invalid read of size 8
-==17107==    at 0x109ED3: lista_destruir (lista.c:210)
-==17107==    by 0x11766A: iterar_lista_con_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x1178CD: pruebas_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x117D6C: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==  Address 0x4a871d8 is 8 bytes inside a block of size 16 free'd
-==17107==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17107==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17107==    by 0x1171FA: iterar_lista_con_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x1178CD: pruebas_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x117D6C: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==  Block was alloc'd at
-==17107==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17107==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17107==    by 0x117058: iterar_lista_con_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x1178CD: pruebas_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x117D6C: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107== 
-==17107== Invalid free() / delete / delete[] / realloc()
-==17107==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17107==    by 0x109EDB: lista_destruir (lista.c:211)
-==17107==    by 0x11766A: iterar_lista_con_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x1178CD: pruebas_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x117D6C: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==  Address 0x4a871d0 is 0 bytes inside a block of size 16 free'd
-==17107==    at 0x484827F: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17107==    by 0x109D08: lista_quitar_de_posicion (lista.c:120)
-==17107==    by 0x1171FA: iterar_lista_con_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x1178CD: pruebas_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x117D6C: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==  Block was alloc'd at
-==17107==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==17107==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==17107==    by 0x117058: iterar_lista_con_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x1178CD: pruebas_iterador_externo (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x117D6C: pruebas_abril (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107==    by 0x109910: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==17107== 
-==17107== 
-==17107== HEAP SUMMARY:
-==17107==     in use at exit: 0 bytes in 0 blocks
-==17107==   total heap usage: 9 allocs, 10 frees, 4,232 bytes allocated
-==17107== 
-==17107== All heap blocks were freed -- no leaks are possible
-==17107== 
-==17107== For lists of detected and suppressed errors, rerun with: -s
-==17107== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+[32;1m✓ [37;1mAvanzamos a un elemento que no es valido
+[32;1m✓ [37;1mEl iterador ya no esta parado sobre un elemento valido
+==16303== 
+==16303== HEAP SUMMARY:
+==16303==     in use at exit: 0 bytes in 0 blocks
+==16303==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
+==16303== 
+==16303== All heap blocks were freed -- no leaks are possible
+==16303== 
+==16303== For lists of detected and suppressed errors, rerun with: -s
+==16303== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3923,15 +3512,15 @@ Lista nula
 [33;1m
 Iterar una lista valida con un iterador externo
 ===============================================[37;1m
-==17105== 
-==17105== HEAP SUMMARY:
-==17105==     in use at exit: 0 bytes in 0 blocks
-==17105==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17105== 
-==17105== All heap blocks were freed -- no leaks are possible
-==17105== 
-==17105== For lists of detected and suppressed errors, rerun with: -s
-==17105== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16301== 
+==16301== HEAP SUMMARY:
+==16301==     in use at exit: 0 bytes in 0 blocks
+==16301==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16301== 
+==16301== All heap blocks were freed -- no leaks are possible
+==16301== 
+==16301== For lists of detected and suppressed errors, rerun with: -s
+==16301== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -4003,13 +3592,13 @@ PRUEBAS DEL ITERADOR EXTERNO
 ============================[37;1m
 [37;1m
 ---------------------------------
-301 pruebas corridas, 4 errores - D:
-[0m==17058== 
-==17058== HEAP SUMMARY:
-==17058==     in use at exit: 0 bytes in 0 blocks
-==17058==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==17058== 
-==17058== All heap blocks were freed -- no leaks are possible
-==17058== 
-==17058== For lists of detected and suppressed errors, rerun with: -s
-==17058== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+337 pruebas corridas, 0 errores - OK
+[0m==16254== 
+==16254== HEAP SUMMARY:
+==16254==     in use at exit: 0 bytes in 0 blocks
+==16254==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==16254== 
+==16254== All heap blocks were freed -- no leaks are possible
+==16254== 
+==16254== For lists of detected and suppressed errors, rerun with: -s
+==16254== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

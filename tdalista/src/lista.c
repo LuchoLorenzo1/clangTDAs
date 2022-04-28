@@ -34,7 +34,7 @@ lista_t *lista_crear()
 
 lista_t *lista_insertar(lista_t *lista, void *elemento)
 {
-	if(!lista)
+	if (!lista)
 		return NULL;
 	return lista_insertar_en_posicion(lista, elemento, lista->cantidad);
 }
@@ -85,9 +85,8 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
 
 void *lista_quitar(lista_t *lista)
 {
-	if (!lista) {
+	if (!lista) 
 		return NULL;
-	}
 	return lista_quitar_de_posicion(lista, lista->cantidad - 1);
 }
 
@@ -98,7 +97,7 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 
 	nodo_t *nodo_posicion;
 
-	if (posicion == 0) {
+	if (posicion == 0 || lista->cantidad == 1) {
 		nodo_posicion = lista->nodo_inicio->siguiente;
 
 		void *elemento = lista->nodo_inicio->elemento;
@@ -115,12 +114,14 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 
 	if (posicion >= lista->cantidad - 1) {
 		nodo_posicion = nodo_en_posicion(lista, lista->cantidad - 2);
-
 		void *elemento = lista->nodo_fin->elemento;
+
 		free(lista->nodo_fin);
 
 		lista->nodo_fin = nodo_posicion;
+		nodo_posicion->siguiente = NULL;
 		lista->cantidad--;
+
 		return elemento;
 	}
 
@@ -257,20 +258,28 @@ bool lista_iterador_tiene_siguiente(lista_iterador_t *iterador)
 {
 	if (!iterador)
 		return false;
-	return !!iterador->corriente;
+
+	if (iterador->corriente == NULL)
+		return false;
+
+	return true;
 }
 
 bool lista_iterador_avanzar(lista_iterador_t *iterador)
 {
-	if (!iterador)
+	if (!iterador || !iterador->corriente)
 		return false;
+	if (iterador->corriente->siguiente == NULL) {
+		iterador->corriente = NULL;
+		return false;
+	}
 	iterador->corriente = iterador->corriente->siguiente;
 	return true;
 }
 
 void *lista_iterador_elemento_actual(lista_iterador_t *iterador)
 {
-	if(!iterador || !iterador->corriente)
+	if (!iterador || !iterador->corriente)
 		return NULL;
 	return iterador->corriente->elemento;
 }
@@ -284,7 +293,7 @@ void lista_iterador_destruir(lista_iterador_t *iterador)
 size_t lista_con_cada_elemento(lista_t *lista, bool (*funcion)(void *, void *),
 			       void *contexto)
 {
-	if (!lista || !lista->nodo_inicio)
+	if (!lista || !lista->nodo_inicio || !funcion)
 		return 0;
 
 	bool continuar_iterando = true;
