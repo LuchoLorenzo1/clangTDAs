@@ -1,10 +1,10 @@
 gcc -g -std=c99 -Wall -Wconversion -Wtype-limits -pedantic -Werror -O2 src/*.c pruebas_chanutron-x86_64.o -o pruebas_chanutron
 valgrind --leak-check=full --track-origins=yes --show-reachable=yes --error-exitcode=2 --show-leak-kinds=all --trace-children=yes ./pruebas_chanutron 2>&1
-==16254== Memcheck, a memory error detector
-==16254== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==16254== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
-==16254== Command: ./pruebas_chanutron
-==16254== 
+==7266== Memcheck, a memory error detector
+==7266== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==7266== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==7266== Command: ./pruebas_chanutron
+==7266== 
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -16,15 +16,15 @@ Pruebas con lista vacía
 [32;1m✓ [37;1mBorrar al final de una lista sin elementos devuelve NULL
 [32;1m✓ [37;1mBorrar en una posicion arbitraria de una lista sin elementos devuelve NULL
 [32;1m✓ [37;1mPedir una posicion arbitraria a una lista sin elementos devuelve NULL
-==16255== 
-==16255== HEAP SUMMARY:
-==16255==     in use at exit: 0 bytes in 0 blocks
-==16255==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==16255== 
-==16255== All heap blocks were freed -- no leaks are possible
-==16255== 
-==16255== For lists of detected and suppressed errors, rerun with: -s
-==16255== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7267== 
+==7267== HEAP SUMMARY:
+==7267==     in use at exit: 0 bytes in 0 blocks
+==7267==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==7267== 
+==7267== All heap blocks were freed -- no leaks are possible
+==7267== 
+==7267== For lists of detected and suppressed errors, rerun with: -s
+==7267== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -55,15 +55,15 @@ Pruebas de inserción
 [32;1m✓ [37;1mEl elemento en la posición 5 es el correcto
 [32;1m✓ [37;1mEl elemento en la posición 6 es el correcto
 [32;1m✓ [37;1mEl ultimo elemento es el correcto
-==16256== 
-==16256== HEAP SUMMARY:
-==16256==     in use at exit: 0 bytes in 0 blocks
-==16256==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
-==16256== 
-==16256== All heap blocks were freed -- no leaks are possible
-==16256== 
-==16256== For lists of detected and suppressed errors, rerun with: -s
-==16256== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7268== 
+==7268== HEAP SUMMARY:
+==7268==     in use at exit: 0 bytes in 0 blocks
+==7268==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
+==7268== 
+==7268== All heap blocks were freed -- no leaks are possible
+==7268== 
+==7268== For lists of detected and suppressed errors, rerun with: -s
+==7268== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -82,15 +82,15 @@ Pruebas de borrar un solo elemento
 [32;1m✓ [37;1mAl insertar un elemento la lista debe contener un elemento
 [32;1m✓ [37;1mPuedo borrar un elemento de la lista
 [32;1m✓ [37;1mAl borrar el elemento la lista queda con 0 elementos
-==16257== 
-==16257== HEAP SUMMARY:
-==16257==     in use at exit: 0 bytes in 0 blocks
-==16257==   total heap usage: 4 allocs, 4 frees, 4,152 bytes allocated
-==16257== 
-==16257== All heap blocks were freed -- no leaks are possible
-==16257== 
-==16257== For lists of detected and suppressed errors, rerun with: -s
-==16257== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7269== 
+==7269== HEAP SUMMARY:
+==7269==     in use at exit: 0 bytes in 0 blocks
+==7269==   total heap usage: 4 allocs, 4 frees, 4,152 bytes allocated
+==7269== 
+==7269== All heap blocks were freed -- no leaks are possible
+==7269== 
+==7269== For lists of detected and suppressed errors, rerun with: -s
+==7269== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -117,15 +117,15 @@ Pruebas de borrado en posicion arbitraria
 [32;1m✓ [37;1mPuedo borrar el ultimo elemento
 [32;1m✓ [37;1mLuego de borrar queda la cantidad correcta de elementos en la lista
 [32;1m✓ [37;1mEl ultimo elemento el correcto
-==16258== 
-==16258== HEAP SUMMARY:
-==16258==     in use at exit: 0 bytes in 0 blocks
-==16258==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
-==16258== 
-==16258== All heap blocks were freed -- no leaks are possible
-==16258== 
-==16258== For lists of detected and suppressed errors, rerun with: -s
-==16258== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7270== 
+==7270== HEAP SUMMARY:
+==7270==     in use at exit: 0 bytes in 0 blocks
+==7270==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
+==7270== 
+==7270== All heap blocks were freed -- no leaks are possible
+==7270== 
+==7270== For lists of detected and suppressed errors, rerun with: -s
+==7270== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -146,15 +146,15 @@ Pruebas de insercion y borrado siempre al final
 [32;1m✓ [37;1mLos elementos borrados se encontraban en el orden esperado
 [32;1m✓ [37;1mLa lista quedó vacía después de eliminar todo
 [32;1m✓ [37;1mPuedo volver a insertar varias veces al final de la lista
-==16259== 
-==16259== HEAP SUMMARY:
-==16259==     in use at exit: 0 bytes in 0 blocks
-==16259==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
-==16259== 
-==16259== All heap blocks were freed -- no leaks are possible
-==16259== 
-==16259== For lists of detected and suppressed errors, rerun with: -s
-==16259== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7271== 
+==7271== HEAP SUMMARY:
+==7271==     in use at exit: 0 bytes in 0 blocks
+==7271==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
+==7271== 
+==7271== All heap blocks were freed -- no leaks are possible
+==7271== 
+==7271== For lists of detected and suppressed errors, rerun with: -s
+==7271== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -178,15 +178,15 @@ Pruebas de insercion y borrado siempre al inicio
 [32;1m✓ [37;1mLos elementos borrados se encontraban en el orden esperado
 [32;1m✓ [37;1mLa lista quedó vacía después de eliminar todo
 [32;1m✓ [37;1mPuedo volver a insertar varias veces al inicio de la lista
-==16260== 
-==16260== HEAP SUMMARY:
-==16260==     in use at exit: 0 bytes in 0 blocks
-==16260==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
-==16260== 
-==16260== All heap blocks were freed -- no leaks are possible
-==16260== 
-==16260== For lists of detected and suppressed errors, rerun with: -s
-==16260== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7272== 
+==7272== HEAP SUMMARY:
+==7272==     in use at exit: 0 bytes in 0 blocks
+==7272==   total heap usage: 42 allocs, 42 frees, 4,760 bytes allocated
+==7272== 
+==7272== All heap blocks were freed -- no leaks are possible
+==7272== 
+==7272== For lists of detected and suppressed errors, rerun with: -s
+==7272== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -221,15 +221,15 @@ Pruebas con NULL
 [32;1m✓ [37;1mEs un error insertar al inicio de una lista nula
 [32;1m✓ [37;1mUn iterador de una lista nula es nulo
 [32;1m✓ [37;1mRecorrer una lista nulo con el iterador interno recorre 0 elementos
-==16261== 
-==16261== HEAP SUMMARY:
-==16261==     in use at exit: 0 bytes in 0 blocks
-==16261==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16261== 
-==16261== All heap blocks were freed -- no leaks are possible
-==16261== 
-==16261== For lists of detected and suppressed errors, rerun with: -s
-==16261== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7273== 
+==7273== HEAP SUMMARY:
+==7273==     in use at exit: 0 bytes in 0 blocks
+==7273==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7273== 
+==7273== All heap blocks were freed -- no leaks are possible
+==7273== 
+==7273== For lists of detected and suppressed errors, rerun with: -s
+==7273== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -258,15 +258,15 @@ Pruebas con muchos elementos
 [32;1m✓ [37;1mSe pueden borrar 1k elementos del inicio de la lista
 [32;1m✓ [37;1mSe pueden borrar 1k elementos del medio de la lista
 [32;1m✓ [37;1mSe pueden borrar 3k elementos del final de la lista
-==16262== 
-==16262== HEAP SUMMARY:
-==16262==     in use at exit: 0 bytes in 0 blocks
-==16262==   total heap usage: 5,002 allocs, 5,002 frees, 84,120 bytes allocated
-==16262== 
-==16262== All heap blocks were freed -- no leaks are possible
-==16262== 
-==16262== For lists of detected and suppressed errors, rerun with: -s
-==16262== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7274== 
+==7274== HEAP SUMMARY:
+==7274==     in use at exit: 0 bytes in 0 blocks
+==7274==   total heap usage: 5,002 allocs, 5,002 frees, 84,120 bytes allocated
+==7274== 
+==7274== All heap blocks were freed -- no leaks are possible
+==7274== 
+==7274== For lists of detected and suppressed errors, rerun with: -s
+==7274== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -306,15 +306,15 @@ Pruebas de insercion en posicion arbitraria
 [32;1m✓ [37;1mEl elemento insertado queda en posición 1
 [32;1m✓ [37;1mEl elemento que estaba en la posición 1 ahora está en la 2
 [32;1m✓ [37;1mEl elemento que estaba en la posición 2 ahora está en la 3
-==16263== 
-==16263== HEAP SUMMARY:
-==16263==     in use at exit: 0 bytes in 0 blocks
-==16263==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
-==16263== 
-==16263== All heap blocks were freed -- no leaks are possible
-==16263== 
-==16263== For lists of detected and suppressed errors, rerun with: -s
-==16263== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7275== 
+==7275== HEAP SUMMARY:
+==7275==     in use at exit: 0 bytes in 0 blocks
+==7275==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==7275== 
+==7275== All heap blocks were freed -- no leaks are possible
+==7275== 
+==7275== For lists of detected and suppressed errors, rerun with: -s
+==7275== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -374,15 +374,15 @@ Pruebas de iterador externo
 [32;1m✓ [37;1mAvanzar el iterador devuelve FALSE si estoy en el último elemento
 [32;1m✓ [37;1mAl iterar, se iteran exactamente la misma cantidad de elementos de la lista
 [32;1m✓ [37;1mEl elemento actual del iterador es NULL
-==16264== 
-==16264== HEAP SUMMARY:
-==16264==     in use at exit: 0 bytes in 0 blocks
-==16264==   total heap usage: 16 allocs, 16 frees, 4,352 bytes allocated
-==16264== 
-==16264== All heap blocks were freed -- no leaks are possible
-==16264== 
-==16264== For lists of detected and suppressed errors, rerun with: -s
-==16264== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7276== 
+==7276== HEAP SUMMARY:
+==7276==     in use at exit: 0 bytes in 0 blocks
+==7276==   total heap usage: 16 allocs, 16 frees, 4,352 bytes allocated
+==7276== 
+==7276== All heap blocks were freed -- no leaks are possible
+==7276== 
+==7276== For lists of detected and suppressed errors, rerun with: -s
+==7276== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -427,15 +427,15 @@ Pruebas de iterador interno
 [32;1m✓ [37;1mEl elemento iterado coincide con el valor esperado
 [32;1m✓ [37;1mSe iteraron todos los elementos esperados
 [32;1m✓ [37;1mSe iteraron todos los elementos esperados
-==16265== 
-==16265== HEAP SUMMARY:
-==16265==     in use at exit: 0 bytes in 0 blocks
-==16265==   total heap usage: 10 allocs, 10 frees, 4,248 bytes allocated
-==16265== 
-==16265== All heap blocks were freed -- no leaks are possible
-==16265== 
-==16265== For lists of detected and suppressed errors, rerun with: -s
-==16265== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7277== 
+==7277== HEAP SUMMARY:
+==7277==     in use at exit: 0 bytes in 0 blocks
+==7277==   total heap usage: 10 allocs, 10 frees, 4,248 bytes allocated
+==7277== 
+==7277== All heap blocks were freed -- no leaks are possible
+==7277== 
+==7277== For lists of detected and suppressed errors, rerun with: -s
+==7277== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -477,43 +477,17 @@ Pruebas de búsqueda
 [32;1m✓ [37;1mBuscar el ultimo elemento de la lista encuentra el elemento
 [32;1m✓ [37;1mBuscar un elemento la lista encuentra el elemento
 [32;1m✓ [37;1mBuscar un elemento inexistente la lista devuelve NULL
-==16266== Jump to the invalid address stated on the next line
-==16266==    at 0x0: ???
-==16266==    by 0x109E17: lista_buscar_elemento (lista.c:161)
-==16266==    by 0x10F4F5: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16266==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16266==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-==16266== 
-[31;1m
-
-ERROR MIENTRAS SE EJECUTABA LA PRUEBA: [33;1m'Buscar un elemento con una función NULL devuelve NULL'
-
-[37;1m==16266== 
-==16266== HEAP SUMMARY:
-==16266==     in use at exit: 184 bytes in 11 blocks
-==16266==   total heap usage: 12 allocs, 1 frees, 4,280 bytes allocated
-==16266== 
-==16266== 24 bytes in 1 blocks are still reachable in loss record 1 of 2
-==16266==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16266==    by 0x109AED: lista_crear (lista.c:23)
-==16266==    by 0x10F184: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16266==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16266== 
-==16266== 160 bytes in 10 blocks are still reachable in loss record 2 of 2
-==16266==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16266==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==16266==    by 0x10F296: pruebas_buscar_elemento (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16266==    by 0x109768: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16266== 
-==16266== LEAK SUMMARY:
-==16266==    definitely lost: 0 bytes in 0 blocks
-==16266==    indirectly lost: 0 bytes in 0 blocks
-==16266==      possibly lost: 0 bytes in 0 blocks
-==16266==    still reachable: 184 bytes in 11 blocks
-==16266==         suppressed: 0 bytes in 0 blocks
-==16266== 
-==16266== For lists of detected and suppressed errors, rerun with: -s
-==16266== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[32;1m✓ [37;1mBuscar un elemento con una función NULL devuelve NULL
+[32;1m✓ [37;1mBuscar un elemento usando un contexto NULL funciona correctamente
+==7278== 
+==7278== HEAP SUMMARY:
+==7278==     in use at exit: 0 bytes in 0 blocks
+==7278==   total heap usage: 12 allocs, 12 frees, 4,280 bytes allocated
+==7278== 
+==7278== All heap blocks were freed -- no leaks are possible
+==7278== 
+==7278== For lists of detected and suppressed errors, rerun with: -s
+==7278== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -554,43 +528,17 @@ Pruebas de búsqueda
 Pruebas de destruir todo
 ========================[37;1m
 [32;1m✓ [37;1mDestruir todo destruye todos los elementos
-==16267== Jump to the invalid address stated on the next line
-==16267==    at 0x0: ???
-==16267==    by 0x109F4D: lista_destruir_todo (lista.c:234)
-==16267==    by 0x10F87F: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16267==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16267==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-==16267== 
-[31;1m
-
-FINALIZACION ANORMAL DE LAS PRUEBAS
-
-[37;1m==16267== 
-==16267== HEAP SUMMARY:
-==16267==     in use at exit: 184 bytes in 11 blocks
-==16267==   total heap usage: 23 allocs, 12 frees, 4,464 bytes allocated
-==16267== 
-==16267== 24 bytes in 1 blocks are still reachable in loss record 1 of 2
-==16267==    at 0x4845899: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16267==    by 0x109AED: lista_crear (lista.c:23)
-==16267==    by 0x10F800: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16267==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16267== 
-==16267== 160 bytes in 10 blocks are still reachable in loss record 2 of 2
-==16267==    at 0x484AA83: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16267==    by 0x109B34: lista_insertar_en_posicion (lista.c:48)
-==16267==    by 0x10F86E: destruir_todo_con_NULL_no_hace_nada (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16267==    by 0x1097E8: main (in /home/lucho/Desktop/algo2/algo2tps/tdalista/pruebas_chanutron)
-==16267== 
-==16267== LEAK SUMMARY:
-==16267==    definitely lost: 0 bytes in 0 blocks
-==16267==    indirectly lost: 0 bytes in 0 blocks
-==16267==      possibly lost: 0 bytes in 0 blocks
-==16267==    still reachable: 184 bytes in 11 blocks
-==16267==         suppressed: 0 bytes in 0 blocks
-==16267== 
-==16267== For lists of detected and suppressed errors, rerun with: -s
-==16267== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[32;1m✓ [37;1mDestruir todo con función NULL no destruye todos los elementos
+[32;1m✓ [37;1mDestruir todo con lista NULL no es un error
+==7279== 
+==7279== HEAP SUMMARY:
+==7279==     in use at exit: 0 bytes in 0 blocks
+==7279==   total heap usage: 23 allocs, 23 frees, 4,464 bytes allocated
+==7279== 
+==7279== All heap blocks were freed -- no leaks are possible
+==7279== 
+==7279== For lists of detected and suppressed errors, rerun with: -s
+==7279== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -634,15 +582,15 @@ Pruebas de destruir todo
 Pruebas de pila (La implementaste con la lista, ¿No?)
 ======================================================[37;1m
 [32;1m✓ [37;1mPuedo apilar algunos valores en la pila
-==16268== 
-==16268== HEAP SUMMARY:
-==16268==     in use at exit: 0 bytes in 0 blocks
-==16268==   total heap usage: 14 allocs, 14 frees, 4,312 bytes allocated
-==16268== 
-==16268== All heap blocks were freed -- no leaks are possible
-==16268== 
-==16268== For lists of detected and suppressed errors, rerun with: -s
-==16268== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7280== 
+==7280== HEAP SUMMARY:
+==7280==     in use at exit: 0 bytes in 0 blocks
+==7280==   total heap usage: 14 allocs, 14 frees, 4,312 bytes allocated
+==7280== 
+==7280== All heap blocks were freed -- no leaks are possible
+==7280== 
+==7280== For lists of detected and suppressed errors, rerun with: -s
+==7280== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -705,15 +653,15 @@ Pruebas de cola (La implementaste con la lista, ¿No?)
 [32;1m✓ [37;1mPuedo desencolar el elemento
 [32;1m✓ [37;1mEl primer elemento de la cola es el esperado
 [32;1m✓ [37;1mPuedo desencolar el elemento
-==16269== 
-==16269== HEAP SUMMARY:
-==16269==     in use at exit: 0 bytes in 0 blocks
-==16269==   total heap usage: 10 allocs, 10 frees, 4,248 bytes allocated
-==16269== 
-==16269== All heap blocks were freed -- no leaks are possible
-==16269== 
-==16269== For lists of detected and suppressed errors, rerun with: -s
-==16269== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7281== 
+==7281== HEAP SUMMARY:
+==7281==     in use at exit: 0 bytes in 0 blocks
+==7281==   total heap usage: 10 allocs, 10 frees, 4,248 bytes allocated
+==7281== 
+==7281== All heap blocks were freed -- no leaks are possible
+==7281== 
+==7281== For lists of detected and suppressed errors, rerun with: -s
+==7281== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -762,15 +710,15 @@ Pruebas de cola (La implementaste con la lista, ¿No?)
 [33;1m
 ------------ MÁS PRUEBAS DEL TDA LISTA ------------
 ====================================================[37;1m
-==16270== 
-==16270== HEAP SUMMARY:
-==16270==     in use at exit: 0 bytes in 0 blocks
-==16270==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16270== 
-==16270== All heap blocks were freed -- no leaks are possible
-==16270== 
-==16270== For lists of detected and suppressed errors, rerun with: -s
-==16270== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7282== 
+==7282== HEAP SUMMARY:
+==7282==     in use at exit: 0 bytes in 0 blocks
+==7282==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7282== 
+==7282== All heap blocks were freed -- no leaks are possible
+==7282== 
+==7282== For lists of detected and suppressed errors, rerun with: -s
+==7282== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -826,15 +774,15 @@ PRUEBAS DE CREACIÓN Y DESTRUCCIÓN
 Destruir lista NULL no genera error
 ===================================[37;1m
 [32;1m✓ [37;1mSe envia una lista nula a lista_destruir y no se genera error
-==16272== 
-==16272== HEAP SUMMARY:
-==16272==     in use at exit: 0 bytes in 0 blocks
-==16272==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16272== 
-==16272== All heap blocks were freed -- no leaks are possible
-==16272== 
-==16272== For lists of detected and suppressed errors, rerun with: -s
-==16272== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7284== 
+==7284== HEAP SUMMARY:
+==7284==     in use at exit: 0 bytes in 0 blocks
+==7284==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7284== 
+==7284== All heap blocks were freed -- no leaks are possible
+==7284== 
+==7284== For lists of detected and suppressed errors, rerun with: -s
+==7284== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -895,15 +843,15 @@ Pruebas de crear y destruir una lista
 [32;1m✓ [37;1mSe crea la lista.
 [32;1m✓ [37;1mEl tamaño de la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==16273== 
-==16273== HEAP SUMMARY:
-==16273==     in use at exit: 0 bytes in 0 blocks
-==16273==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==16273== 
-==16273== All heap blocks were freed -- no leaks are possible
-==16273== 
-==16273== For lists of detected and suppressed errors, rerun with: -s
-==16273== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7285== 
+==7285== HEAP SUMMARY:
+==7285==     in use at exit: 0 bytes in 0 blocks
+==7285==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==7285== 
+==7285== All heap blocks were freed -- no leaks are possible
+==7285== 
+==7285== For lists of detected and suppressed errors, rerun with: -s
+==7285== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -961,15 +909,15 @@ Destruir lista NULL no genera error
 [33;1m
 Pruebas de crear y destruir una lista
 =====================================[37;1m
-==16271== 
-==16271== HEAP SUMMARY:
-==16271==     in use at exit: 0 bytes in 0 blocks
-==16271==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16271== 
-==16271== All heap blocks were freed -- no leaks are possible
-==16271== 
-==16271== For lists of detected and suppressed errors, rerun with: -s
-==16271== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7283== 
+==7283== HEAP SUMMARY:
+==7283==     in use at exit: 0 bytes in 0 blocks
+==7283==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7283== 
+==7283== All heap blocks were freed -- no leaks are possible
+==7283== 
+==7283== For lists of detected and suppressed errors, rerun with: -s
+==7283== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1028,15 +976,15 @@ PRUEBAS DE INSERCIÓN
 Lista NULL
 ==========[37;1m
 [32;1m✓ [37;1mNo se puede insertar en una lista inválida.
-==16275== 
-==16275== HEAP SUMMARY:
-==16275==     in use at exit: 0 bytes in 0 blocks
-==16275==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16275== 
-==16275== All heap blocks were freed -- no leaks are possible
-==16275== 
-==16275== For lists of detected and suppressed errors, rerun with: -s
-==16275== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7287== 
+==7287== HEAP SUMMARY:
+==7287==     in use at exit: 0 bytes in 0 blocks
+==7287==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7287== 
+==7287== All heap blocks were freed -- no leaks are possible
+==7287== 
+==7287== For lists of detected and suppressed errors, rerun with: -s
+==7287== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1100,15 +1048,15 @@ Insertar un elemento
 [32;1m✓ [37;1mEs posible insertar un elemento en la lista
 [32;1m✓ [37;1mEs posible insertar un elemento nulo en la lista
 [32;1m✓ [37;1mEs posible insertar un elemento que vive en el heap en la lista
-==16276== 
-==16276== HEAP SUMMARY:
-==16276==     in use at exit: 0 bytes in 0 blocks
-==16276==   total heap usage: 8 allocs, 8 frees, 4,220 bytes allocated
-==16276== 
-==16276== All heap blocks were freed -- no leaks are possible
-==16276== 
-==16276== For lists of detected and suppressed errors, rerun with: -s
-==16276== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7288== 
+==7288== HEAP SUMMARY:
+==7288==     in use at exit: 0 bytes in 0 blocks
+==7288==   total heap usage: 8 allocs, 8 frees, 4,220 bytes allocated
+==7288== 
+==7288== All heap blocks were freed -- no leaks are possible
+==7288== 
+==7288== For lists of detected and suppressed errors, rerun with: -s
+==7288== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1183,15 +1131,15 @@ Insertar varios elementos
 [32;1m✓ [37;1mEl cuarto elemento de la lista es el correcto
 [32;1m✓ [37;1mEl último elemento de la lista es el correcto
 [32;1m✓ [37;1mEl tercer elemento no está en la quinta posición
-==16277== 
-==16277== HEAP SUMMARY:
-==16277==     in use at exit: 0 bytes in 0 blocks
-==16277==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
-==16277== 
-==16277== All heap blocks were freed -- no leaks are possible
-==16277== 
-==16277== For lists of detected and suppressed errors, rerun with: -s
-==16277== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7289== 
+==7289== HEAP SUMMARY:
+==7289==     in use at exit: 0 bytes in 0 blocks
+==7289==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
+==7289== 
+==7289== All heap blocks were freed -- no leaks are possible
+==7289== 
+==7289== For lists of detected and suppressed errors, rerun with: -s
+==7289== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1267,15 +1215,15 @@ Insertar un elemento en posicion
 [32;1m✓ [37;1mEs posible insertar un elemento en la posición 14 de una lista vacía
 [32;1m✓ [37;1mEl elemento no está en la posición 14
 [32;1m✓ [37;1mEl elemento está en la posición 0
-==16278== 
-==16278== HEAP SUMMARY:
-==16278==     in use at exit: 0 bytes in 0 blocks
-==16278==   total heap usage: 10 allocs, 10 frees, 4,260 bytes allocated
-==16278== 
-==16278== All heap blocks were freed -- no leaks are possible
-==16278== 
-==16278== For lists of detected and suppressed errors, rerun with: -s
-==16278== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7290== 
+==7290== HEAP SUMMARY:
+==7290==     in use at exit: 0 bytes in 0 blocks
+==7290==   total heap usage: 10 allocs, 10 frees, 4,260 bytes allocated
+==7290== 
+==7290== All heap blocks were freed -- no leaks are possible
+==7290== 
+==7290== For lists of detected and suppressed errors, rerun with: -s
+==7290== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1369,15 +1317,15 @@ Insertar varios elementos en posicion
 [32;1m✓ [37;1mEse elemento está en la posición correcta de la lista
 [32;1m✓ [37;1mEl elemento anterior es el correcto
 [32;1m✓ [37;1mEl siguiente elemento es el correcto
-==16279== 
-==16279== HEAP SUMMARY:
-==16279==     in use at exit: 0 bytes in 0 blocks
-==16279==   total heap usage: 11 allocs, 11 frees, 4,264 bytes allocated
-==16279== 
-==16279== All heap blocks were freed -- no leaks are possible
-==16279== 
-==16279== For lists of detected and suppressed errors, rerun with: -s
-==16279== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7291== 
+==7291== HEAP SUMMARY:
+==7291==     in use at exit: 0 bytes in 0 blocks
+==7291==   total heap usage: 11 allocs, 11 frees, 4,264 bytes allocated
+==7291== 
+==7291== All heap blocks were freed -- no leaks are possible
+==7291== 
+==7291== For lists of detected and suppressed errors, rerun with: -s
+==7291== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1447,15 +1395,15 @@ Insertar un elemento en posicion
 [33;1m
 Insertar varios elementos en posicion
 =====================================[37;1m
-==16274== 
-==16274== HEAP SUMMARY:
-==16274==     in use at exit: 0 bytes in 0 blocks
-==16274==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16274== 
-==16274== All heap blocks were freed -- no leaks are possible
-==16274== 
-==16274== For lists of detected and suppressed errors, rerun with: -s
-==16274== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7286== 
+==7286== HEAP SUMMARY:
+==7286==     in use at exit: 0 bytes in 0 blocks
+==7286==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7286== 
+==7286== All heap blocks were freed -- no leaks are possible
+==7286== 
+==7286== For lists of detected and suppressed errors, rerun with: -s
+==7286== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1518,15 +1466,15 @@ Lista nula y vacia
 ==================[37;1m
 [32;1m✓ [37;1mNo se puede eliminar de una lista nula
 [32;1m✓ [37;1mNo se puede eliminar de una lista vacía
-==16281== 
-==16281== HEAP SUMMARY:
-==16281==     in use at exit: 0 bytes in 0 blocks
-==16281==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==16281== 
-==16281== All heap blocks were freed -- no leaks are possible
-==16281== 
-==16281== For lists of detected and suppressed errors, rerun with: -s
-==16281== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7293== 
+==7293== HEAP SUMMARY:
+==7293==     in use at exit: 0 bytes in 0 blocks
+==7293==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==7293== 
+==7293== All heap blocks were freed -- no leaks are possible
+==7293== 
+==7293== For lists of detected and suppressed errors, rerun with: -s
+==7293== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1595,15 +1543,15 @@ Eliminar un elemento
 [32;1m✓ [37;1mEs posible eliminar este elemento
 [32;1m✓ [37;1mEl tamaño de la lista ahora es 0
 [32;1m✓ [37;1mLa lista está vacía
-==16282== 
-==16282== HEAP SUMMARY:
-==16282==     in use at exit: 0 bytes in 0 blocks
-==16282==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
-==16282== 
-==16282== All heap blocks were freed -- no leaks are possible
-==16282== 
-==16282== For lists of detected and suppressed errors, rerun with: -s
-==16282== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7294== 
+==7294== HEAP SUMMARY:
+==7294==     in use at exit: 0 bytes in 0 blocks
+==7294==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
+==7294== 
+==7294== All heap blocks were freed -- no leaks are possible
+==7294== 
+==7294== For lists of detected and suppressed errors, rerun with: -s
+==7294== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1679,15 +1627,15 @@ Eliminar varios elementos iguales
 [32;1m✓ [37;1mEs posible eliminar el último elemento
 [32;1m✓ [37;1mEl tamaño de la lista ahora es 0
 [32;1m✓ [37;1mLa lista está vacía
-==16283== 
-==16283== HEAP SUMMARY:
-==16283==     in use at exit: 0 bytes in 0 blocks
-==16283==   total heap usage: 502 allocs, 502 frees, 12,120 bytes allocated
-==16283== 
-==16283== All heap blocks were freed -- no leaks are possible
-==16283== 
-==16283== For lists of detected and suppressed errors, rerun with: -s
-==16283== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7295== 
+==7295== HEAP SUMMARY:
+==7295==     in use at exit: 0 bytes in 0 blocks
+==7295==   total heap usage: 502 allocs, 502 frees, 12,120 bytes allocated
+==7295== 
+==7295== All heap blocks were freed -- no leaks are possible
+==7295== 
+==7295== For lists of detected and suppressed errors, rerun with: -s
+==7295== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1782,15 +1730,15 @@ Agregar, eliminar y volver a agregar
 [32;1m✓ [37;1mLa lista tiene 2 elementos
 [32;1m✓ [37;1mSe puede insertar un elemento nuevo en la lista.
 [32;1m✓ [37;1mLa lista tiene 3 elementos
-==16284== 
-==16284== HEAP SUMMARY:
-==16284==     in use at exit: 0 bytes in 0 blocks
-==16284==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
-==16284== 
-==16284== All heap blocks were freed -- no leaks are possible
-==16284== 
-==16284== For lists of detected and suppressed errors, rerun with: -s
-==16284== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7296== 
+==7296== HEAP SUMMARY:
+==7296==     in use at exit: 0 bytes in 0 blocks
+==7296==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
+==7296== 
+==7296== All heap blocks were freed -- no leaks are possible
+==7296== 
+==7296== For lists of detected and suppressed errors, rerun with: -s
+==7296== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1865,15 +1813,15 @@ Lista nula y vacia (ahora con quitar de posicion)
 =================================================[37;1m
 [32;1m✓ [37;1mNo se puede eliminar (con quitar de posición) de una lista nula
 [32;1m✓ [37;1mNo se puede eliminar (con quitar de posición) de una lista vacía
-==16285== 
-==16285== HEAP SUMMARY:
-==16285==     in use at exit: 0 bytes in 0 blocks
-==16285==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==16285== 
-==16285== All heap blocks were freed -- no leaks are possible
-==16285== 
-==16285== For lists of detected and suppressed errors, rerun with: -s
-==16285== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7297== 
+==7297== HEAP SUMMARY:
+==7297==     in use at exit: 0 bytes in 0 blocks
+==7297==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==7297== 
+==7297== All heap blocks were freed -- no leaks are possible
+==7297== 
+==7297== For lists of detected and suppressed errors, rerun with: -s
+==7297== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -1954,15 +1902,15 @@ Eliminar un elemento de una posicion valida
 [32;1m✓ [37;1mSe puede eliminar (con quitar de posición) el único elemento de una lista
 [32;1m✓ [37;1mLa cantidad de elementos en la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==16286== 
-==16286== HEAP SUMMARY:
-==16286==     in use at exit: 0 bytes in 0 blocks
-==16286==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
-==16286== 
-==16286== All heap blocks were freed -- no leaks are possible
-==16286== 
-==16286== For lists of detected and suppressed errors, rerun with: -s
-==16286== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7298== 
+==7298== HEAP SUMMARY:
+==7298==     in use at exit: 0 bytes in 0 blocks
+==7298==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
+==7298== 
+==7298== All heap blocks were freed -- no leaks are possible
+==7298== 
+==7298== For lists of detected and suppressed errors, rerun with: -s
+==7298== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2046,15 +1994,15 @@ Eliminar un elemento de una posicion inexistente
 [32;1m✓ [37;1mEliminar un elemento de una posicion inexistente quita el ultimo elemento
 [32;1m✓ [37;1mLa cantidad de elementos en la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==16287== 
-==16287== HEAP SUMMARY:
-==16287==     in use at exit: 0 bytes in 0 blocks
-==16287==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
-==16287== 
-==16287== All heap blocks were freed -- no leaks are possible
-==16287== 
-==16287== For lists of detected and suppressed errors, rerun with: -s
-==16287== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7299== 
+==7299== HEAP SUMMARY:
+==7299==     in use at exit: 0 bytes in 0 blocks
+==7299==   total heap usage: 3 allocs, 3 frees, 4,136 bytes allocated
+==7299== 
+==7299== All heap blocks were freed -- no leaks are possible
+==7299== 
+==7299== For lists of detected and suppressed errors, rerun with: -s
+==7299== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2157,15 +2105,15 @@ Agregar, eliminar y volver a agregar (ahora con quitar de posicion)
 [32;1m✓ [37;1mSe eliminaron todos los elementos de la lista correctamente
 [32;1m✓ [37;1mLa cantidad de elementos en la lista es 0
 [32;1m✓ [37;1mLa lista está vacía
-==16288== 
-==16288== HEAP SUMMARY:
-==16288==     in use at exit: 0 bytes in 0 blocks
-==16288==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
-==16288== 
-==16288== All heap blocks were freed -- no leaks are possible
-==16288== 
-==16288== For lists of detected and suppressed errors, rerun with: -s
-==16288== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7300== 
+==7300== HEAP SUMMARY:
+==7300==     in use at exit: 0 bytes in 0 blocks
+==7300==   total heap usage: 8 allocs, 8 frees, 4,216 bytes allocated
+==7300== 
+==7300== All heap blocks were freed -- no leaks are possible
+==7300== 
+==7300== For lists of detected and suppressed errors, rerun with: -s
+==7300== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2247,15 +2195,15 @@ Eliminar un elemento de una posicion inexistente
 [33;1m
 Agregar, eliminar y volver a agregar (ahora con quitar de posicion)
 ===================================================================[37;1m
-==16280== 
-==16280== HEAP SUMMARY:
-==16280==     in use at exit: 0 bytes in 0 blocks
-==16280==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16280== 
-==16280== All heap blocks were freed -- no leaks are possible
-==16280== 
-==16280== For lists of detected and suppressed errors, rerun with: -s
-==16280== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7292== 
+==7292== HEAP SUMMARY:
+==7292==     in use at exit: 0 bytes in 0 blocks
+==7292==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7292== 
+==7292== All heap blocks were freed -- no leaks are possible
+==7292== 
+==7292== For lists of detected and suppressed errors, rerun with: -s
+==7292== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2321,15 +2269,15 @@ Lista nula y vacia
 ==================[37;1m
 [32;1m✓ [37;1mEl primer elemento de una lista nula es NULL
 [32;1m✓ [37;1mEl último elemento de una lista nula es NULL
-==16290== 
-==16290== HEAP SUMMARY:
-==16290==     in use at exit: 0 bytes in 0 blocks
-==16290==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16290== 
-==16290== All heap blocks were freed -- no leaks are possible
-==16290== 
-==16290== For lists of detected and suppressed errors, rerun with: -s
-==16290== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7302== 
+==7302== HEAP SUMMARY:
+==7302==     in use at exit: 0 bytes in 0 blocks
+==7302==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7302== 
+==7302== All heap blocks were freed -- no leaks are possible
+==7302== 
+==7302== For lists of detected and suppressed errors, rerun with: -s
+==7302== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2408,15 +2356,15 @@ Lista valida
 [32;1m✓ [37;1mEl último elemento es el correcto
 [32;1m✓ [37;1mSe eliminan todos los elementos. El primer elemento de una lista vacía es NULL
 [32;1m✓ [37;1mEl último elemento de una lista vacía es NULL
-==16291== 
-==16291== HEAP SUMMARY:
-==16291==     in use at exit: 0 bytes in 0 blocks
-==16291==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
-==16291== 
-==16291== All heap blocks were freed -- no leaks are possible
-==16291== 
-==16291== For lists of detected and suppressed errors, rerun with: -s
-==16291== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7303== 
+==7303== HEAP SUMMARY:
+==7303==     in use at exit: 0 bytes in 0 blocks
+==7303==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==7303== 
+==7303== All heap blocks were freed -- no leaks are possible
+==7303== 
+==7303== For lists of detected and suppressed errors, rerun with: -s
+==7303== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2483,15 +2431,15 @@ Lista nula y vacia
 [33;1m
 Lista valida
 ============[37;1m
-==16289== 
-==16289== HEAP SUMMARY:
-==16289==     in use at exit: 0 bytes in 0 blocks
-==16289==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16289== 
-==16289== All heap blocks were freed -- no leaks are possible
-==16289== 
-==16289== For lists of detected and suppressed errors, rerun with: -s
-==16289== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7301== 
+==7301== HEAP SUMMARY:
+==7301==     in use at exit: 0 bytes in 0 blocks
+==7301==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7301== 
+==7301== All heap blocks were freed -- no leaks are possible
+==7301== 
+==7301== For lists of detected and suppressed errors, rerun with: -s
+==7301== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2560,15 +2508,15 @@ Lista nula y vacia
 ==================[37;1m
 [32;1m✓ [37;1mEl tamaño de una lista nula es 0
 [32;1m✓ [37;1mUna lista nula está vacía
-==16293== 
-==16293== HEAP SUMMARY:
-==16293==     in use at exit: 0 bytes in 0 blocks
-==16293==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16293== 
-==16293== All heap blocks were freed -- no leaks are possible
-==16293== 
-==16293== For lists of detected and suppressed errors, rerun with: -s
-==16293== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7305== 
+==7305== HEAP SUMMARY:
+==7305==     in use at exit: 0 bytes in 0 blocks
+==7305==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7305== 
+==7305== All heap blocks were freed -- no leaks are possible
+==7305== 
+==7305== For lists of detected and suppressed errors, rerun with: -s
+==7305== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2648,15 +2596,15 @@ Lista valida
 [32;1m✓ [37;1mUna lista con un elemento no está vacía
 [32;1m✓ [37;1mSe elimina el otro elemento de la lista. El tamaño de una lista sin elementos es 0
 [32;1m✓ [37;1mUna lista sin elementos está vacía
-==16294== 
-==16294== HEAP SUMMARY:
-==16294==     in use at exit: 0 bytes in 0 blocks
-==16294==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
-==16294== 
-==16294== All heap blocks were freed -- no leaks are possible
-==16294== 
-==16294== For lists of detected and suppressed errors, rerun with: -s
-==16294== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7306== 
+==7306== HEAP SUMMARY:
+==7306==     in use at exit: 0 bytes in 0 blocks
+==7306==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==7306== 
+==7306== All heap blocks were freed -- no leaks are possible
+==7306== 
+==7306== For lists of detected and suppressed errors, rerun with: -s
+==7306== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2726,15 +2674,15 @@ Lista nula y vacia
 [33;1m
 Lista valida
 ============[37;1m
-==16292== 
-==16292== HEAP SUMMARY:
-==16292==     in use at exit: 0 bytes in 0 blocks
-==16292==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16292== 
-==16292== All heap blocks were freed -- no leaks are possible
-==16292== 
-==16292== For lists of detected and suppressed errors, rerun with: -s
-==16292== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7304== 
+==7304== HEAP SUMMARY:
+==7304==     in use at exit: 0 bytes in 0 blocks
+==7304==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7304== 
+==7304== All heap blocks were freed -- no leaks are possible
+==7304== 
+==7304== For lists of detected and suppressed errors, rerun with: -s
+==7304== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2805,15 +2753,15 @@ PRUEBAS DEL ITERADOR INTERNO
 Lista nula
 ==========[37;1m
 [32;1m✓ [37;1mIterar una lista nula devuelve 0.
-==16296== 
-==16296== HEAP SUMMARY:
-==16296==     in use at exit: 0 bytes in 0 blocks
-==16296==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16296== 
-==16296== All heap blocks were freed -- no leaks are possible
-==16296== 
-==16296== For lists of detected and suppressed errors, rerun with: -s
-==16296== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7308== 
+==7308== HEAP SUMMARY:
+==7308==     in use at exit: 0 bytes in 0 blocks
+==7308==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7308== 
+==7308== All heap blocks were freed -- no leaks are possible
+==7308== 
+==7308== For lists of detected and suppressed errors, rerun with: -s
+==7308== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2887,15 +2835,15 @@ Lista nula
 Funcion nula
 ============[37;1m
 [32;1m✓ [37;1mNo se puede aplicar una función nula a la lista.
-==16297== 
-==16297== HEAP SUMMARY:
-==16297==     in use at exit: 0 bytes in 0 blocks
-==16297==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==16297== 
-==16297== All heap blocks were freed -- no leaks are possible
-==16297== 
-==16297== For lists of detected and suppressed errors, rerun with: -s
-==16297== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7309== 
+==7309== HEAP SUMMARY:
+==7309==     in use at exit: 0 bytes in 0 blocks
+==7309==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==7309== 
+==7309== All heap blocks were freed -- no leaks are possible
+==7309== 
+==7309== For lists of detected and suppressed errors, rerun with: -s
+==7309== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -2972,15 +2920,15 @@ Funcion nula
 Lista vacia
 ===========[37;1m
 [32;1m✓ [37;1mIterar una lista vacía devuelve 0 elementos iterados.
-==16298== 
-==16298== HEAP SUMMARY:
-==16298==     in use at exit: 0 bytes in 0 blocks
-==16298==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
-==16298== 
-==16298== All heap blocks were freed -- no leaks are possible
-==16298== 
-==16298== For lists of detected and suppressed errors, rerun with: -s
-==16298== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7310== 
+==7310== HEAP SUMMARY:
+==7310==     in use at exit: 0 bytes in 0 blocks
+==7310==   total heap usage: 2 allocs, 2 frees, 4,120 bytes allocated
+==7310== 
+==7310== All heap blocks were freed -- no leaks are possible
+==7310== 
+==7310== For lists of detected and suppressed errors, rerun with: -s
+==7310== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3060,15 +3008,15 @@ Lista vacia
 Iterar totalmente la lista
 ==========================[37;1m
 [32;1m✓ [37;1mIterar una lista con elementos en su totalidad devuelve la cantidad de elementos de la lista.
-==16299== 
-==16299== HEAP SUMMARY:
-==16299==     in use at exit: 0 bytes in 0 blocks
-==16299==   total heap usage: 5 allocs, 5 frees, 4,168 bytes allocated
-==16299== 
-==16299== All heap blocks were freed -- no leaks are possible
-==16299== 
-==16299== For lists of detected and suppressed errors, rerun with: -s
-==16299== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7311== 
+==7311== HEAP SUMMARY:
+==7311==     in use at exit: 0 bytes in 0 blocks
+==7311==   total heap usage: 5 allocs, 5 frees, 4,168 bytes allocated
+==7311== 
+==7311== All heap blocks were freed -- no leaks are possible
+==7311== 
+==7311== For lists of detected and suppressed errors, rerun with: -s
+==7311== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3155,15 +3103,15 @@ Iterar parcialmente la lista
 [32;1m✓ [37;1mBuscar el tercer elemento de la lista con el it interno devuelve 3 elementos iterados
 [32;1m✓ [37;1mSe inserta un elemento al final. Buscar ese elemento con el it interno devuelve 4 elementos iterados
 [32;1m✓ [37;1mBuscar el tercer elemento de una lista con 4 elementos con el it interno devuelve 3 elementos iterados
-==16300== 
-==16300== HEAP SUMMARY:
-==16300==     in use at exit: 0 bytes in 0 blocks
-==16300==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
-==16300== 
-==16300== All heap blocks were freed -- no leaks are possible
-==16300== 
-==16300== For lists of detected and suppressed errors, rerun with: -s
-==16300== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7312== 
+==7312== HEAP SUMMARY:
+==7312==     in use at exit: 0 bytes in 0 blocks
+==7312==   total heap usage: 6 allocs, 6 frees, 4,184 bytes allocated
+==7312== 
+==7312== All heap blocks were freed -- no leaks are possible
+==7312== 
+==7312== For lists of detected and suppressed errors, rerun with: -s
+==7312== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3245,15 +3193,15 @@ Iterar totalmente la lista
 [33;1m
 Iterar parcialmente la lista
 ============================[37;1m
-==16295== 
-==16295== HEAP SUMMARY:
-==16295==     in use at exit: 0 bytes in 0 blocks
-==16295==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16295== 
-==16295== All heap blocks were freed -- no leaks are possible
-==16295== 
-==16295== For lists of detected and suppressed errors, rerun with: -s
-==16295== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7307== 
+==7307== HEAP SUMMARY:
+==7307==     in use at exit: 0 bytes in 0 blocks
+==7307==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7307== 
+==7307== All heap blocks were freed -- no leaks are possible
+==7307== 
+==7307== For lists of detected and suppressed errors, rerun with: -s
+==7307== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3331,15 +3279,15 @@ Lista nula
 [32;1m✓ [37;1mNo se puede avanzar un iterador nulo
 [32;1m✓ [37;1mNo se puede verificar el elemento actual de un iterador nulo
 [32;1m✓ [37;1mNo hubo problema al intentar destruir un iterador nulo
-==16302== 
-==16302== HEAP SUMMARY:
-==16302==     in use at exit: 0 bytes in 0 blocks
-==16302==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16302== 
-==16302== All heap blocks were freed -- no leaks are possible
-==16302== 
-==16302== For lists of detected and suppressed errors, rerun with: -s
-==16302== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7314== 
+==7314== HEAP SUMMARY:
+==7314==     in use at exit: 0 bytes in 0 blocks
+==7314==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7314== 
+==7314== All heap blocks were freed -- no leaks are possible
+==7314== 
+==7314== For lists of detected and suppressed errors, rerun with: -s
+==7314== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3428,15 +3376,15 @@ Iterar una lista valida con un iterador externo
 [32;1m✓ [37;1mEl iterador esta parado sobre un elemento valido
 [32;1m✓ [37;1mAvanzamos a un elemento que no es valido
 [32;1m✓ [37;1mEl iterador ya no esta parado sobre un elemento valido
-==16303== 
-==16303== HEAP SUMMARY:
-==16303==     in use at exit: 0 bytes in 0 blocks
-==16303==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
-==16303== 
-==16303== All heap blocks were freed -- no leaks are possible
-==16303== 
-==16303== For lists of detected and suppressed errors, rerun with: -s
-==16303== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7315== 
+==7315== HEAP SUMMARY:
+==7315==     in use at exit: 0 bytes in 0 blocks
+==7315==   total heap usage: 9 allocs, 9 frees, 4,232 bytes allocated
+==7315== 
+==7315== All heap blocks were freed -- no leaks are possible
+==7315== 
+==7315== For lists of detected and suppressed errors, rerun with: -s
+==7315== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3512,15 +3460,15 @@ Lista nula
 [33;1m
 Iterar una lista valida con un iterador externo
 ===============================================[37;1m
-==16301== 
-==16301== HEAP SUMMARY:
-==16301==     in use at exit: 0 bytes in 0 blocks
-==16301==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16301== 
-==16301== All heap blocks were freed -- no leaks are possible
-==16301== 
-==16301== For lists of detected and suppressed errors, rerun with: -s
-==16301== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==7313== 
+==7313== HEAP SUMMARY:
+==7313==     in use at exit: 0 bytes in 0 blocks
+==7313==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7313== 
+==7313== All heap blocks were freed -- no leaks are possible
+==7313== 
+==7313== For lists of detected and suppressed errors, rerun with: -s
+==7313== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 [33;1m
 Pruebas con lista vacía
 ========================[37;1m
@@ -3592,13 +3540,13 @@ PRUEBAS DEL ITERADOR EXTERNO
 ============================[37;1m
 [37;1m
 ---------------------------------
-337 pruebas corridas, 0 errores - OK
-[0m==16254== 
-==16254== HEAP SUMMARY:
-==16254==     in use at exit: 0 bytes in 0 blocks
-==16254==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==16254== 
-==16254== All heap blocks were freed -- no leaks are possible
-==16254== 
-==16254== For lists of detected and suppressed errors, rerun with: -s
-==16254== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+341 pruebas corridas, 0 errores - OK
+[0m==7266== 
+==7266== HEAP SUMMARY:
+==7266==     in use at exit: 0 bytes in 0 blocks
+==7266==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==7266== 
+==7266== All heap blocks were freed -- no leaks are possible
+==7266== 
+==7266== For lists of detected and suppressed errors, rerun with: -s
+==7266== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

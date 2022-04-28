@@ -45,12 +45,11 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
 	if (!lista)
 		return NULL;
 
-	nodo_t *nuevo_nodo = calloc(1, sizeof(nodo_t));
-
+	nodo_t *nuevo_nodo = malloc(sizeof(nodo_t));
 	if (!nuevo_nodo)
 		return NULL;
-
 	nuevo_nodo->elemento = elemento;
+	nuevo_nodo->siguiente = NULL;
 
 	if (!lista->nodo_inicio) {
 		lista->nodo_inicio = nuevo_nodo;
@@ -85,7 +84,7 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
 
 void *lista_quitar(lista_t *lista)
 {
-	if (!lista) 
+	if (!lista)
 		return NULL;
 	return lista_quitar_de_posicion(lista, lista->cantidad - 1);
 }
@@ -100,7 +99,7 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 	if (posicion == 0 || lista->cantidad == 1) {
 		nodo_posicion = lista->nodo_inicio->siguiente;
 
-		void *elemento = lista->nodo_inicio->elemento;
+		void *elemento = lista->nodo_inicio->elemento; 
 		free(lista->nodo_inicio);
 
 		lista->nodo_inicio = nodo_posicion;
@@ -153,7 +152,7 @@ void *lista_elemento_en_posicion(lista_t *lista, size_t posicion)
 void *lista_buscar_elemento(lista_t *lista, int (*comparador)(void *, void *),
 			    void *contexto)
 {
-	if (!lista || !lista->nodo_inicio)
+	if (!lista || !lista->nodo_inicio || !comparador)
 		return NULL;
 
 	nodo_t *nodo = lista->nodo_inicio;
@@ -199,11 +198,6 @@ void lista_destruir(lista_t *lista)
 	if (!lista)
 		return;
 
-	if (!lista->nodo_inicio) {
-		free(lista);
-		return;
-	}
-
 	nodo_t *nodo = lista->nodo_inicio;
 	nodo_t *aux;
 
@@ -221,9 +215,9 @@ void lista_destruir_todo(lista_t *lista, void (*funcion)(void *))
 	if (!lista)
 		return;
 
-	if (!lista->nodo_inicio) {
+	if (!funcion) {
+		lista_destruir(lista);
 		return;
-		free(lista);
 	}
 
 	nodo_t *nodo = lista->nodo_inicio;
@@ -269,11 +263,10 @@ bool lista_iterador_avanzar(lista_iterador_t *iterador)
 {
 	if (!iterador || !iterador->corriente)
 		return false;
-	if (iterador->corriente->siguiente == NULL) {
-		iterador->corriente = NULL;
+	iterador->corriente = iterador->corriente->siguiente;
+	if (!iterador->corriente) {
 		return false;
 	}
-	iterador->corriente = iterador->corriente->siguiente;
 	return true;
 }
 
