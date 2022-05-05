@@ -4,11 +4,35 @@
 
 abb_t *abb_crear(abb_comparador comparador)
 {
-	return NULL;
+	if (!comparador)
+		return NULL;
+
+	abb_t *arbol = malloc(sizeof(abb_t));
+	if (!arbol)
+		return NULL;
+
+	arbol->nodo_raiz = NULL;
+	arbol->comparador = comparador;
+	arbol->tamanio = 0;
+	return arbol;
 }
 
 abb_t *abb_insertar(abb_t *arbol, void *elemento)
 {
+	if (!arbol || !arbol->nodo_raiz)
+		return NULL;
+
+	nodo_abb_t *nodo_actual = arbol->nodo_raiz;
+
+	int n = arbol->comparador(elemento, nodo_actual->elemento);
+
+	if(n<=0){
+		nodo_actual = nodo_actual->izquierda;
+	} else {
+		nodo_actual = nodo_actual->derecha;
+	}
+
+
 	return arbol;
 }
 
@@ -24,12 +48,16 @@ void *abb_buscar(abb_t *arbol, void *elemento)
 
 bool abb_vacio(abb_t *arbol)
 {
-	return true;
+	if(!arbol || !arbol->nodo_raiz)
+		return true;
+	return false;
 }
 
 size_t abb_tamanio(abb_t *arbol)
 {
-	return 0;
+	if(!arbol)
+		return 0;
+	return arbol->tamanio;
 }
 
 void abb_destruir(abb_t *arbol)

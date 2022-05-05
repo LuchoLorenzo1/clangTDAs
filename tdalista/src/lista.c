@@ -99,7 +99,7 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 	if (posicion == 0 || lista->cantidad == 1) {
 		nodo_posicion = lista->nodo_inicio->siguiente;
 
-		void *elemento = lista->nodo_inicio->elemento; 
+		void *elemento = lista->nodo_inicio->elemento;
 		free(lista->nodo_inicio);
 
 		lista->nodo_inicio = nodo_posicion;
