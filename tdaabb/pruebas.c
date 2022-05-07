@@ -23,10 +23,8 @@ bool mostrar(void *elemento1, void *aux)
 	return true;
 }
 
-int main()
+void pruebas_creacion_e_insercion()
 {
-	pa2m_nuevo_grupo("Pruebas de ABB");
-
 	pa2m_nuevo_grupo("Pruebas creacion e insercion");
 	abb_t *arbol = abb_crear(comparador_enteros);
 	pa2m_afirmar(!!arbol, "Creo un arbol y no hay errores");
@@ -56,6 +54,13 @@ int main()
 	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->elemento); */
 	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->izquierda->elemento); */
 	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->izquierda->derecha->elemento); */
+
+}
+int main()
+{
+	pa2m_nuevo_grupo("Pruebas de ABB");
+
+	pruebas_creacion_e_insercion();
 
 	abb_con_cada_elemento(arbol, PREORDEN, mostrar, NULL);
 
