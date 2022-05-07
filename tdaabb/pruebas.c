@@ -62,7 +62,6 @@ int main()
 
 	pruebas_creacion_e_insercion();
 
-	abb_con_cada_elemento(arbol, PREORDEN, mostrar, NULL);
 
 	return pa2m_mostrar_reporte();
 }
