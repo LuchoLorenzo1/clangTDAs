@@ -215,14 +215,19 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 
 /* typedef struct array_con_tamanio { */
 /* 	void **array; */
-/* 	size_t tamanio_array; */
-/* 	size_t posicion_actual; */
+/* 	size_t max; */
+/* 	size_t act; */
 /* } arr_t; */
 
-/* bool insertar_array(void *elemento, void *array){ */
-/* 	arr_t *array_con_tamanio = (arr_t*)array; */
+/* bool insertar_array(void *elemento, void *array_con_tamanio){ */
+/* 	arr_t *array = (arr_t*)array_con_tamanio; */
 
-/* 	void *vector = array_con_tamanio->array; */
+/* 	array->array[array->act] = elemento; */
+/* 	array->act++; */
+
+/* 	if(array->act == array->max) */
+/* 		return false; */
+/* 	return true; */
 /* } */
 
 /* size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array, */
@@ -231,10 +236,10 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 /* 	if (!arbol || !array || tamanio_array <= 0) */
 /* 		return 0; */
 
-/* 	arr_t *aux; */
+/* 	arr_t *aux = &array; */
 /* 	aux->array = array; */
-/* 	aux->tamanio_array = tamanio_array; */
-/* 	aux->posicion_actual = 0; */
+/* 	aux->max = tamanio_array; */
+/* 	aux->act = 0; */
 
 /* 	return abb_con_cada_elemento(arbol, recorrido, insertar_array, aux); */
 /* } */

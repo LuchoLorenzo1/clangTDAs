@@ -26,63 +26,104 @@ bool mostrar(void *elemento1, void *aux)
 void pruebas_creacion_e_insercion()
 {
 	pa2m_nuevo_grupo("Pruebas creacion e insercion");
+
 	abb_t *arbol = abb_crear(comparador_enteros);
-	pa2m_afirmar(!!arbol, "Creo un arbol y no hay errores");
-	pa2m_afirmar(abb_vacio(arbol), "Creo un arbol y esta vacio");
+	pa2m_afirmar(!!arbol, "No hay errores al crear el arbol");
+	pa2m_afirmar(abb_vacio(arbol), "Un arbol recien creado eta vacio");
 	pa2m_afirmar(abb_tamanio(arbol) == 0,
-		     "Creo un arbol y su tamanio es 0");
+		     "El tamanio de un arbol recien creado es 0");
 
 	int a = 10;
 	int b = 11;
 	int c = 7;
 	int d = 8;
 	int e = 6;
-	int f = 12;
-	int g = 15;
-	int h = 13;
 
 	arbol = abb_insertar(arbol, &a);
 	pa2m_afirmar(!abb_vacio(arbol),
-		     "Agrego un elemento y ya no esta vacio el arbol");
+		     "agregar un elemento hace que no este vacio el arbol");
 	pa2m_afirmar(
 		abb_tamanio(arbol) == 1,
-		"Agrego un elemento y el tamanio del arbol aumenta correctamente");
+		"agregar un elemento hace que el tamanio del arbol aumente correctamente");
 
 	arbol = abb_insertar(arbol, &b);
 	pa2m_afirmar(
 		!!arbol,
-		"Agrego un elemento mayor al elemento raiz y se agrega correctamente");
+		"agregar un elemento mayor al elemento raiz se agrega correctamente");
 	pa2m_afirmar(
 		abb_tamanio(arbol) == 2,
-		"Agrego un elemento y el tamanio del arbol aumenta correctamente");
+		"agregar un elemento hace que el tamanio del arbol aumente correctamente");
 
 	arbol = abb_insertar(arbol, &c);
 	pa2m_afirmar(
 		!!arbol,
-		"Agrego un elemento menor al elemento raiz y se agrega correctamente");
+		"agregar un elemento menor al elemento raiz se agrega correctamente");
 	pa2m_afirmar(
 		abb_tamanio(arbol) == 3,
-		"Agrego un elemento y el tamanio del arbol aumenta correctamente");
+		"agregar un elemento hace que el tamanio del arbol aumente correctamente");
 
 	arbol = abb_insertar(arbol, &d);
 	arbol = abb_insertar(arbol, &e);
-	arbol = abb_insertar(arbol, &f);
-	arbol = abb_insertar(arbol, &g);
-	arbol = abb_insertar(arbol, &h);
+
+	pa2m_afirmar(
+		abb_insertar(arbol, NULL) == NULL,
+ 		"agregar un elemento NULL devuelve NULL");
+	pa2m_afirmar(
+		abb_tamanio(arbol) == 5,
+ 		"agregar un elemento NULL no cambia el tamanio del arbol");
+	pa2m_afirmar(
+		abb_insertar(NULL, &d) == NULL,
+ 		"Agregar a un arbol NULL devuelve NULL");
 
 	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->elemento); */
 	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->izquierda->elemento); */
 	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->derecha->elemento); */
 	/* printf("%d\n", *(int*)arbol->nodo_raiz->derecha->elemento); */
 
-	printf("INORDEN\n");
-	abb_con_cada_elemento(arbol, INORDEN, mostrar, NULL);
-	printf("PREORDEN\n");
-	abb_con_cada_elemento(arbol, PREORDEN, mostrar, NULL);
-	printf("POSTORDEN\n");
-	abb_con_cada_elemento(arbol, POSTORDEN, mostrar, NULL);
+	/* printf("INORDEN\n"); */
+	/* abb_con_cada_elemento(arbol, INORDEN, mostrar, NULL); */
+	/* printf("PREORDEN\n"); */
+	/* abb_con_cada_elemento(arbol, PREORDEN, mostrar, NULL); */
+	/* printf("POSTORDEN\n"); */
+	/* abb_con_cada_elemento(arbol, POSTORDEN, mostrar, NULL); */
 
+	abb_destruir(arbol);
 }
+
+void pruebas_quitar()
+{
+	pa2m_nuevo_grupo("Pruebas quitar");
+	abb_t *arbol = abb_crear(comparador_enteros);
+
+	int a = 10, b = 11, c = 7 , d = 8 , e = 8 , f = 8 , g = 8 , h = 8 , i = 6;
+
+	abb_insertar(arbol, &a);
+	abb_insertar(arbol, &b);
+	abb_insertar(arbol, &c);
+	abb_insertar(arbol, &d);
+	abb_insertar(arbol, &e);
+	abb_insertar(arbol, &e);
+	abb_insertar(arbol, &e);
+
+	int *quitado_hoja = (int*)abb_quitar(arbol, &e);
+	pa2m_afirmar(quitado_hoja == &e, "Quitar una hoja devuelve el elemento de la hoja correctamente");
+	pa2m_afirmar(abb_buscar(arbol, &e) == NULL, "Buscar el elemento de la hoja quitada devuelve NULL (no hay otro repetido)");
+	pa2m_afirmar(abb_tamanio(arbol) == 4, "Quitar un elemento reduce el tamanio correctamente");
+
+	int *quitado_normal = (int*)abb_quitar(arbol, &c);
+	pa2m_afirmar(quitado_normal == &c, "Quitar una nodo devuelve el elemento del nodo correctamente");
+	pa2m_afirmar(abb_buscar(arbol, &c) == NULL, "Buscar el elemento quitado devuelve NULL (no hay otro repetido)");
+	pa2m_afirmar(abb_tamanio(arbol) == 4, "Quitar un elemento reduce el tamanio correctamente");
+
+	int *quitado_raiz = (int*)abb_quitar(arbol, &a);
+	pa2m_afirmar(quitado_raiz == &a, "Quitar la raiz devuelve el elemento del nodo correctamente");
+	pa2m_afirmar(abb_buscar(arbol, &a) == NULL, "Buscar el elemento de la raiz quitada devuelve NULL (no hay otro repetido)");
+	pa2m_afirmar(abb_tamanio(arbol) == 3, "Quitar un elemento reduce el tamanio correctamente");
+
+	abb_destruir(arbol);
+}
+
+
 int main()
 {
 	pa2m_nuevo_grupo("Pruebas de ABB");
