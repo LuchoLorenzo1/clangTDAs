@@ -277,7 +277,7 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 }
 
 typedef struct array_con_tamanio {
-	void ***puntero_doble_array;
+	void ***puntero_array_de_punteros;
 	size_t max;
 	size_t *act;
 } arr_t;
@@ -286,9 +286,9 @@ bool insertar_array(void *elemento, void *array_con_tamanio)
 {
 	arr_t aux = *(arr_t *)array_con_tamanio;
 
-	void **array = *aux.puntero_doble_array;
+	void **array_de_punteros = *aux.puntero_array_de_punteros;
 
-	array[*aux.act] = elemento;
+	array_de_punteros[*aux.act] = elemento;
 	(*aux.act)++;
 
 	if (*aux.act == aux.max)
@@ -303,7 +303,7 @@ size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		return 0;
 
 	arr_t aux;
-	aux.puntero_doble_array = &array;
+	aux.puntero_array_de_punteros = &array;
 	aux.max = tamanio_array;
 
 	size_t tamanio_actual = 0;
