@@ -1,7 +1,6 @@
 #include "abb.h"
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 abb_t *abb_crear(abb_comparador comparador)
 {
@@ -53,7 +52,6 @@ abb_t *abb_insertar(abb_t *arbol, void *elemento)
 
 	nodo_abb_t *raiz = insertar_recursivo(arbol->nodo_raiz, elemento,
 					      arbol->comparador);
-
 	if (!raiz)
 		return NULL;
 
@@ -88,6 +86,7 @@ void *quitar_recursivo(nodo_abb_t *nodo, void *elemento,
 		nodo_abb_t *izq = nodo->izquierda;
 		nodo_abb_t *der = nodo->derecha;
 		*extraido = nodo->elemento;
+
 		free(nodo);
 		nodo = NULL;
 
@@ -95,23 +94,21 @@ void *quitar_recursivo(nodo_abb_t *nodo, void *elemento,
 			nodo_abb_t *reemplazo;
 			if (izq->derecha) {
 				reemplazo = predecesor_inmediato(izq);
-				nodo_abb_t *todo_izquierda = reemplazo;
-				while (todo_izquierda->izquierda)
-					todo_izquierda =
-						todo_izquierda->izquierda;
-				todo_izquierda->izquierda = izq;
+				nodo_abb_t *hoja_izq = reemplazo;
+				while (hoja_izq->izquierda)
+					hoja_izq = hoja_izq->izquierda;
+				hoja_izq->izquierda = izq;
 			} else {
 				reemplazo = izq;
 			}
 			reemplazo->derecha = der;
 			return reemplazo;
 		}
-		if (!izq && der)
+		if (der)
 			return der;
-		if (izq && !der)
+		if (izq)
 			return izq;
-		if (!izq && !der)
-			return NULL;
+		return NULL;
 
 	} else if (comparacion < 0) {
 		nodo->izquierda = quitar_recursivo(nodo->izquierda, elemento,
