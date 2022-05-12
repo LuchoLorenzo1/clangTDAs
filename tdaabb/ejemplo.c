@@ -132,8 +132,8 @@ int main()
 
 	destruir_cosa(auxiliar);
 
-	cosa *elementos[10];
 
+	cosa *elementos[10];
 	printf("Recorrido inorden (deberian salir en orden 1 3 5): ");
 	size_t cantidad = abb_recorrer(arbol, INORDEN, (void **)elementos, 10);
 	for (size_t i = 0; i < cantidad; i++)
