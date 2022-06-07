@@ -2,7 +2,7 @@
 #include "hash.h"
 #include <string.h>
 
-#define c 0.618033988
+#define constante 0.618033988
 
 typedef struct nodo nodo_t;
 
@@ -22,7 +22,8 @@ int funcion_hash(hash_t hash, char *cadena)
 {
 	if (!cadena)
 		return 0;
-	double n = cadena[0] * c;
+	int clave = strlen(cadena) * (cadena[0] * cadena[strlen(cadena) - 1]);
+	double n = clave * constante;
 	int parte_entera_n = (int)n;
 	return (int)(hash.cantidad_maxima * (n - parte_entera_n));
 }
