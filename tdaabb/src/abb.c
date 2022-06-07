@@ -1,8 +1,8 @@
 #include "abb.h"
 #include "recorridos.h"
+#include "array_con_tamanio.h"
 #include <stddef.h>
 #include <stdlib.h>
-
 
 abb_t *abb_crear(abb_comparador comparador)
 {
@@ -49,7 +49,7 @@ nodo_abb_t *insertar_recursivo(nodo_abb_t *nodo, void *elemento,
 
 abb_t *abb_insertar(abb_t *arbol, void *elemento)
 {
-	if (!arbol || !elemento)
+	if (!arbol)
 		return NULL;
 
 	nodo_abb_t *raiz = insertar_recursivo(arbol->nodo_raiz, elemento,
@@ -124,7 +124,7 @@ void *quitar_recursivo(nodo_abb_t *nodo, void *elemento,
 
 void *abb_quitar(abb_t *arbol, void *elemento)
 {
-	if (!arbol || !elemento)
+	if (!arbol)
 		return NULL;
 
 	void *extraido = NULL;
@@ -152,14 +152,14 @@ void *buscar_recursivo(nodo_abb_t *nodo, void *elemento,
 
 void *abb_buscar(abb_t *arbol, void *elemento)
 {
-	if (!arbol || !elemento)
+	if (!arbol )
 		return NULL;
 	return buscar_recursivo(arbol->nodo_raiz, elemento, arbol->comparador);
 }
 
 bool abb_vacio(abb_t *arbol)
 {
-	if (!arbol || !arbol->nodo_raiz)
+	if (arbol == NULL || arbol->nodo_raiz == NULL || arbol->tamanio == 0)
 		return true;
 	return false;
 }
@@ -217,26 +217,6 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 	default:
 		return 0;
 	}
-}
-
-typedef struct array_con_tamanio {
-	void ***puntero_array_de_punteros;
-	size_t max;
-	size_t *act;
-} arr_t;
-
-bool insertar_array(void *elemento, void *array_con_tamanio)
-{
-	arr_t aux = *(arr_t *)array_con_tamanio;
-
-	void **array_de_punteros = *aux.puntero_array_de_punteros;
-
-	array_de_punteros[*aux.act] = elemento;
-	(*aux.act)++;
-
-	if (*aux.act == aux.max)
-		return false;
-	return true;
 }
 
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,

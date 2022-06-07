@@ -29,7 +29,7 @@ void pruebas_creacion_e_insercion()
 
 	abb_t *arbol = abb_crear(comparador_enteros);
 	pa2m_afirmar(!!arbol, "No hay errores al crear el arbol");
-	pa2m_afirmar(abb_vacio(arbol), "Un arbol recien creado eta vacio");
+	pa2m_afirmar(abb_vacio(arbol), "Un arbol recien creado esta vacio");
 	pa2m_afirmar(abb_tamanio(arbol) == 0,
 		     "El tamaño de un arbol recien creado es 0");
 
@@ -65,24 +65,12 @@ void pruebas_creacion_e_insercion()
 	arbol = abb_insertar(arbol, &d);
 	arbol = abb_insertar(arbol, &e);
 
-	pa2m_afirmar(abb_insertar(arbol, NULL) == NULL,
-		     "agregar un elemento NULL devuelve NULL");
 	pa2m_afirmar(abb_tamanio(arbol) == 5,
 		     "agregar un elemento NULL no cambia el tamaño del arbol");
 	pa2m_afirmar(abb_insertar(NULL, &d) == NULL,
 		     "Agregar a un arbol NULL devuelve NULL");
 
-	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->elemento); */
-	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->izquierda->elemento); */
-	/* printf("%d\n", *(int*)arbol->nodo_raiz->izquierda->derecha->elemento); */
-	/* printf("%d\n", *(int*)arbol->nodo_raiz->derecha->elemento); */
 
-	/* printf("INORDEN\n"); */
-	/* abb_con_cada_elemento(arbol, INORDEN, mostrar, NULL); */
-	/* printf("PREORDEN\n"); */
-	/* abb_con_cada_elemento(arbol, PREORDEN, mostrar, NULL); */
-	/* printf("POSTORDEN\n"); */
-	/* abb_con_cada_elemento(arbol, POSTORDEN, mostrar, NULL); */
 
 	abb_destruir(arbol);
 }
@@ -145,7 +133,28 @@ void pruebas_quitar()
 		abb_tamanio(arbol) == 7,
 		"Intentar quitar un elemento que no esta en el arbol NO reduce el tamaño");
 
+
+	abb_t *arbol2 = abb_crear(comparador_enteros);
+	pa2m_afirmar(!!arbol2, "No hay errores al crear el arbol");
+	pa2m_afirmar(abb_vacio(arbol2), "Un arbol recien creado esta vacio");
+	pa2m_afirmar(abb_tamanio(arbol2) == 0,
+		     "El tamaño de un arbol recien creado es 0");
+	arbol2 = abb_insertar(arbol2, &a);
+	pa2m_afirmar(!abb_vacio(arbol2),
+		     "agregar un elemento hace que no este vacio el arbol");
+	pa2m_afirmar(
+		abb_tamanio(arbol2) == 1,
+		"agregar un elemento hace que el tamaño del arbol aumente correctamente");
+
+	quitado = abb_quitar(arbol2, &a);
+	pa2m_afirmar(abb_vacio(arbol2),
+		     "Quitar el unico elemento hace que el arbol este vacio");
+	pa2m_afirmar(
+		abb_tamanio(arbol2) == 0,
+		"agregar un elemento hace que el tamaño del arbol aumente correctamente");
+
 	abb_destruir(arbol);
+	abb_destruir(arbol2);
 }
 
 void pruebas_recorrer()
@@ -233,10 +242,10 @@ void pruebas_recorrer()
 		recorrido,
 		"Utilizo la funcion abb_con_cada_elemento para triplicar todos los elementos y funciona perfectamente");
 
-	cantidad = abb_recorrer(arbol, PREORDEN, (void **)elementos4, 9);
+	size_t cantidad2 = abb_con_cada_elemento(arbol, 4, triplicar_elementos, NULL);
 	pa2m_afirmar(
-		recorrido,
-		"Utilizo la funcion abb_con_cada_elemento para triplicar todos los elementos y funciona perfectamente");
+		cantidad2 == 0,
+		"Utilizo la funcion abb_con_cada_elemento con un recorrido invalido y devuelve que la cantidad de elementos recorridos es 0");
 
 	abb_destruir(arbol);
 }
