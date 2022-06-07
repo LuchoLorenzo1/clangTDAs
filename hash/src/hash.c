@@ -1,4 +1,8 @@
+#include <math.h>
 #include "hash.h"
+#include <string.h>
+
+#define c 0.618033988
 
 typedef struct nodo nodo_t;
 
@@ -10,8 +14,18 @@ struct nodo {
 
 struct hash {
 	nodo_t *claves;
-	size_t cantidad;
+	size_t cantidad_maxima;
+	size_t cantidad_actual;
 };
+
+int funcion_hash(hash_t hash, char *cadena)
+{
+	if (!cadena)
+		return 0;
+	double n = cadena[0] * c;
+	int parte_entera_n = (int)n;
+	return (int)(hash.cantidad_maxima * (n - parte_entera_n));
+}
 
 hash_t *hash_crear(size_t capacidad)
 {
