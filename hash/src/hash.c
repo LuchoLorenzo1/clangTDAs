@@ -1,4 +1,3 @@
-#include <math.h>
 #include "hash.h"
 #include <stdlib.h>
 #include <string.h>
@@ -19,23 +18,31 @@ struct hash {
 	size_t cantidad_actual;
 };
 
-/* int funcion_hash(hash_t hash, char *cadena) */
-/* { */
-/* 	if (!cadena) */
-/* 		return 0; */
-/* 	int clave = strlen(cadena) * (cadena[0] * cadena[strlen(cadena) - 1]); */
-/* 	double n = clave * constante; */
-/* 	int parte_entera_n = (int)n; */
-/* 	return (int)(hash.cantidad_maxima * (n - parte_entera_n)); */
-/* } */
-
 size_t funcion_hash(hash_t *hash, const char *cadena)
 {
+	double n = constante * (double)strlen(cadena) *
+		   ((double)cadena[0] * (double)cadena[strlen(cadena) - 1]);
+	return (size_t)((double)hash->cantidad_maxima * (n - (size_t)n));
+}
+
+/* size_t funcion_hash(hash_t *hash, const char *cadena)
+{
 	return strlen(cadena) % hash->cantidad_maxima;
+} */
+
+hash_t *rehashear(hash_t *hash)
+{
+	if (!hash)
+		return NULL;
+
+	return hash;
 }
 
 hash_t *hash_crear(size_t capacidad)
 {
+	if (capacidad < 3)
+		capacidad = 3;
+
 	hash_t *hash = malloc(sizeof(hash_t));
 	if (!hash)
 		return NULL;
@@ -82,6 +89,12 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		return hash;
 	}
 
+	if (strcmp(puntero_nodo->clave, clave) == 0) {
+		*anterior = puntero_nodo->elemento;
+		puntero_nodo->elemento = elemento;
+		return hash;
+	}
+
 	while (puntero_nodo->siguiente) {
 		puntero_nodo = puntero_nodo->siguiente;
 		if (strcmp(puntero_nodo->clave, clave) == 0) {
@@ -100,6 +113,30 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 
 void *hash_quitar(hash_t *hash, const char *clave)
 {
+	if (!hash)
+		return NULL;
+	size_t posicion = funcion_hash(hash, clave);
+	nodo_t *nodo_posicion = hash->tabla[posicion];
+	if (!nodo_posicion)
+		return NULL;
+
+	nodo_t *anterior = NULL;
+	while (nodo_posicion) {
+		if (strcmp(nodo_posicion->clave, clave) == 0) {
+			if (!anterior) {
+				hash->tabla[posicion] =
+					nodo_posicion->siguiente;
+			} else {
+				anterior->siguiente = nodo_posicion->siguiente;
+			}
+			void *elemento = nodo_posicion->elemento;
+			free(nodo_posicion);
+			hash->cantidad_actual--;
+			return elemento;
+		}
+		anterior = nodo_posicion;
+		nodo_posicion = nodo_posicion->siguiente;
+	}
 	return NULL;
 }
 
@@ -123,6 +160,14 @@ void *hash_obtener(hash_t *hash, const char *clave)
 
 bool hash_contiene(hash_t *hash, const char *clave)
 {
+	if (!hash)
+		return NULL;
+	nodo_t *nodo_posicion = hash->tabla[funcion_hash(hash, clave)];
+	while (nodo_posicion) {
+		if (strcmp(nodo_posicion->clave, clave) == 0)
+			return true;
+		nodo_posicion = nodo_posicion->siguiente;
+	}
 	return false;
 }
 
@@ -165,5 +210,17 @@ size_t hash_con_cada_clave(hash_t *hash,
 			   bool (*f)(const char *clave, void *valor, void *aux),
 			   void *aux)
 {
-	return 0;
+	nodo_t *nodo_posicion;
+	size_t recorridos = 0;
+	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
+		nodo_posicion = hash->tabla[i];
+		while (nodo_posicion) {
+			recorridos++;
+			if (!f(nodo_posicion->clave, nodo_posicion->elemento,
+			       aux))
+				return recorridos;
+			nodo_posicion = nodo_posicion->siguiente;
+		}
+	}
+	return recorridos;
 }
