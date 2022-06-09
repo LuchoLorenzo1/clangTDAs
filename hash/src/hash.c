@@ -1,5 +1,5 @@
-#include "hash.h"
 #include <stdlib.h>
+#include "hash.h"
 #include <string.h>
 
 #define constante 0.618033988
@@ -30,12 +30,39 @@ size_t funcion_hash(hash_t *hash, const char *cadena)
 	return strlen(cadena) % hash->cantidad_maxima;
 } */
 
-hash_t *rehashear(hash_t *hash)
+hash_t *rehash(hash_t *hash)
 {
 	if (!hash)
 		return NULL;
 
-	return hash;
+	hash_t *nuevo_hash = hash_crear(hash->cantidad_maxima * 2);
+	if (!nuevo_hash)
+		return NULL;
+
+	nodo_t *nodo_posicion = NULL;
+	nodo_t *nodo_nueva_pos = NULL;
+	nodo_t *siguiente = NULL;
+	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
+		nodo_posicion = hash->tabla[i];
+		while (nodo_posicion) {
+			siguiente = nodo_posicion->siguiente;
+
+			size_t posicion_nueva =
+				funcion_hash(nuevo_hash, nodo_posicion->clave);
+			nodo_nueva_pos = nuevo_hash->tabla[posicion_nueva];
+
+			while (nodo_nueva_pos->siguiente) {
+				nodo_nueva_pos = nodo_nueva_pos->siguiente;
+			}
+			nodo_nueva_pos = nodo_posicion;
+			nodo_nueva_pos = NULL;
+
+			nodo_posicion = siguiente;
+		}
+	}
+	free(hash->tabla);
+	free(hash);
+	return nuevo_hash;
 }
 
 hash_t *hash_crear(size_t capacidad)
@@ -76,6 +103,14 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 {
 	if (!hash)
 		return NULL;
+
+	double factor = (double)hash->cantidad_actual /
+			((double)hash->cantidad_maxima + 1);
+	if (factor > 0.75) {
+		hash_t *nuevo_hash = rehash(hash);
+		if (nuevo_hash)
+			*hash = *nuevo_hash;
+	}
 
 	size_t posicion_tabla = funcion_hash(hash, clave);
 	nodo_t *puntero_nodo = hash->tabla[posicion_tabla];
