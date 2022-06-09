@@ -1,8 +1,8 @@
 #include "src/hash.h"
-#include "src/hash.c"
 #include "pa2m.h"
+#include <stdlib.h>
 
-void pruebas_insercion()
+void pruebas_creacion_insercion()
 {
 	pa2m_nuevo_grupo("Pruebas de creacion e insercion");
 	hash_t *diccionario_scaloneta = hash_crear(8);
@@ -28,20 +28,23 @@ void pruebas_insercion()
 
 	pa2m_afirmar(hash_cantidad(diccionario_scaloneta) == 4,
 		     "Cuando inserto se actualiza el tamanio correctamente");
-	pa2m_afirmar(*(int *)hash_obtener(diccionario_scaloneta, "messi") == a,
+	pa2m_afirmar(*(int *)hash_obtener(diccionario_scaloneta, "Messi") == a,
 		     "El valor de una clave insertada es correcta");
 	pa2m_afirmar(*(int *)hash_obtener(diccionario_scaloneta,
 					  "Fideo Di maria") == b,
 		     "El valor de una clave insertada es correcta");
 
-	int **anterior;
+	int **anterior = malloc(sizeof(int **));
+	if (!anterior) {
+		return;
+	}
 	pa2m_afirmar(hash_insertar(diccionario_scaloneta, "Messi", &c,
 				   (void **)anterior) != NULL,
 		     "Se pudo actualizar un elemento correctamente");
 	pa2m_afirmar(
 		*anterior == &c,
 		"El elemento actualizado se devuelve asigna correctamente");
-	pa2m_afirmar(*(int *)hash_obtener(diccionario_scaloneta, "messi") == c,
+	pa2m_afirmar(*(int *)hash_obtener(diccionario_scaloneta, "Messi") == c,
 		     "El valor de la clave actualizada es la correcta");
 	pa2m_afirmar(
 		hash_cantidad(diccionario_scaloneta) == 4,
@@ -76,6 +79,7 @@ void pruebas_insercion()
 
 int main()
 {
+	pruebas_creacion_insercion();
 	pa2m_nuevo_grupo("Pruebas de algo");
 
 	return pa2m_mostrar_reporte();

@@ -29,9 +29,9 @@ struct hash {
 /* 	return (int)(hash.cantidad_maxima * (n - parte_entera_n)); */
 /* } */
 
-int funcion_hash(hash_t *hash, const char *cadena)
+size_t funcion_hash(hash_t *hash, const char *cadena)
 {
-	return (cadena[0] * strlen(cadena)) % hash->cantidad_maxima;
+	return strlen(cadena) % hash->cantidad_maxima;
 }
 
 hash_t *hash_crear(size_t capacidad)
@@ -67,16 +67,17 @@ nodo_t *alocar_nodo(const char *clave, void *elemento)
 hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		      void **anterior)
 {
-	if (!hash || !elemento)
+	if (!hash)
 		return NULL;
 
-	int posicion_tabla = funcion_hash(hash, clave);
+	size_t posicion_tabla = funcion_hash(hash, clave);
 	nodo_t *puntero_nodo = hash->tabla[posicion_tabla];
 
 	if (!puntero_nodo) {
 		nodo_t *nuevo_nodo = alocar_nodo(clave, elemento);
 		if (!nuevo_nodo)
 			return NULL;
+		hash->tabla[posicion_tabla] = nuevo_nodo;
 		hash->cantidad_actual++;
 		return hash;
 	}
@@ -104,6 +105,19 @@ void *hash_quitar(hash_t *hash, const char *clave)
 
 void *hash_obtener(hash_t *hash, const char *clave)
 {
+	if (!hash)
+		return NULL;
+	size_t posicion = funcion_hash(hash, clave);
+	nodo_t *nodo_posicion = hash->tabla[posicion];
+	if (!nodo_posicion)
+		return NULL;
+	while (nodo_posicion->siguiente) {
+		if (strcmp(nodo_posicion->clave, clave) == 0)
+			return nodo_posicion->elemento;
+		nodo_posicion = nodo_posicion->siguiente;
+	}
+	if (strcmp(nodo_posicion->clave, clave) == 0)
+		return nodo_posicion->elemento;
 	return NULL;
 }
 
@@ -134,6 +148,7 @@ void hash_destruir(hash_t *hash)
 	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
 		destruir_enlazados(hash->tabla[i], NULL);
 	}
+	free(hash->tabla);
 	free(hash);
 }
 
@@ -142,6 +157,7 @@ void hash_destruir_todo(hash_t *hash, void (*destructor)(void *))
 	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
 		destruir_enlazados(hash->tabla[i], destructor);
 	}
+	free(hash->tabla);
 	free(hash);
 }
 
