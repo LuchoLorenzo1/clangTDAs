@@ -46,17 +46,22 @@ hash_t *rehash(hash_t *hash)
 		nodo_posicion = hash->tabla[i];
 		while (nodo_posicion) {
 			siguiente = nodo_posicion->siguiente;
+			nodo_posicion->siguiente = NULL;
 
 			size_t posicion_nueva =
 				funcion_hash(nuevo_hash, nodo_posicion->clave);
 			nodo_nueva_pos = nuevo_hash->tabla[posicion_nueva];
 
+			if (!nodo_nueva_pos) {
+				nuevo_hash->tabla[posicion_nueva] =
+					nodo_posicion;
+				nodo_posicion = siguiente;
+				continue;
+			}
 			while (nodo_nueva_pos->siguiente) {
 				nodo_nueva_pos = nodo_nueva_pos->siguiente;
 			}
-			nodo_nueva_pos = nodo_posicion;
-			nodo_nueva_pos = NULL;
-
+			nodo_nueva_pos->siguiente = nodo_posicion;
 			nodo_posicion = siguiente;
 		}
 	}
