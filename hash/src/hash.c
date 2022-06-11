@@ -1,22 +1,7 @@
 #include <stdlib.h>
+#include "internas.h"
 #include "hash.h"
 #include <string.h>
-
-#define constante 0.618033988
-
-typedef struct nodo nodo_t;
-
-struct nodo {
-	const char *clave;
-	void *elemento;
-	nodo_t *siguiente;
-};
-
-struct hash {
-	nodo_t **tabla;
-	size_t cantidad_maxima;
-	size_t cantidad_actual;
-};
 
 size_t funcion_hash(size_t tamanio, const char *cadena)
 {
@@ -30,15 +15,15 @@ size_t funcion_hash(size_t tamanio, const char *cadena)
 	return strlen(cadena) % hash->cantidad_maxima;
 } */
 
-hash_t *rehash(hash_t *hash)
+void rehash(hash_t *hash)
 {
 	if (!hash)
-		return NULL;
+		return;
 
 	nodo_t **nueva_tabla =
 		calloc(hash->cantidad_maxima * 2, sizeof(nodo_t *));
 	if (!nueva_tabla)
-		return NULL;
+		return;
 
 	nodo_t *nodo_posicion = NULL;
 	nodo_t *nodo_nueva_pos = NULL;
@@ -69,7 +54,7 @@ hash_t *rehash(hash_t *hash)
 	free(hash->tabla);
 	hash->tabla = nueva_tabla;
 	hash->cantidad_maxima *= 2;
-	return hash;
+	return;
 }
 
 hash_t *hash_crear(size_t capacidad)
@@ -114,11 +99,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	double factor = (double)(hash->cantidad_actual + 1) /
 			((double)hash->cantidad_maxima);
 
-	if (factor > 0.75) {
-		hash_t *nuevo_hash = rehash(hash);
-		if (nuevo_hash)
-			*hash = *nuevo_hash;
-	}
+	if (factor > 0.75)
+		rehash(hash);
 
 	size_t posicion_tabla = funcion_hash(hash->cantidad_maxima, clave);
 	nodo_t *puntero_nodo = hash->tabla[posicion_tabla];

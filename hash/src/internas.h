@@ -16,6 +16,7 @@ struct hash {
 	size_t cantidad_maxima;
 	size_t cantidad_actual;
 };
+#define constante 0.618033988
 
 /*
  *
