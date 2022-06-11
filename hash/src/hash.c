@@ -51,10 +51,10 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	if (!hash)
 		return NULL;
 
-	double factor = (double)(hash->cantidad_actual + 1) /
-			((double)hash->cantidad_maxima);
+	double factor_rehash = (double)(hash->cantidad_actual + 1) /
+			       ((double)hash->cantidad_maxima);
 
-	if (factor > 0.75)
+	if (factor_rehash > 0.75)
 		rehash(hash);
 
 	size_t posicion_tabla = funcion_hash(hash->cantidad_maxima, clave);
