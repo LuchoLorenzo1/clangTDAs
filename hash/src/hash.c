@@ -5,56 +5,11 @@
 
 size_t funcion_hash(size_t tamanio, const char *cadena)
 {
-	double n = constante * (double)strlen(cadena) *
-		   ((double)cadena[0] * (double)cadena[strlen(cadena) - 1]);
-	return (size_t)((double)tamanio * (n - (size_t)n));
-}
-
-/* size_t funcion_hash(hash_t *hash, const char *cadena)
-{
-	return strlen(cadena) % hash->cantidad_maxima;
-} */
-
-void rehash(hash_t *hash)
-{
-	if (!hash)
-		return;
-
-	nodo_t **nueva_tabla =
-		calloc(hash->cantidad_maxima * 2, sizeof(nodo_t *));
-	if (!nueva_tabla)
-		return;
-
-	nodo_t *nodo_posicion = NULL;
-	nodo_t *nodo_nueva_pos = NULL;
-	nodo_t *siguiente = NULL;
-	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
-		nodo_posicion = hash->tabla[i];
-		while (nodo_posicion) {
-			siguiente = nodo_posicion->siguiente;
-			nodo_posicion->siguiente = NULL;
-
-			size_t posicion_nueva =
-				funcion_hash(hash->cantidad_maxima * 2,
-					     nodo_posicion->clave);
-			nodo_nueva_pos = nueva_tabla[posicion_nueva];
-
-			if (!nodo_nueva_pos) {
-				nueva_tabla[posicion_nueva] = nodo_posicion;
-				nodo_posicion = siguiente;
-				continue;
-			}
-			while (nodo_nueva_pos->siguiente) {
-				nodo_nueva_pos = nodo_nueva_pos->siguiente;
-			}
-			nodo_nueva_pos->siguiente = nodo_posicion;
-			nodo_posicion = siguiente;
-		}
+	size_t clave = 0;
+	for (size_t i = 0; i < strlen(cadena); i++) {
+		clave += (size_t)cadena[i];
 	}
-	free(hash->tabla);
-	hash->tabla = nueva_tabla;
-	hash->cantidad_maxima *= 2;
-	return;
+	return (strlen(cadena) * clave) % tamanio;
 }
 
 hash_t *hash_crear(size_t capacidad)
@@ -134,6 +89,49 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	hash->cantidad_actual++;
 	puntero_nodo->siguiente = nuevo_nodo;
 	return hash;
+}
+
+void rehash(hash_t *hash)
+{
+	if (!hash)
+		return;
+
+	nodo_t **nueva_tabla =
+		calloc(hash->cantidad_maxima * 2, sizeof(nodo_t *));
+	if (!nueva_tabla)
+		return;
+
+	nodo_t *nodo_act = NULL;
+	nodo_t *nodo_nuevo = NULL;
+	nodo_t *siguiente = NULL;
+
+	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
+		nodo_act = hash->tabla[i];
+		while (nodo_act) {
+			siguiente = nodo_act->siguiente;
+			nodo_act->siguiente = NULL;
+
+			size_t nueva_pos = funcion_hash(
+				hash->cantidad_maxima * 2, nodo_act->clave);
+			nodo_nuevo = nueva_tabla[nueva_pos];
+
+			if (!nodo_nuevo) {
+				nueva_tabla[nueva_pos] = nodo_act;
+				nodo_act = siguiente;
+				continue;
+			}
+			while (nodo_nuevo->siguiente) {
+				nodo_nuevo = nodo_nuevo->siguiente;
+			}
+
+			nodo_nuevo->siguiente = nodo_act;
+			nodo_act = siguiente;
+		}
+	}
+	free(hash->tabla);
+	hash->tabla = nueva_tabla;
+	hash->cantidad_maxima *= 2;
+	return;
 }
 
 void *hash_quitar(hash_t *hash, const char *clave)
