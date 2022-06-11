@@ -18,11 +18,11 @@ struct hash {
 	size_t cantidad_actual;
 };
 
-size_t funcion_hash(hash_t *hash, const char *cadena)
+size_t funcion_hash(size_t tamanio, const char *cadena)
 {
 	double n = constante * (double)strlen(cadena) *
 		   ((double)cadena[0] * (double)cadena[strlen(cadena) - 1]);
-	return (size_t)((double)hash->cantidad_maxima * (n - (size_t)n));
+	return (size_t)((double)tamanio * (n - (size_t)n));
 }
 
 /* size_t funcion_hash(hash_t *hash, const char *cadena)
@@ -35,8 +35,9 @@ hash_t *rehash(hash_t *hash)
 	if (!hash)
 		return NULL;
 
-	hash_t *nuevo_hash = hash_crear(hash->cantidad_maxima * 2);
-	if (!nuevo_hash)
+	nodo_t **nueva_tabla =
+		calloc(hash->cantidad_maxima * 2, sizeof(nodo_t *));
+	if (!nueva_tabla)
 		return NULL;
 
 	nodo_t *nodo_posicion = NULL;
@@ -49,12 +50,12 @@ hash_t *rehash(hash_t *hash)
 			nodo_posicion->siguiente = NULL;
 
 			size_t posicion_nueva =
-				funcion_hash(nuevo_hash, nodo_posicion->clave);
-			nodo_nueva_pos = nuevo_hash->tabla[posicion_nueva];
+				funcion_hash(hash->cantidad_maxima * 2,
+					     nodo_posicion->clave);
+			nodo_nueva_pos = nueva_tabla[posicion_nueva];
 
 			if (!nodo_nueva_pos) {
-				nuevo_hash->tabla[posicion_nueva] =
-					nodo_posicion;
+				nueva_tabla[posicion_nueva] = nodo_posicion;
 				nodo_posicion = siguiente;
 				continue;
 			}
@@ -66,8 +67,9 @@ hash_t *rehash(hash_t *hash)
 		}
 	}
 	free(hash->tabla);
-	free(hash);
-	return nuevo_hash;
+	hash->tabla = nueva_tabla;
+	hash->cantidad_maxima *= 2;
+	return hash;
 }
 
 hash_t *hash_crear(size_t capacidad)
@@ -109,15 +111,16 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	if (!hash)
 		return NULL;
 
-	double factor = (double)hash->cantidad_actual /
-			((double)hash->cantidad_maxima + 1);
+	double factor = (double)(hash->cantidad_actual + 1) /
+			((double)hash->cantidad_maxima);
+
 	if (factor > 0.75) {
 		hash_t *nuevo_hash = rehash(hash);
 		if (nuevo_hash)
 			*hash = *nuevo_hash;
 	}
 
-	size_t posicion_tabla = funcion_hash(hash, clave);
+	size_t posicion_tabla = funcion_hash(hash->cantidad_maxima, clave);
 	nodo_t *puntero_nodo = hash->tabla[posicion_tabla];
 
 	if (!puntero_nodo) {
@@ -155,7 +158,7 @@ void *hash_quitar(hash_t *hash, const char *clave)
 {
 	if (!hash)
 		return NULL;
-	size_t posicion = funcion_hash(hash, clave);
+	size_t posicion = funcion_hash(hash->cantidad_maxima, clave);
 	nodo_t *nodo_posicion = hash->tabla[posicion];
 	if (!nodo_posicion)
 		return NULL;
@@ -184,7 +187,7 @@ void *hash_obtener(hash_t *hash, const char *clave)
 {
 	if (!hash)
 		return NULL;
-	size_t posicion = funcion_hash(hash, clave);
+	size_t posicion = funcion_hash(hash->cantidad_maxima, clave);
 	nodo_t *nodo_posicion = hash->tabla[posicion];
 	if (!nodo_posicion)
 		return NULL;
@@ -202,7 +205,8 @@ bool hash_contiene(hash_t *hash, const char *clave)
 {
 	if (!hash)
 		return NULL;
-	nodo_t *nodo_posicion = hash->tabla[funcion_hash(hash, clave)];
+	nodo_t *nodo_posicion =
+		hash->tabla[funcion_hash(hash->cantidad_maxima, clave)];
 	while (nodo_posicion) {
 		if (strcmp(nodo_posicion->clave, clave) == 0)
 			return true;
