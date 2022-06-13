@@ -6,7 +6,7 @@
 typedef struct nodo nodo_t;
 
 struct nodo {
-	const char *clave;
+	char *clave;
 	void *elemento;
 	nodo_t *siguiente;
 };
@@ -16,6 +16,8 @@ struct hash {
 	size_t cantidad_maxima;
 	size_t cantidad_actual;
 };
+
+#define factor_de_carga 0.75
 
 /*
  * Recibe un hash y se encarga de reallocar la memoria para el mismo, duplicando el tamanio que tiene.
@@ -29,8 +31,8 @@ void rehash(hash_t *hash);
 /*
  *  Recibe un tamanio y una cadena de caracteres (string)
  *
- * 	Devuelve una posicion necesariamente menor al tamanio
- * 	la cual siempre es igual para la misma cadena y el mismo tamanio
+ * Devuelve una posicion necesariamente menor al tamanio
+ * La cual siempre es igual para la misma cadena y el mismo tamanio
  * */
 size_t funcion_hash(size_t tamanio, const char *cadena);
 
@@ -42,7 +44,7 @@ size_t funcion_hash(size_t tamanio, const char *cadena);
  * Devuelve NULL en caso de ERROR.
  *
  * */
-nodo_t *alocar_nodo(const char *clave, void *elemento);
+nodo_t *alocar_nodo(char *clave, void *elemento);
 
 /*
  * Recibe un nodo y libera la memoria para todos los nodos conectados al mismo.

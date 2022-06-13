@@ -221,11 +221,71 @@ void pruebas_iterador()
 	hash_destruir(dic_scaloneta);
 }
 
+#define tamanio 250
+void pruebas_muchas_inserciones_eliminaciones()
+{
+	pa2m_nuevo_grupo("Pruebas muchas inserciones eliminaciones");
+	hash_t *dic = hash_crear(40000);
+	if (!dic)
+		return;
+
+	int a = 1;
+	char *clave = calloc(tamanio + 1, sizeof(char));
+	if (!clave)
+		return;
+	// clave[0] = 'm';
+	// printf("%s\n", clave);
+	// printf("%zu\n", strlen(clave));
+	int sum = 0;
+	bool r = true;
+	for (int i = 0; i < tamanio; i++) {
+		for (int j = 10; j < 220; j++) {
+			clave[i] = (char)j;
+			// printf("%s\n", clave);
+			sum++;
+			dic = hash_insertar(dic, clave, &a, NULL);
+			if (dic == NULL)
+				r = false;
+		}
+	}
+	pa2m_afirmar(
+		r,
+		"Insertar 52500 claves diferentes no devuelve NULL en ningun momento");
+	printf("%d\n", sum);
+	free(clave);
+
+	pa2m_afirmar(
+		hash_cantidad(dic) == sum,
+		"El hash tiene la 52500 elementos, y es la cantidad correcta de elementos insertados");
+
+	clave = calloc(tamanio + 1, sizeof(char));
+	if (!clave)
+		return;
+
+	bool s = true;
+	for (int i = 0; i < tamanio; i++) {
+		for (int j = 10; j < 220; j++) {
+			clave[i] = (char)j;
+			// printf("%s\n", clave);
+			sum++;
+			if (*(int *)hash_quitar(dic, clave) != a)
+				s = false;
+		}
+	}
+	pa2m_afirmar(
+		s,
+		"Quito todos los 52500 elementos y todos me devuelven el elemento correcto");
+
+	free(clave);
+	hash_destruir(dic);
+}
+
 int main()
 {
 	pruebas_creacion_insercion();
 	pruebas_quitar();
 	pruebas_iterador();
+	pruebas_muchas_inserciones_eliminaciones();
 
 	return pa2m_mostrar_reporte();
 }

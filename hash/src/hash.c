@@ -1,7 +1,7 @@
 #include <stdlib.h>
+#include <string.h>
 #include "internas.h"
 #include "hash.h"
-#include <string.h>
 
 size_t funcion_hash(size_t tamanio, const char *cadena)
 {
@@ -34,7 +34,7 @@ hash_t *hash_crear(size_t capacidad)
 	return hash;
 }
 
-nodo_t *alocar_nodo(const char *clave, void *elemento)
+nodo_t *alocar_nodo(char *clave, void *elemento)
 {
 	nodo_t *nodo = malloc(sizeof(nodo_t));
 	if (!nodo)
@@ -48,44 +48,63 @@ nodo_t *alocar_nodo(const char *clave, void *elemento)
 hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		      void **anterior)
 {
-	if (!hash)
+	if (!hash || !clave)
 		return NULL;
 
 	double factor_rehash = (double)(hash->cantidad_actual + 1) /
 			       ((double)hash->cantidad_maxima);
 
-	if (factor_rehash > 0.75)
+	if (factor_rehash > factor_de_carga)
 		rehash(hash);
 
-	size_t posicion_tabla = funcion_hash(hash->cantidad_maxima, clave);
+	char *copia_clave = malloc((sizeof(char) * strlen(clave)) + 1);
+	if (!copia_clave)
+		return NULL;
+	strcpy(copia_clave, clave);
+
+	size_t posicion_tabla =
+		funcion_hash(hash->cantidad_maxima, copia_clave);
 	nodo_t *puntero_nodo = hash->tabla[posicion_tabla];
 
 	if (!puntero_nodo) {
-		nodo_t *nuevo_nodo = alocar_nodo(clave, elemento);
-		if (!nuevo_nodo)
+		nodo_t *nuevo_nodo = alocar_nodo(copia_clave, elemento);
+		if (!nuevo_nodo) {
+			free(copia_clave);
 			return NULL;
+		}
+		if (anterior)
+			*anterior = NULL;
 		hash->tabla[posicion_tabla] = nuevo_nodo;
 		hash->cantidad_actual++;
 		return hash;
 	}
 
-	if (strcmp(puntero_nodo->clave, clave) == 0) {
-		*anterior = puntero_nodo->elemento;
+	if (strcmp(puntero_nodo->clave, copia_clave) == 0) {
+		if (anterior)
+			*anterior = puntero_nodo->elemento;
 		puntero_nodo->elemento = elemento;
+		free(copia_clave);
 		return hash;
 	}
 
 	while (puntero_nodo->siguiente) {
 		puntero_nodo = puntero_nodo->siguiente;
-		if (strcmp(puntero_nodo->clave, clave) == 0) {
+		if (strcmp(puntero_nodo->clave, copia_clave) == 0) {
+			if (anterior)
+				*anterior = puntero_nodo->elemento;
+			free(copia_clave);
 			puntero_nodo->elemento = elemento;
 			return hash;
 		}
 	}
 
-	nodo_t *nuevo_nodo = alocar_nodo(clave, elemento);
-	if (!nuevo_nodo)
+	nodo_t *nuevo_nodo = alocar_nodo(copia_clave, elemento);
+	if (!nuevo_nodo) {
+		free(copia_clave);
 		return NULL;
+	}
+	if (anterior)
+		*anterior = NULL;
 	hash->cantidad_actual++;
 	puntero_nodo->siguiente = nuevo_nodo;
 	return hash;
@@ -136,8 +155,9 @@ void rehash(hash_t *hash)
 
 void *hash_quitar(hash_t *hash, const char *clave)
 {
-	if (!hash)
+	if (!hash || !clave)
 		return NULL;
+
 	size_t posicion = funcion_hash(hash->cantidad_maxima, clave);
 	nodo_t *nodo_posicion = hash->tabla[posicion];
 	if (!nodo_posicion)
@@ -153,6 +173,7 @@ void *hash_quitar(hash_t *hash, const char *clave)
 				anterior->siguiente = nodo_posicion->siguiente;
 			}
 			void *elemento = nodo_posicion->elemento;
+			free(nodo_posicion->clave);
 			free(nodo_posicion);
 			hash->cantidad_actual--;
 			return elemento;
@@ -160,33 +181,32 @@ void *hash_quitar(hash_t *hash, const char *clave)
 		anterior = nodo_posicion;
 		nodo_posicion = nodo_posicion->siguiente;
 	}
+
 	return NULL;
 }
 
 void *hash_obtener(hash_t *hash, const char *clave)
 {
-	if (!hash)
+	if (!hash || !clave)
 		return NULL;
 	size_t posicion = funcion_hash(hash->cantidad_maxima, clave);
 	nodo_t *nodo_posicion = hash->tabla[posicion];
 	if (!nodo_posicion)
 		return NULL;
-	while (nodo_posicion->siguiente) {
+	while (nodo_posicion) {
 		if (strcmp(nodo_posicion->clave, clave) == 0)
 			return nodo_posicion->elemento;
 		nodo_posicion = nodo_posicion->siguiente;
 	}
-	if (strcmp(nodo_posicion->clave, clave) == 0)
-		return nodo_posicion->elemento;
 	return NULL;
 }
 
 bool hash_contiene(hash_t *hash, const char *clave)
 {
-	if (!hash)
+	if (!hash || !clave)
 		return NULL;
-	nodo_t *nodo_posicion =
-		hash->tabla[funcion_hash(hash->cantidad_maxima, clave)];
+	size_t posicion = funcion_hash(hash->cantidad_maxima, clave);
+	nodo_t *nodo_posicion = hash->tabla[posicion];
 	while (nodo_posicion) {
 		if (strcmp(nodo_posicion->clave, clave) == 0)
 			return true;
@@ -209,11 +229,14 @@ void destruir_enlazados(nodo_t *nodo, void (*destructor)(void *))
 	destruir_enlazados(nodo->siguiente, destructor);
 	if (destructor)
 		destructor(nodo->elemento);
+	free(nodo->clave);
 	free(nodo);
 }
 
 void hash_destruir(hash_t *hash)
 {
+	if (!hash)
+		return;
 	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
 		destruir_enlazados(hash->tabla[i], NULL);
 	}
@@ -223,6 +246,8 @@ void hash_destruir(hash_t *hash)
 
 void hash_destruir_todo(hash_t *hash, void (*destructor)(void *))
 {
+	if (!hash)
+		return;
 	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
 		destruir_enlazados(hash->tabla[i], destructor);
 	}
@@ -234,6 +259,8 @@ size_t hash_con_cada_clave(hash_t *hash,
 			   bool (*f)(const char *clave, void *valor, void *aux),
 			   void *aux)
 {
+	if (!hash)
+		return 0;
 	nodo_t *nodo_posicion;
 	size_t recorridos = 0;
 	for (size_t i = 0; i < hash->cantidad_maxima; i++) {
