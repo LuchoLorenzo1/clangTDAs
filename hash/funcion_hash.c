@@ -15,7 +15,7 @@ size_t funcion_hash1(const char *cadena)
 size_t funcion_hash2(const char *cadena)
 {
 	int clave = 0;
-	for (size_t i = 0; i < strlen(cadena); i++) {
+	for (size_t i = 0; i < strlen(cadena); i = (i + 1) * 2) {
 		clave += cadena[i];
 	}
 

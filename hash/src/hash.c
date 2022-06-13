@@ -1,15 +1,16 @@
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include "internas.h"
 #include "hash.h"
 
 size_t funcion_hash(size_t tamanio, const char *cadena)
 {
-	size_t clave = 0;
-	for (size_t i = 0; i < strlen(cadena); i++) {
+	size_t clave = 1;
+	size_t len = strlen(cadena);
+	for (size_t i = 0; i < len; i++) {
 		clave += (size_t)cadena[i];
 	}
-	return (strlen(cadena) * clave) % tamanio;
+	return (len * clave * (clave + 3)) % tamanio;
 }
 
 hash_t *hash_crear(size_t capacidad)
