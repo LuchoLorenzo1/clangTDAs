@@ -5,12 +5,10 @@
 
 size_t funcion_hash(size_t tamanio, const char *cadena)
 {
-	size_t clave = 1;
-	size_t len = strlen(cadena);
-	for (size_t i = 0; i < len; i++) {
-		clave += (size_t)cadena[i];
-	}
-	return (len * clave * (clave + 3)) % tamanio;
+	    int hash = 0;
+	    while (*cadena)
+		hash = (hash * 10) + *cadena++ - '0';
+	    return (size_t)hash % tamanio;
 }
 
 hash_t *hash_crear(size_t capacidad)
@@ -63,8 +61,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		return NULL;
 	strcpy(copia_clave, clave);
 
-	size_t posicion_tabla =
-		funcion_hash(hash->cantidad_maxima, copia_clave);
+	size_t posicion_tabla = funcion_hash(hash->cantidad_maxima, copia_clave);
 	nodo_t *puntero_nodo = hash->tabla[posicion_tabla];
 
 	if (!puntero_nodo) {
@@ -80,16 +77,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		return hash;
 	}
 
-	if (strcmp(puntero_nodo->clave, copia_clave) == 0) {
-		if (anterior)
-			*anterior = puntero_nodo->elemento;
-		puntero_nodo->elemento = elemento;
-		free(copia_clave);
-		return hash;
-	}
-
-	while (puntero_nodo->siguiente) {
-		puntero_nodo = puntero_nodo->siguiente;
+	nodo_t *puntero_nodo_anterior = NULL;
+	while (puntero_nodo) {
 		if (strcmp(puntero_nodo->clave, copia_clave) == 0) {
 			if (anterior)
 				*anterior = puntero_nodo->elemento;
@@ -97,6 +86,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 			puntero_nodo->elemento = elemento;
 			return hash;
 		}
+		puntero_nodo_anterior = puntero_nodo;
+		puntero_nodo = puntero_nodo->siguiente;
 	}
 
 	nodo_t *nuevo_nodo = alocar_nodo(copia_clave, elemento);
@@ -106,8 +97,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	}
 	if (anterior)
 		*anterior = NULL;
+	puntero_nodo_anterior->siguiente = nuevo_nodo;
 	hash->cantidad_actual++;
-	puntero_nodo->siguiente = nuevo_nodo;
 	return hash;
 }
 

@@ -5,6 +5,7 @@
 
 void pruebas_creacion_insercion()
 {
+
 	pa2m_nuevo_grupo("Pruebas de creacion e insercion");
 	hash_t *diccionario_scaloneta = hash_crear(8);
 
