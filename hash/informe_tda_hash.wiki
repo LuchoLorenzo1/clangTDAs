@@ -64,4 +64,10 @@ La estructura del hash es simple, ademas del contador de los elementos actuales 
 
 Si la capacidad sobrepasa el factor de carga, el hash realiza un rehash. Para implementarlo decidí solo 'realocar' la memoria para el vector de punteros a `nodo_t`, y doblar su capacidad en memoria. Para ello se crea una nuevo vector con esa doble capacidad, y sin eliminar de la memoria a los todos los nodos, es decir insertando los punteros, se van reconectando a la nueva tabla. Luego libero la memoria para la vieja tabla y la reemplazo con la nueva.
 
-Para la función de hash, decidí utilizar una que dada una clave string, sume una cantidad especifica de caracteres y los multiplique por la cantidad de caracteres. Y teniendo ese numero, le aplique el operador módulo con la cantidad máxima de elementos en el hash, y devuelva el valor obtenido, el cual va a ser siempre una posición válida dentro del vector de listas.
+Para la función de hash, decidi usar la siguiente
+
+{{$%align%
+hash(s) &= s[0] + s[1] \cdot p + s[2] \cdot p^2 + \ldots + s[n-1] \cdot p^{n-1} \\
+&= \sum_{i=0}^{n-1} s[i]\cdot p^i\\
+}}$
+

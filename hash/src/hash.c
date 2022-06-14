@@ -5,10 +5,14 @@
 
 size_t funcion_hash(size_t tamanio, const char *cadena)
 {
-	    int hash = 0;
-	    while (*cadena)
-		hash = (hash * 10) + *cadena++ - '0';
-	    return (size_t)hash % tamanio;
+	const int p = 31;
+	int hash = 0;
+	int ppow = 1;
+	while (*cadena) {
+		hash += (ppow * (*cadena++ - 'a' + 1));
+		ppow = (ppow * p);
+	}
+	return (size_t)hash % tamanio;
 }
 
 hash_t *hash_crear(size_t capacidad)
@@ -61,7 +65,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		return NULL;
 	strcpy(copia_clave, clave);
 
-	size_t posicion_tabla = funcion_hash(hash->cantidad_maxima, copia_clave);
+	size_t posicion_tabla =
+		funcion_hash(hash->cantidad_maxima, copia_clave);
 	nodo_t *puntero_nodo = hash->tabla[posicion_tabla];
 
 	if (!puntero_nodo) {
