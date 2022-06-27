@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define MAX_NOMBRE 20
 #define MAX_LINEA 200
@@ -20,9 +21,9 @@ typedef struct nodo_objeto {
 	bool conocido;
 } nodo_objeto_t;
 
-typedef struct sala {
+struct sala {
 	hash_t *objetos;
-} sala_t;
+};
 
 sala_t *sala_crear_desde_archivos(const char *objetos,
 				  const char *interacciones)
@@ -101,31 +102,75 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 }
 
 typedef struct vector_char {
-
+	char **nombres;
+	size_t tope;
 } vector_char_t;
 
-bool agrega_nombres(void *nodo_objeto_void)
+bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
+		    void *vector_char_void)
 {
+	vector_char_t *vector_char = (vector_char_t *)vector_char_void;
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
-	if()
 
+	vector_char->nombres[vector_char->tope] = nodo_objeto->objeto->nombre;
+	vector_char->tope++;
+	return true;
 }
 
 char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 {
-	hash_con_cada_clave
+	if (!cantidad)
+		return NULL;
+	if (!sala) {
+		*cantidad = -1;
+		return NULL;
+	}
+
+	// char **nombres = malloc((unsigned int)sala->cantidad_objetos * sizeof(char*));
+	char **nombres = calloc(hash_cantidad(sala->objetos), sizeof(char *));
+	if (!nombres) {
+		*cantidad = -1;
+		return NULL;
+	}
+	vector_char_t *vector_char = malloc(sizeof(vector_char_t));
+	if (!vector_char) {
+		*cantidad = -1;
+		free(nombres);
+		return NULL;
+	}
+
+	vector_char->tope = 0;
+	vector_char->nombres = nombres;
+
+	size_t recorridos =
+		hash_con_cada_clave(sala->objetos, agrega_nombres, vector_char);
+	free(vector_char);
+
+	if (cantidad)
+		*cantidad = (int)recorridos;
+
+	return nombres;
 }
 
 bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 				const char *objeto1, const char *objeto2)
 {
-	return false;
+	if (sala == NULL || verbo == NULL || objeto2 == NULL)
+		return false;
+
+	nodo_objeto_t *nodo_objeto1 =
+		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
+	// nodo_objeto_t *nodo_objeto2 =
+		// (nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
+
+	return true;
 }
 
 void destruir_interacciones(void *interaccion)
 {
 	free(interaccion);
 }
+
 void destruir_nodo_objeto(void *nodo_objeto_void)
 {
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;

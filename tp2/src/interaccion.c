@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct interaccion *interaccion_crear_desde_string(const char *string);
+struct interaccion *interaccion_crear_desde_string(const char *string)
 {
+
 	if (string == NULL || strcmp(string, "") == 0)
 		return NULL;
 
@@ -28,10 +29,10 @@ struct interaccion *interaccion_crear_desde_string(const char *string);
 		return NULL;
 
 	if (strcmp(objeto_parametro, "_") == 0)
-		strcpy(objeto_parametro, VACIO);
+		strcpy(objeto_parametro, "");
 
 	if (strcmp(nombre_objeto_accion, "_") == 0)
-		strcpy(nombre_objeto_accion, VACIO);
+		strcpy(nombre_objeto_accion, "");
 
 	switch (tipo_accion[0]) {
 	case 'r':
