@@ -1,6 +1,6 @@
-#include "estructuras.h"
 #include "utils/hash.h"
 #include "utils/lista.h"
+#include "estructuras.h"
 #include "objeto.h"
 #include "interaccion.h"
 #include "sala.h"
@@ -23,6 +23,7 @@ typedef struct nodo_objeto {
 
 struct sala {
 	hash_t *objetos;
+	size_t cantidad_objetos;
 };
 
 sala_t *sala_crear_desde_archivos(const char *objetos,
@@ -95,15 +96,18 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 		}
 		lista_insertar(nodo_objeto->interacciones, interaccion);
 	}
+	sala->cantidad_objetos = hash_cantidad(sala->objetos);
 
 	fclose(archivo_objetos);
 	fclose(archivo_interacciones);
 	return sala;
 }
 
-typedef struct vector_char {
+typedef struct vector_char_con_condicion {
 	char **nombres;
 	size_t tope;
+	bool en_posesion;
+	bool conocido;
 } vector_char_t;
 
 bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
@@ -112,12 +116,17 @@ bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
 	vector_char_t *vector_char = (vector_char_t *)vector_char_void;
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
 
+	if(vector_char->en_posesion && !nodo_objeto->en_posesion) /*  Si necesita estar en posesion, pero no lo esta, sigo con el siguiente  */
+		return true;
+	if(vector_char->conocido && !nodo_objeto->conocido)
+		return true;
+
 	vector_char->nombres[vector_char->tope] = nodo_objeto->objeto->nombre;
 	vector_char->tope++;
 	return true;
 }
 
-char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
+char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad, bool conocido, bool en_posesion)
 {
 	if (!cantidad)
 		return NULL;
@@ -126,7 +135,6 @@ char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 		return NULL;
 	}
 
-	// char **nombres = malloc((unsigned int)sala->cantidad_objetos * sizeof(char*));
 	char **nombres = calloc(hash_cantidad(sala->objetos), sizeof(char *));
 	if (!nombres) {
 		*cantidad = -1;
@@ -141,6 +149,8 @@ char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 
 	vector_char->tope = 0;
 	vector_char->nombres = nombres;
+	vector_char->en_posesion = en_posesion;
+	vector_char->conocido = conocido;
 
 	size_t recorridos =
 		hash_con_cada_clave(sala->objetos, agrega_nombres, vector_char);
@@ -152,18 +162,82 @@ char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 	return nombres;
 }
 
+char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
+{
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false, false);
+}
+
+char **sala_obtener_nombre_objetos_conocidos(sala_t *sala, int *cantidad)
+{
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, true, false);
+}
+
+char **sala_obtener_nombre_objetos_poseidos(sala_t *sala, int *cantidad)
+{
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false, true);
+}
+
+
 bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 				const char *objeto1, const char *objeto2)
 {
 	if (sala == NULL || verbo == NULL || objeto2 == NULL)
 		return false;
 
-	nodo_objeto_t *nodo_objeto1 =
-		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
+	// nodo_objeto_t *nodo_objeto1 =
+		// (nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
+
 	// nodo_objeto_t *nodo_objeto2 =
-		// (nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
+	// (nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
+
+	// lista_buscar_elemento(nodo_objeto1->interacciones);
 
 	return true;
+}
+
+bool sala_escape_exitoso(sala_t *sala)
+{
+	return true;
+}
+
+int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
+			      const char *objeto1, const char *objeto2,
+			      void (*mostrar_mensaje)(const char *mensaje,
+						      enum tipo_accion accion,
+						      void *aux),
+			      void *aux)
+{
+	return 0;
+}
+
+char *sala_describir_objeto(sala_t *sala, const char *nombre_objeto)
+{
+	if (!sala || !nombre_objeto)
+		return NULL;
+	nodo_objeto_t *nodo_objeto =
+		(nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
+	if (!nodo_objeto)
+		return NULL;
+
+	if (nodo_objeto->conocido || nodo_objeto->en_posesion)
+		return nodo_objeto->objeto->descripcion;
+	return NULL;
+}
+
+bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
+{
+	if (!sala || !nombre_objeto)
+		return NULL;
+	nodo_objeto_t *nodo_objeto =
+		(nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
+	if (!nodo_objeto)
+		return NULL;
+
+	if (nodo_objeto->conocido && nodo_objeto->objeto->es_asible){
+		nodo_objeto->en_posesion = true;
+		return true;
+	}
+	return NULL;
 }
 
 void destruir_interacciones(void *interaccion)
@@ -178,6 +252,7 @@ void destruir_nodo_objeto(void *nodo_objeto_void)
 	free(nodo_objeto->objeto);
 	free(nodo_objeto);
 }
+
 void sala_destruir(sala_t *sala)
 {
 	hash_destruir_todo(sala->objetos, destruir_nodo_objeto);

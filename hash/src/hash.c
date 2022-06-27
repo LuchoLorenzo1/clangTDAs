@@ -9,7 +9,7 @@ size_t funcion_hash(size_t tamanio, const char *cadena)
 	int hash = 0;
 	int ppow = 1;
 	while (*cadena) {
-		hash += (ppow * (*cadena++ - 'a' + 1));
+		hash += (ppow * *cadena++);
 		ppow = (ppow * p);
 	}
 	return (size_t)hash % tamanio;

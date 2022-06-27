@@ -1,6 +1,7 @@
 #include "pa2mm.h"
 #include "src/estructuras.h"
 #include "src/sala.h"
+#include "src/sala.c"
 #include "src/objeto.h"
 #include "src/interaccion.h"
 

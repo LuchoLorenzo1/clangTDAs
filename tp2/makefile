@@ -18,7 +18,7 @@ valgrind-pruebas: pruebas
 	valgrind $(VALGRIND_FLAGS) ./pruebas 2>&1
 
 pruebas: src/*.c pruebas.c
-	$(CC) $(CFLAGS) src/*.c pruebas.c -o pruebas 2>&1
+	$(CC) $(CFLAGS) src/*.c src/utils/*.c pruebas.c -o pruebas 2>&1
 
 clean:
 	rm -f escape *.o pruebas 2>&1

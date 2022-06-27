@@ -222,7 +222,7 @@ void pruebas_iterador()
 	hash_destruir(dic_scaloneta);
 }
 
-#define tamanio 5000
+#define tamanio 2000
 void pruebas_muchas_inserciones_eliminaciones()
 {
 	pa2m_nuevo_grupo("Pruebas muchas inserciones eliminaciones");
@@ -245,10 +245,9 @@ void pruebas_muchas_inserciones_eliminaciones()
 				r = false;
 		}
 	}
-	printf("sum %d\n", sum);
 	pa2m_afirmar(
 		r,
-		"Insertar 130000 claves diferentes no devuelve NULL en ningun momento");
+		"Insertar 52000 claves diferentes no devuelve NULL en ningun momento");
 	free(clave);
 
 	pa2m_afirmar(
@@ -258,13 +257,10 @@ void pruebas_muchas_inserciones_eliminaciones()
 	clave = calloc(tamanio + 1, sizeof(char));
 	if (!clave)
 		return;
-
 	bool s = true;
 	for (int i = 0; i < tamanio; i++) {
 		for (int j = 97; j < 123; j++) {
 			clave[i] = (char)j;
-			// printf("%s\n", clave);
-			sum++;
 			if (*(int *)hash_quitar(dic, clave) != a)
 				s = false;
 		}
@@ -272,7 +268,6 @@ void pruebas_muchas_inserciones_eliminaciones()
 	pa2m_afirmar(
 		s,
 		"Quito todos los elementos y todos me devuelven el elemento correcto");
-
 	free(clave);
 	hash_destruir(dic);
 }
