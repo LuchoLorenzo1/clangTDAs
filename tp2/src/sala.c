@@ -1,9 +1,12 @@
+#include "sala.h"
+
 #include "utils/hash.h"
 #include "utils/lista.h"
+
 #include "estructuras.h"
 #include "objeto.h"
 #include "interaccion.h"
-#include "sala.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -24,17 +27,21 @@ typedef struct nodo_objeto {
 struct sala {
 	hash_t *objetos;
 	size_t cantidad_objetos;
+	size_t cantidad_interacciones;
 };
 
 sala_t *sala_crear_desde_archivos(const char *objetos,
 				  const char *interacciones)
 {
+	if (!objetos || !interacciones)
+		return NULL;
+
 	FILE *archivo_objetos = fopen(objetos, "r");
 	FILE *archivo_interacciones = fopen(interacciones, "r");
 
 	if (!archivo_objetos || !archivo_interacciones) {
-		fclose(archivo_objetos);
-		fclose(archivo_interacciones);
+		// fclose(archivo_objetos);
+		// fclose(archivo_interacciones);
 		return NULL;
 	}
 
@@ -55,6 +62,8 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 	}
 
 	sala->objetos = diccionario_objetos;
+	sala->cantidad_objetos = 0;
+	sala->cantidad_interacciones = 0;
 
 	char linea[MAX_LINEA];
 	while (fgets(linea, MAX_LINEA, archivo_objetos) != NULL) {
@@ -80,6 +89,7 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 
 		hash_insertar(sala->objetos, objeto->nombre, nodo_objeto, NULL);
 	}
+	sala->cantidad_objetos = hash_cantidad(sala->objetos);
 
 	while (fgets(linea, MAX_LINEA, archivo_interacciones) != NULL) {
 		struct interaccion *interaccion =
@@ -95,11 +105,17 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 			continue;
 		}
 		lista_insertar(nodo_objeto->interacciones, interaccion);
+		sala->cantidad_interacciones++;
 	}
-	sala->cantidad_objetos = hash_cantidad(sala->objetos);
 
 	fclose(archivo_objetos);
 	fclose(archivo_interacciones);
+
+	if (sala->cantidad_interacciones == 0 || sala->cantidad_objetos == 0) {
+		sala_destruir(sala);
+		return NULL;
+	}
+
 	return sala;
 }
 
@@ -116,9 +132,10 @@ bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
 	vector_char_t *vector_char = (vector_char_t *)vector_char_void;
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
 
-	if(vector_char->en_posesion && !nodo_objeto->en_posesion) /*  Si necesita estar en posesion, pero no lo esta, sigo con el siguiente  */
+	if (vector_char->en_posesion && !nodo_objeto->en_posesion)
+		/*  Si necesita estar en posesion, pero no lo esta, sigo con el siguiente  */
 		return true;
-	if(vector_char->conocido && !nodo_objeto->conocido)
+	if (vector_char->conocido && !nodo_objeto->conocido)
 		return true;
 
 	vector_char->nombres[vector_char->tope] = nodo_objeto->objeto->nombre;
@@ -126,23 +143,25 @@ bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
 	return true;
 }
 
-char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad, bool conocido, bool en_posesion)
+char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad,
+					       bool conocido, bool en_posesion)
 {
-	if (!cantidad)
-		return NULL;
 	if (!sala) {
-		*cantidad = -1;
+		if (cantidad)
+			*cantidad = -1;
 		return NULL;
 	}
 
 	char **nombres = calloc(hash_cantidad(sala->objetos), sizeof(char *));
 	if (!nombres) {
-		*cantidad = -1;
+		if (cantidad)
+			*cantidad = -1;
 		return NULL;
 	}
 	vector_char_t *vector_char = malloc(sizeof(vector_char_t));
 	if (!vector_char) {
-		*cantidad = -1;
+		if (cantidad)
+			*cantidad = -1;
 		free(nombres);
 		return NULL;
 	}
@@ -164,19 +183,21 @@ char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad, bool
 
 char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false, false);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false,
+						       false);
 }
 
 char **sala_obtener_nombre_objetos_conocidos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, true, false);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, true,
+						       false);
 }
 
 char **sala_obtener_nombre_objetos_poseidos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false, true);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false,
+						       true);
 }
-
 
 bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 				const char *objeto1, const char *objeto2)
@@ -184,8 +205,16 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 	if (sala == NULL || verbo == NULL || objeto2 == NULL)
 		return false;
 
-	// nodo_objeto_t *nodo_objeto1 =
-		// (nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
+	nodo_objeto_t *nodo_objeto1 =
+		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
+
+	lista_iterador_t *it = NULL;
+	struct interaccion *interaccion_actual = NULL;
+	for (it = lista_iterador_crear(nodo_objeto1->interacciones);
+	     lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
+		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
+		if (strcmp(verbo, interaccion_actual->verbo))
+	}
 
 	// nodo_objeto_t *nodo_objeto2 =
 	// (nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
@@ -233,7 +262,7 @@ bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
 	if (!nodo_objeto)
 		return NULL;
 
-	if (nodo_objeto->conocido && nodo_objeto->objeto->es_asible){
+	if (nodo_objeto->conocido && nodo_objeto->objeto->es_asible) {
 		nodo_objeto->en_posesion = true;
 		return true;
 	}
