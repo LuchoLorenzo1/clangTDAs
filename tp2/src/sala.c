@@ -85,9 +85,10 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 		if (interaccion == NULL)
 			continue;
 
-		nodo_objeto_t *nodo_objeto = (nodo_objeto_t*)hash_obtener(sala->objetos, interaccion->objeto);
+		nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)hash_obtener(
+			sala->objetos, interaccion->objeto);
 
-		if(!nodo_objeto){
+		if (!nodo_objeto) {
 			free(interaccion);
 			continue;
 		}
@@ -99,9 +100,20 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 	return sala;
 }
 
+typedef struct vector_char {
+
+} vector_char_t;
+
+bool agrega_nombres(void *nodo_objeto_void)
+{
+	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
+	if()
+
+}
+
 char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 {
-	return NULL;
+	hash_con_cada_clave
 }
 
 bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
@@ -110,9 +122,19 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 	return false;
 }
 
+void destruir_interacciones(void *interaccion)
+{
+	free(interaccion);
+}
+void destruir_nodo_objeto(void *nodo_objeto_void)
+{
+	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
+	lista_destruir_todo(nodo_objeto->interacciones, destruir_interacciones);
+	free(nodo_objeto->objeto);
+	free(nodo_objeto);
+}
 void sala_destruir(sala_t *sala)
 {
-	// TODO
-	hash_destruir_todo(sala->objetos, )
-	sala->objetos;
+	hash_destruir_todo(sala->objetos, destruir_nodo_objeto);
+	free(sala);
 }
