@@ -14,7 +14,7 @@
 #define MAX_TEXTO 200
 
 typedef struct nodo_objeto {
-	struct objeto objeto;
+	struct objeto *objeto;
 	lista_t *interacciones;
 	bool en_posesion;
 	bool conocido;
@@ -23,7 +23,6 @@ typedef struct nodo_objeto {
 typedef struct sala {
 	hash_t *objetos;
 } sala_t;
-
 
 sala_t *sala_crear_desde_archivos(const char *objetos,
 				  const char *interacciones)
@@ -38,36 +37,46 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 	}
 
 	sala_t *sala = malloc(sizeof(sala_t));
+	if (!sala) {
+		fclose(archivo_objetos);
+		fclose(archivo_interacciones);
+		return NULL;
+	}
 
 	hash_t *diccionario_objetos = hash_crear(10);
 
-	if (!archivo_objetos || !archivo_interacciones || !sala || !diccionario_objetos) {
+	if (!diccionario_objetos) {
 		fclose(archivo_objetos);
 		fclose(archivo_interacciones);
 		free(sala);
-		free(diccionario_objetos);
 		return NULL;
 	}
+
 	sala->objetos = diccionario_objetos;
 
 	char linea[MAX_LINEA];
 	while (fgets(linea, MAX_LINEA, archivo_objetos) != NULL) {
-
 		struct objeto *objeto = objeto_crear_desde_string(linea);
-		lista_t *lista_interacciones = lista_crear();
 		nodo_objeto_t *nodo_objeto = malloc(sizeof(nodo_objeto_t));
-
-		if(!objeto || !lista_interacciones || !nodo_objeto){
-			fK
+		if (!objetos || !nodo_objeto) {
+			free(objeto);
+			free(nodo_objeto);
+			continue;
 		}
 
-		if(hash_cantidad(sala->objetos) == 0)
-
-
-		if (!objeto)
+		lista_t *lista_interacciones = lista_crear();
+		if (!lista_interacciones) {
+			free(objeto);
+			free(nodo_objeto);
 			continue;
+		}
 
-		nodo_objeto_t *nodo_objeto =
+		nodo_objeto->en_posesion = false;
+		nodo_objeto->objeto = objeto;
+		nodo_objeto->interacciones = lista_interacciones;
+		nodo_objeto->conocido = hash_cantidad(sala->objetos) == 0;
+
+		hash_insertar(sala->objetos, objeto->nombre, nodo_objeto, NULL);
 	}
 
 	while (fgets(linea, MAX_LINEA, archivo_interacciones) != NULL) {
@@ -77,7 +86,7 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 		if (interaccion == NULL)
 			continue;
 
-		// agregar_vector_interacciones(&sala->interacciones, puntero_interaccion, &(sala->cantidad_interacciones));
+		hash_obtener(sala->objetos, interaccion->objeto);
 	}
 
 	fclose(archivo_objetos);
