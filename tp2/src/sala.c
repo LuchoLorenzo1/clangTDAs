@@ -82,21 +82,20 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 	while (fgets(linea, MAX_LINEA, archivo_interacciones) != NULL) {
 		struct interaccion *interaccion =
 			interaccion_crear_desde_string(linea);
-
 		if (interaccion == NULL)
 			continue;
 
-		hash_obtener(sala->objetos, interaccion->objeto);
+		nodo_objeto_t *nodo_objeto = (nodo_objeto_t*)hash_obtener(sala->objetos, interaccion->objeto);
+
+		if(!nodo_objeto){
+			free(interaccion);
+			continue;
+		}
+		lista_insertar(nodo_objeto->interacciones, interaccion);
 	}
 
 	fclose(archivo_objetos);
 	fclose(archivo_interacciones);
-
-	// if (sala->cantidad_interacciones == 0 || sala->cantidad_objetos == 0) {
-	//         sala_destruir(sala);
-	//         return NULL;
-	// }
-
 	return sala;
 }
 
@@ -113,4 +112,7 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 
 void sala_destruir(sala_t *sala)
 {
+	// TODO
+	hash_destruir_todo(sala->objetos, )
+	sala->objetos;
 }
