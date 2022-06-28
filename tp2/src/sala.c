@@ -265,11 +265,6 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 
 				// INTERACCION VALIDA
 
-				switch (true) {
-				default:
-
-				break;
-				}
 
 			}
 		}
