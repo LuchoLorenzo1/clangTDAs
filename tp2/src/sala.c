@@ -37,13 +37,15 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 		return NULL;
 
 	FILE *archivo_objetos = fopen(objetos, "r");
-	FILE *archivo_interacciones = fopen(interacciones, "r");
-
-	if (!archivo_objetos || !archivo_interacciones) {
-		// fclose(archivo_objetos);
-		// fclose(archivo_interacciones);
+	if (!archivo_objetos){
 		return NULL;
 	}
+	FILE *archivo_interacciones = fopen(interacciones, "r");
+	if(!archivo_interacciones) {
+		fclose(archivo_objetos);
+		return NULL;
+	}
+
 
 	sala_t *sala = malloc(sizeof(sala_t));
 	if (!sala) {
@@ -202,7 +204,7 @@ char **sala_obtener_nombre_objetos_poseidos(sala_t *sala, int *cantidad)
 bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 				const char *objeto1, const char *objeto2)
 {
-	if (sala == NULL || verbo == NULL || objeto2 == NULL)
+	if (sala == NULL || verbo == NULL || objeto1 == NULL || objeto2 == NULL)
 		return false;
 
 	nodo_objeto_t *nodo_objeto1 =
@@ -211,10 +213,13 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 	lista_iterador_t *it = NULL;
 	struct interaccion *interaccion_actual = NULL;
 	for (it = lista_iterador_crear(nodo_objeto1->interacciones);
-	     lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
+	     lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it))
+	{
 		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
-		if (strcmp(verbo, interaccion_actual->verbo))
+		if (strcmp(verbo, interaccion_actual->verbo) == 0)
+			return true;
 	}
+	lista_iterador_destruir(it);
 
 	// nodo_objeto_t *nodo_objeto2 =
 	// (nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
@@ -245,6 +250,7 @@ char *sala_describir_objeto(sala_t *sala, const char *nombre_objeto)
 		return NULL;
 	nodo_objeto_t *nodo_objeto =
 		(nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
+
 	if (!nodo_objeto)
 		return NULL;
 
