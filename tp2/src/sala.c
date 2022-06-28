@@ -256,17 +256,17 @@ char *sala_describir_objeto(sala_t *sala, const char *nombre_objeto)
 bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
 {
 	if (!sala || !nombre_objeto)
-		return NULL;
+		return false;
 	nodo_objeto_t *nodo_objeto =
 		(nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
 	if (!nodo_objeto)
-		return NULL;
+		return false;
 
 	if (nodo_objeto->conocido && nodo_objeto->objeto->es_asible) {
 		nodo_objeto->en_posesion = true;
 		return true;
 	}
-	return NULL;
+	return false;
 }
 
 void destruir_interacciones(void *interaccion)
