@@ -20,5 +20,9 @@ valgrind-pruebas: pruebas
 pruebas: src/*.c pruebas.c
 	$(CC) $(CFLAGS) src/*.c src/utils/*.c pruebas.c -o pruebas 2>&1
 
+gdb-pruebas: pruebas
+	gdb --args ./pruebas 2>&1
+
+
 clean:
 	rm -f escape *.o pruebas 2>&1
