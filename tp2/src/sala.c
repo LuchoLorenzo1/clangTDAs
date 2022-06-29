@@ -186,17 +186,20 @@ char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad,
 
 char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false, false);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false,
+						       false);
 }
 
 char **sala_obtener_nombre_objetos_conocidos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, true, false);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, true,
+						       false);
 }
 
 char **sala_obtener_nombre_objetos_poseidos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false, true);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false,
+						       true);
 }
 
 bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
@@ -208,24 +211,25 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 	nodo_objeto_t *nodo_objeto1 =
 		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
 
-	if(!nodo_objeto1)
+	if (!nodo_objeto1)
 		return false;
 
 	lista_iterador_t *it = NULL;
 	struct interaccion *interaccion_actual = NULL;
 
 	for (it = lista_iterador_crear(nodo_objeto1->interacciones);
-	     lista_iterador_tiene_siguiente(it);
-	     lista_iterador_avanzar(it)) {
-
-		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
+	     lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
+		interaccion_actual =
+			(struct interaccion *)lista_iterador_elemento_actual(
+				it);
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
-			if (strcmp(objeto2, interaccion_actual->objeto_parametro) == 0 || strcmp(objeto2, "") == 0){
+			if (strcmp(objeto2,
+				   interaccion_actual->objeto_parametro) == 0 ||
+			    strcmp(objeto2, "") == 0) {
 				lista_iterador_destruir(it);
 				return true;
 			}
 		}
-
 	}
 
 	lista_iterador_destruir(it);
@@ -235,6 +239,44 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 bool sala_escape_exitoso(sala_t *sala)
 {
 	return sala->escape_exitoso;
+}
+
+int sala_ejecutar_interaccion_valida(
+	sala_t *sala, struct interaccion *interaccion,  nodo_objeto_t *objeto1, nodo_objeto_t *objeto2,
+	void (*mostrar_mensaje)(const char *mensaje, enum tipo_accion accion,
+				void *aux),
+	void *aux)
+{
+
+	// enum tipo_accion {
+	// 	ACCION_INVALIDA,
+	// 	DESCUBRIR_OBJETO,
+	// 	REEMPLAZAR_OBJETO,
+	// 	ELIMINAR_OBJETO,
+	// 	MOSTRAR_MENSAJE,
+	// 	ESCAPAR
+	// };
+
+	switch (interaccion->accion.tipo) {
+	// case ACCION_INVALIDA:
+
+	case DESCUBRIR_OBJETO:
+		objeto2->conocido = true;
+		break;
+
+	// case REEMPLAZAR_OBJETO:
+	// case ELIMINAR_OBJETO:
+	case MOSTRAR_MENSAJE:
+		mostrar_mensaje(interaccion->accion.mensaje, interaccion->accion.tipo, aux);
+		break;
+	case ESCAPAR:
+		sala->escape_exitoso = true;
+		break;
+	default:
+		break;
+	}
+	mostrar_mensaje(interaccion->accion.mensaje, interaccion->accion.tipo, aux);
+	return 1;
 }
 
 int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
@@ -250,25 +292,26 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 	nodo_objeto_t *nodo_objeto1 =
 		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
 
-	if(!nodo_objeto1)
+	nodo_objeto_t *nodo_objeto2 =
+		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
+
+	if (!nodo_objeto1)
 		return 0;
 
 	struct interaccion *interaccion_actual = NULL;
-	lista_iterador_t *it = NULL;
-	for (it = lista_iterador_crear(nodo_objeto1->interacciones);
-	     lista_iterador_tiene_siguiente(it);
-	     lista_iterador_avanzar(it)) {
+	lista_iterador_t *it =
+		lista_iterador_crear(nodo_objeto1->interacciones);
 
+	for (; lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
 		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
+
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
-			if (strcmp(objeto2, interaccion_actual->objeto_parametro) == 0 || strcmp(objeto2, "") == 0){
+			if (strcmp(objeto2, interaccion_actual->objeto_parametro) == 0 ||
+			    strcmp(objeto2, "") == 0) {
 
-				// INTERACCION VALIDA
-
-
+				sala_ejecutar_interaccion_valida(sala, interaccion_actual, nodo_objeto1, nodo_objeto2, mostrar_mensaje, aux);
 			}
 		}
-
 	}
 
 	return 0;
