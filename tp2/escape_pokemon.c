@@ -4,6 +4,11 @@
 #include <string.h>
 #include <stdbool.h>
 
+#define MAX_NOMBRE 20
+#define MAX_LINEA 200
+#define MAX_VERBO 20
+#define MAX_TEXTO 200
+
 int main(int argc, char *argv[])
 {
 	if(argc != 3){
@@ -17,12 +22,16 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+
 	printf("Bienvenido a la sala de escape! \n");
 	// game loop
-	char *comando;
-	char *objeto1;
-	char *objeto2;
-	while(sala_escape_exitoso(sala)){
+	char comando[MAX_VERBO];
+	char objeto1[MAX_NOMBRE];
+	char objeto2[MAX_NOMBRE];
+	while(!sala_escape_exitoso(sala)){
+		printf("> \n");
+		char linea[256];
+		fgets();
 		scanf("%s %s %s", comando, objeto1, objeto2);
 
 		if(strcmp(comando, "ayuda") == 0){
@@ -42,11 +51,13 @@ int main(int argc, char *argv[])
 			}
 			printf("Nuevo item adquirido: %s\n", objeto1);
 		} else {
-			if(!objeto2)
-				objeto2 = "";
 			bool valida = sala_es_interaccion_valida(sala, comando, objeto1, objeto2);
-			if(!valida)
+			if(!valida){
 				printf("No podes hacer eso\n");
+				continue;
+
+			}
+
 			printf("es muy buena interaccion, cuando lo implemente la ejecuto\n");
 		}
 
