@@ -47,6 +47,9 @@ struct interaccion *interaccion_crear_desde_string(const char *string)
 	case 'm':
 		tipo = MOSTRAR_MENSAJE;
 		break;
+	case 'g':
+		tipo = ESCAPAR;
+		break;
 	default:
 		tipo = ACCION_INVALIDA;
 		break;

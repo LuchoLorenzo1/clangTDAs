@@ -243,16 +243,6 @@ int sala_ejecutar_interaccion_valida(
 				void *aux),
 	void *aux)
 {
-	// enum tipo_accion {
-
-	// 	ACCION_INVALIDA,
-	// 	DESCUBRIR_OBJETO,
-	// 	REEMPLAZAR_OBJETO,
-	// 	ELIMINAR_OBJETO,
-	// 	MOSTRAR_MENSAJE,
-	// 	ESCAPAR
-	// };
-
 	if(!objeto1->en_posesion && objeto1->objeto->es_asible){
 		mostrar_mensaje("Necesitas agarrarlo para poder usarlo", interaccion->accion.tipo, aux);
 		return 0;
@@ -299,7 +289,6 @@ int sala_ejecutar_interaccion_valida(
 		break;
 
 	case ESCAPAR:
-		printf("bien pa\n");
 		sala->escape_exitoso = true;
 		break;
 
@@ -319,33 +308,40 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 						      void *aux),
 			      void *aux)
 {
-	if (!sala || !verbo || !objeto1)
+	if (!sala || !verbo || !objeto1){
+		mostrar_mensaje("Los parametros no son correctos", ACCION_INVALIDA, aux);
 		return 0;
+	}
 
 	nodo_objeto_t *nodo_objeto1 = (nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
-	if (!nodo_objeto1)
+	if (!nodo_objeto1){
+		mostrar_mensaje("No se a que te referis", ACCION_INVALIDA, aux);
 		return 0;
+	}
 
-	nodo_objeto_t *nodo_objeto2 =
-		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
-
+	nodo_objeto_t *nodo_objeto2 = (nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
 
 	struct interaccion *interaccion_actual = NULL;
 	lista_iterador_t *it = lista_iterador_crear(nodo_objeto1->interacciones);
+
+	int interacciones_ejecutadas = 0;
 
 	for (; lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
 		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
 
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
-			if (strcmp(objeto2, interaccion_actual->objeto_parametro) == 0 ||
-			    strcmp(objeto2, "") == 0) {
+			if (strcmp(objeto2, "") == 0 || strcmp(objeto2, interaccion_actual->objeto_parametro) == 0) {
 				int n = sala_ejecutar_interaccion_valida(sala, interaccion_actual, nodo_objeto1, nodo_objeto2, mostrar_mensaje, aux);
 				if(n == 0)
 					return 0;
+				interacciones_ejecutadas += n;
 			}
 		}
 	}
-	return 1;
+	if (interacciones_ejecutadas == 0) {
+		mostrar_mensaje("No puedo hacer eso", ACCION_INVALIDA, aux);
+	}
+	return interacciones_ejecutadas;
 }
 
 char *sala_describir_objeto(sala_t *sala, const char *nombre_objeto)
