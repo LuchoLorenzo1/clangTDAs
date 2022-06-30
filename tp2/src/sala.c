@@ -1,7 +1,5 @@
-#include "sala.h"
-
-#include "utils/hash.h"
-#include "utils/lista.h"
+#include "hash.h"
+#include "lista.h"
 
 #include "estructuras.h"
 #include "objeto.h"
@@ -26,8 +24,6 @@ typedef struct nodo_objeto {
 
 struct sala {
 	hash_t *objetos;
-	size_t cantidad_objetos;
-	size_t cantidad_interacciones;
 	bool escape_exitoso;
 };
 
@@ -64,10 +60,10 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 	}
 
 	sala->objetos = diccionario_objetos;
-	sala->cantidad_objetos = 0;
-	sala->cantidad_interacciones = 0;
 	sala->escape_exitoso = false;
 
+	size_t cantidad_objetos = 0;
+	size_t cantidad_interacciones = 0;
 	char linea[MAX_LINEA];
 	while (fgets(linea, MAX_LINEA, archivo_objetos) != NULL) {
 		struct objeto *objeto = objeto_crear_desde_string(linea);
@@ -92,7 +88,7 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 
 		hash_insertar(sala->objetos, objeto->nombre, nodo_objeto, NULL);
 	}
-	sala->cantidad_objetos = hash_cantidad(sala->objetos);
+	cantidad_objetos = hash_cantidad(sala->objetos);
 
 	while (fgets(linea, MAX_LINEA, archivo_interacciones) != NULL) {
 		struct interaccion *interaccion =
@@ -108,13 +104,13 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 			continue;
 		}
 		lista_insertar(nodo_objeto->interacciones, interaccion);
-		sala->cantidad_interacciones++;
+		cantidad_interacciones++;
 	}
 
 	fclose(archivo_objetos);
 	fclose(archivo_interacciones);
 
-	if (sala->cantidad_interacciones == 0 || sala->cantidad_objetos == 0) {
+	if (cantidad_interacciones == 0 || cantidad_objetos == 0) {
 		sala_destruir(sala);
 		return NULL;
 	}
@@ -219,9 +215,7 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 	for (; lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
 		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
-			if (strcmp(objeto2,
-						interaccion_actual->objeto_parametro) == 0 ||
-					strcmp(objeto2, "") == 0) {
+			if (strcmp(objeto2, interaccion_actual->objeto_parametro) == 0 || strcmp(objeto2, "") == 0) {
 				lista_iterador_destruir(it);
 				return true;
 			}
@@ -237,31 +231,19 @@ bool sala_escape_exitoso(sala_t *sala)
 	return sala->escape_exitoso;
 }
 
-int sala_ejecutar_interaccion_valida(
-	sala_t *sala, struct interaccion *interaccion,  nodo_objeto_t *objeto1, nodo_objeto_t *objeto2,
-	void (*mostrar_mensaje)(const char *mensaje, enum tipo_accion accion,
-				void *aux),
-	void *aux)
+int sala_ejecutar_interaccion_valida( sala_t *sala, struct interaccion *interaccion,  nodo_objeto_t *objeto1, nodo_objeto_t *objeto2, void (*mostrar_mensaje)(const char *mensaje, enum tipo_accion accion, void *aux), void *aux)
 {
-	if(!objeto1->en_posesion && objeto1->objeto->es_asible){
-		mostrar_mensaje("Necesitas agarrarlo para poder usarlo", interaccion->accion.tipo, aux);
-		return 0;
-	}
+
 
 	nodo_objeto_t *nodo_aux = hash_obtener(sala->objetos, interaccion->accion.objeto);
 
 	switch (interaccion->accion.tipo) {
-
 	case DESCUBRIR_OBJETO:
-		if(!nodo_aux || !(objeto1->conocido || objeto1->en_posesion) || objeto2 != NULL){
-			mostrar_mensaje("No se como hacer eso", interaccion->accion.tipo, aux);
+		if(!nodo_aux || !(objeto1->conocido || objeto1->en_posesion) || objeto2 != NULL)
 			return 0;
-		}
 
-		if(nodo_aux->conocido || nodo_aux->en_posesion){
-			mostrar_mensaje("Nada interesante", interaccion->accion.tipo, aux);
+		if(nodo_aux->conocido || nodo_aux->en_posesion)
 			return 0;
-		}
 
 		nodo_aux->conocido = true;
 		break;
@@ -292,14 +274,16 @@ int sala_ejecutar_interaccion_valida(
 		sala->escape_exitoso = true;
 		break;
 
-	// case ACCION_INVALIDA:
+	case ACCION_INVALIDA:
+		return 0;
+
 	default:
 		return 0;
 		break;
 	}
-	mostrar_mensaje(interaccion->accion.mensaje, interaccion->accion.tipo, aux);
 	return 1;
 }
+
 
 int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 			      const char *objeto1, const char *objeto2,
@@ -308,16 +292,15 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 						      void *aux),
 			      void *aux)
 {
-	if (!sala || !verbo || !objeto1){
-		mostrar_mensaje("Los parametros no son correctos", ACCION_INVALIDA, aux);
+	if (!sala || !verbo || !objeto1)
 		return 0;
-	}
 
 	nodo_objeto_t *nodo_objeto1 = (nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
-	if (!nodo_objeto1){
-		mostrar_mensaje("No se a que te referis", ACCION_INVALIDA, aux);
+	if (!nodo_objeto1 || !(nodo_objeto1->conocido || nodo_objeto1->en_posesion) )
 		return 0;
-	}
+
+	if(!nodo_objeto1->en_posesion && nodo_objeto1->objeto->es_asible)
+		return 0;
 
 	nodo_objeto_t *nodo_objeto2 = (nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
 
@@ -332,15 +315,17 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
 			if (strcmp(objeto2, "") == 0 || strcmp(objeto2, interaccion_actual->objeto_parametro) == 0) {
 				int n = sala_ejecutar_interaccion_valida(sala, interaccion_actual, nodo_objeto1, nodo_objeto2, mostrar_mensaje, aux);
-				if(n == 0)
+				if(n == 0){
+					lista_iterador_destruir(it);
 					return 0;
-				interacciones_ejecutadas += n;
+				}
+				mostrar_mensaje(interaccion_actual->accion.mensaje, interaccion_actual->accion.tipo, aux);
+				interacciones_ejecutadas++;
 			}
 		}
 	}
-	if (interacciones_ejecutadas == 0) {
-		mostrar_mensaje("No puedo hacer eso", ACCION_INVALIDA, aux);
-	}
+
+	lista_iterador_destruir(it);
 	return interacciones_ejecutadas;
 }
 
@@ -348,8 +333,8 @@ char *sala_describir_objeto(sala_t *sala, const char *nombre_objeto)
 {
 	if (!sala || !nombre_objeto)
 		return NULL;
-	nodo_objeto_t *nodo_objeto =
-		(nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
+
+	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
 
 	if (!nodo_objeto)
 		return NULL;
@@ -363,8 +348,9 @@ bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
 {
 	if (!sala || !nombre_objeto)
 		return false;
+
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
-	if (!nodo_objeto)
+	if (!nodo_objeto || nodo_objeto->en_posesion)
 		return false;
 
 	if (nodo_objeto->conocido && nodo_objeto->objeto->es_asible) {
@@ -376,15 +362,9 @@ bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
 	return false;
 }
 
-void destruir_interacciones(void *interaccion)
-{
-	free(interaccion);
-}
-
 void destruir_nodo_objeto(void *nodo_objeto_void)
 {
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
-	// lista_destruir_todo(nodo_objeto->interacciones, destruir_interacciones);
 	lista_destruir_todo(nodo_objeto->interacciones, free);
 	free(nodo_objeto->objeto);
 	free(nodo_objeto);

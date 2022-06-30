@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 			for (int i = 0; i < cantidad; i++) {
 				printf("%d. %s\n", i, vector_nombres[i]);
 			}
-		} else if (strcmp(comando, "salir") == 0 && strcmp(objeto1, "") == 0 && strcmp(objeto2, "") == 0) {
+		} else if (strcmp(comando, "salir") == 0 && strcmp(objeto1, "") == 0) {
 			sala_destruir(sala);
 			return 0;
 		}
