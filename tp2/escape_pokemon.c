@@ -44,27 +44,66 @@ int main(int argc, char *argv[])
 		sscanf(linea, "%s %s %s", comando, objeto1, objeto2);
 
 		if (strcmp(comando, "ayuda") == 0) {
-			printf("comandos: \n * ayuda \n * agarrar \n * describir \n * [verbo] [objeto1] [objeto2] \n");
+
+			printf("comandos: \n * ayuda \n * agarrar \n * describir \n * listar (objetos|inventario) \n * [verbo] [objeto1] [objeto2] \n salir \n");
+
 		} else if (strcmp(comando, "describir") == 0) {
-			char *descripcion =
-				sala_describir_objeto(sala, objeto1);
+
+			char *descripcion = sala_describir_objeto(sala, objeto1);
 			if (!descripcion) {
 				printf("No conozco ese objeto \n");
 				continue;
 			}
 			printf("%s\n", descripcion);
+
 		} else if (strcmp(comando, "agarrar") == 0) {
+
 			bool agarrado = sala_agarrar_objeto(sala, objeto1);
 			if (!agarrado) {
 				printf("No podes agarrar eso\n");
 				continue;
 			}
+
 			printf("Nuevo item adquirido: %s\n", objeto1);
-		} else {
+
+		} else if (strcmp(comando, "listar") == 0){
+
+			int cantidad = 0;
+			char **vector_nombres;
+
+			if(strcmp(objeto1, "objetos") == 0){
+				vector_nombres = sala_obtener_nombre_objetos_conocidos(sala, &cantidad);
+				if(!vector_nombres || cantidad == 0){
+					printf("No hay objetos conocidos\n");
+					continue;
+				}
+			}
+			else if(strcmp(objeto1, "inventario") == 0){
+				vector_nombres = sala_obtener_nombre_objetos_poseidos(sala, &cantidad);
+				if(!vector_nombres || cantidad == 0){
+					printf("No hay nada en el inventario\n");
+					continue;
+				}
+			}
+			else {
+				printf("No puedo listar eso\n");
+				continue;
+			}
+
+			for (int i = 0; i < cantidad; i++) {
+				printf("%d. %s\n", i, vector_nombres[i]);
+			}
+		} else if (strcmp(comando, "salir") == 0 && strcmp(objeto1, "") == 0 && strcmp(objeto2, "") == 0) {
+			sala_destruir(sala);
+			return 0;
+		}
+		else {
 			sala_ejecutar_interaccion(sala, comando, objeto1, objeto2, mostrar_mensaje, NULL);
 		}
+		strcpy(comando, "");
+		strcpy(objeto1, "");
+		strcpy(objeto2, "");
 	}
-	printf("FELICIDADES! ESCAPASTE DE LA SALA! LIBERTAD!!! \n");
 	sala_destruir(sala);
 	return 0;
 }
