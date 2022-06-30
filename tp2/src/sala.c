@@ -32,7 +32,7 @@ struct sala {
 };
 
 sala_t *sala_crear_desde_archivos(const char *objetos,
-				  const char *interacciones)
+		const char *interacciones)
 {
 	if (!objetos || !interacciones)
 		return NULL;
@@ -101,7 +101,7 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 			continue;
 
 		nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)hash_obtener(
-			sala->objetos, interaccion->objeto);
+				sala->objetos, interaccion->objeto);
 
 		if (!nodo_objeto) {
 			free(interaccion);
@@ -124,13 +124,13 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 
 typedef struct vector_char_con_condicion {
 	char **nombres;
-	size_t tope;
+	int tope;
 	bool en_posesion;
 	bool conocido;
 } vector_char_t;
 
 bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
-		    void *vector_char_void)
+		void *vector_char_void)
 {
 	vector_char_t *vector_char = (vector_char_t *)vector_char_void;
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
@@ -147,7 +147,7 @@ bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
 }
 
 char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad,
-					       bool conocido, bool en_posesion)
+		bool conocido, bool en_posesion)
 {
 	if (!sala) {
 		if (cantidad)
@@ -161,6 +161,7 @@ char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad,
 			*cantidad = -1;
 		return NULL;
 	}
+
 	vector_char_t *vector_char = malloc(sizeof(vector_char_t));
 	if (!vector_char) {
 		if (cantidad)
@@ -174,12 +175,12 @@ char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad,
 	vector_char->en_posesion = en_posesion;
 	vector_char->conocido = conocido;
 
-	size_t recorridos =
-		hash_con_cada_clave(sala->objetos, agrega_nombres, vector_char);
-	free(vector_char);
+	hash_con_cada_clave(sala->objetos, agrega_nombres, vector_char);
 
 	if (cantidad)
-		*cantidad = (int)recorridos;
+		*cantidad = vector_char->tope;
+
+	free(vector_char);
 
 	return nombres;
 }
@@ -187,23 +188,21 @@ char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad,
 char **sala_obtener_nombre_objetos(sala_t *sala, int *cantidad)
 {
 	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false,
-						       false);
+			false);
 }
 
 char **sala_obtener_nombre_objetos_conocidos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, true,
-						       false);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, true, false);
 }
 
 char **sala_obtener_nombre_objetos_poseidos(sala_t *sala, int *cantidad)
 {
-	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false,
-						       true);
+	return sala_obtener_nombre_objetos_condicional(sala, cantidad, false, true);
 }
 
 bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
-				const char *objeto1, const char *objeto2)
+		const char *objeto1, const char *objeto2)
 {
 	if (sala == NULL || verbo == NULL || objeto1 == NULL || objeto2 == NULL)
 		return false;
@@ -214,18 +213,15 @@ bool sala_es_interaccion_valida(sala_t *sala, const char *verbo,
 	if (!nodo_objeto1)
 		return false;
 
-	lista_iterador_t *it = NULL;
+	lista_iterador_t *it = lista_iterador_crear(nodo_objeto1->interacciones);
 	struct interaccion *interaccion_actual = NULL;
 
-	for (it = lista_iterador_crear(nodo_objeto1->interacciones);
-	     lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
-		interaccion_actual =
-			(struct interaccion *)lista_iterador_elemento_actual(
-				it);
+	for (; lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
+		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
 			if (strcmp(objeto2,
-				   interaccion_actual->objeto_parametro) == 0 ||
-			    strcmp(objeto2, "") == 0) {
+						interaccion_actual->objeto_parametro) == 0 ||
+					strcmp(objeto2, "") == 0) {
 				lista_iterador_destruir(it);
 				return true;
 			}
@@ -257,28 +253,45 @@ int sala_ejecutar_interaccion_valida(
 	// 	ESCAPAR
 	// };
 
+	if(!objeto1->en_posesion && objeto1->objeto->es_asible){
+		mostrar_mensaje("Necesitas agarrarlo para poder usarlo", interaccion->accion.tipo, aux);
+		return 0;
+	}
+
 	nodo_objeto_t *nodo_aux = hash_obtener(sala->objetos, interaccion->accion.objeto);
 
 	switch (interaccion->accion.tipo) {
-	// case ACCION_INVALIDA:
 
 	case DESCUBRIR_OBJETO:
-		if(!nodo_aux || objeto2 != NULL){
+		if(!nodo_aux || !(objeto1->conocido || objeto1->en_posesion) || objeto2 != NULL){
+			mostrar_mensaje("No se como hacer eso", interaccion->accion.tipo, aux);
 			return 0;
 		}
-		if(objeto1->conocido){
-			if(nodo_aux->conocido){
-				return 0;
-			}
-			nodo_aux->conocido = true;
+
+		if(nodo_aux->conocido || nodo_aux->en_posesion){
+			mostrar_mensaje("Nada interesante", interaccion->accion.tipo, aux);
+			return 0;
+		}
+
+		nodo_aux->conocido = true;
+		break;
+
+	case REEMPLAZAR_OBJETO:
+		if(!objeto2 || !nodo_aux)
+			return 0;
+		if((objeto1->conocido || objeto1->en_posesion) && (objeto2->conocido || objeto2->en_posesion)){
+			nodo_aux->conocido = objeto2->conocido;
+			nodo_aux->en_posesion = objeto2->en_posesion;
+			hash_quitar(sala->objetos, objeto2->objeto->nombre);
 		}
 		break;
 
-	// case REEMPLAZAR_OBJETO:
-
 	case ELIMINAR_OBJETO:
-		if(objeto1->conocido){
-			return 0;
+		if(objeto1->conocido || objeto1->en_posesion){
+			if(nodo_aux)
+				hash_quitar(sala->objetos, interaccion->accion.objeto);
+			else
+				return 0;
 		}
 		break;
 
@@ -286,9 +299,13 @@ int sala_ejecutar_interaccion_valida(
 		break;
 
 	case ESCAPAR:
+		printf("bien pa\n");
 		sala->escape_exitoso = true;
 		break;
+
+	// case ACCION_INVALIDA:
 	default:
+		return 0;
 		break;
 	}
 	mostrar_mensaje(interaccion->accion.mensaje, interaccion->accion.tipo, aux);
@@ -302,21 +319,19 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 						      void *aux),
 			      void *aux)
 {
-	if (sala == NULL || verbo == NULL || objeto1 == NULL || objeto2 == NULL)
+	if (!sala || !verbo || !objeto1)
 		return 0;
 
-	nodo_objeto_t *nodo_objeto1 =
-		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
+	nodo_objeto_t *nodo_objeto1 = (nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
+	if (!nodo_objeto1)
+		return 0;
 
 	nodo_objeto_t *nodo_objeto2 =
 		(nodo_objeto_t *)hash_obtener(sala->objetos, objeto2);
 
-	if (!nodo_objeto1)
-		return 0;
 
 	struct interaccion *interaccion_actual = NULL;
-	lista_iterador_t *it =
-		lista_iterador_crear(nodo_objeto1->interacciones);
+	lista_iterador_t *it = lista_iterador_crear(nodo_objeto1->interacciones);
 
 	for (; lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
 		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
@@ -324,13 +339,13 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
 			if (strcmp(objeto2, interaccion_actual->objeto_parametro) == 0 ||
 			    strcmp(objeto2, "") == 0) {
-
-				sala_ejecutar_interaccion_valida(sala, interaccion_actual, nodo_objeto1, nodo_objeto2, mostrar_mensaje, aux);
+				int n = sala_ejecutar_interaccion_valida(sala, interaccion_actual, nodo_objeto1, nodo_objeto2, mostrar_mensaje, aux);
+				if(n == 0)
+					return 0;
 			}
 		}
 	}
-
-	return 0;
+	return 1;
 }
 
 char *sala_describir_objeto(sala_t *sala, const char *nombre_objeto)
@@ -352,15 +367,16 @@ bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
 {
 	if (!sala || !nombre_objeto)
 		return false;
-	nodo_objeto_t *nodo_objeto =
-		(nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
+	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)hash_obtener(sala->objetos, nombre_objeto);
 	if (!nodo_objeto)
 		return false;
 
 	if (nodo_objeto->conocido && nodo_objeto->objeto->es_asible) {
 		nodo_objeto->en_posesion = true;
+		nodo_objeto->conocido = false;
 		return true;
 	}
+
 	return false;
 }
 
@@ -372,7 +388,8 @@ void destruir_interacciones(void *interaccion)
 void destruir_nodo_objeto(void *nodo_objeto_void)
 {
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
-	lista_destruir_todo(nodo_objeto->interacciones, destruir_interacciones);
+	// lista_destruir_todo(nodo_objeto->interacciones, destruir_interacciones);
+	lista_destruir_todo(nodo_objeto->interacciones, free);
 	free(nodo_objeto->objeto);
 	free(nodo_objeto);
 }
