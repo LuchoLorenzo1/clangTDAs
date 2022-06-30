@@ -247,8 +247,8 @@ int sala_ejecutar_interaccion_valida(
 				void *aux),
 	void *aux)
 {
-
 	// enum tipo_accion {
+
 	// 	ACCION_INVALIDA,
 	// 	DESCUBRIR_OBJETO,
 	// 	REEMPLAZAR_OBJETO,
@@ -257,18 +257,34 @@ int sala_ejecutar_interaccion_valida(
 	// 	ESCAPAR
 	// };
 
+	nodo_objeto_t *nodo_aux = hash_obtener(sala->objetos, interaccion->accion.objeto);
+
 	switch (interaccion->accion.tipo) {
 	// case ACCION_INVALIDA:
 
 	case DESCUBRIR_OBJETO:
-		objeto2->conocido = true;
+		if(!nodo_aux || objeto2 != NULL){
+			return 0;
+		}
+		if(objeto1->conocido){
+			if(nodo_aux->conocido){
+				return 0;
+			}
+			nodo_aux->conocido = true;
+		}
 		break;
 
 	// case REEMPLAZAR_OBJETO:
-	// case ELIMINAR_OBJETO:
-	case MOSTRAR_MENSAJE:
-		mostrar_mensaje(interaccion->accion.mensaje, interaccion->accion.tipo, aux);
+
+	case ELIMINAR_OBJETO:
+		if(objeto1->conocido){
+			return 0;
+		}
 		break;
+
+	case MOSTRAR_MENSAJE:
+		break;
+
 	case ESCAPAR:
 		sala->escape_exitoso = true;
 		break;
