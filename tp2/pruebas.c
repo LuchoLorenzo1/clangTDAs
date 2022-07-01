@@ -100,6 +100,8 @@ void pruebas_crear_sala()
 	sala_t *sala = sala_crear_desde_archivos("chanu/obj.dat", "chanu/int.csv");
 
 	pa2m_afirmar(sala != NULL, "Puedo crear la sala a partir de archivos no vacíos");
+
+	// PRUEBAS ELIMINADA POR SER DE CAJA BLANCA
 	// pa2m_afirmar(sala->cantidad_objetos == 9, "Se leyeron 9 objetos");
 	// pa2m_afirmar(sala->cantidad_interacciones == 9, "Se leyeron 9 interacciones");
 
@@ -123,6 +125,7 @@ void pruebas_nombre_objetos()
 	pa2m_afirmar(objetos2 != NULL,
 		     "Puedo pedir el vector de nombres a la sala pasando cantidad no NULL");
 
+	// PRUEBA ELIMINADA POR SER ERRONEA
 	// pa2m_afirmar(cantidad == 9, "La cantidad de elementos del vector coincide con lo esperado");
 	//
 	// const char *esperados[] = { "habitacion",    "mesa",  "interruptor", "pokebola", "cajon",

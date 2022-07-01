@@ -27,34 +27,17 @@ struct sala {
 	bool escape_exitoso;
 };
 
-sala_t *sala_crear_desde_archivos(const char *objetos,
-		const char *interacciones)
+sala_t *sala_crear_desde_archivos(const char *objetos, const char *interacciones)
 {
 	if (!objetos || !interacciones)
 		return NULL;
 
-	FILE *archivo_objetos = fopen(objetos, "r");
-	if (!archivo_objetos) {
-		return NULL;
-	}
-	FILE *archivo_interacciones = fopen(interacciones, "r");
-	if (!archivo_interacciones) {
-		fclose(archivo_objetos);
-		return NULL;
-	}
-
 	sala_t *sala = malloc(sizeof(sala_t));
-	if (!sala) {
-		fclose(archivo_objetos);
-		fclose(archivo_interacciones);
+	if (!sala)
 		return NULL;
-	}
 
 	hash_t *diccionario_objetos = hash_crear(10);
-
-	if (!diccionario_objetos) {
-		fclose(archivo_objetos);
-		fclose(archivo_interacciones);
+	if (!diccionario_objetos){
 		free(sala);
 		return NULL;
 	}
@@ -62,23 +45,31 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 	sala->objetos = diccionario_objetos;
 	sala->escape_exitoso = false;
 
+	FILE *archivo_objetos = fopen(objetos, "r");
+	if (!archivo_objetos){
+		sala_destruir(sala);
+		return NULL;
+	}
+
 	size_t cantidad_objetos = 0;
 	size_t cantidad_interacciones = 0;
 	char linea[MAX_LINEA];
 	while (fgets(linea, MAX_LINEA, archivo_objetos) != NULL) {
 		struct objeto *objeto = objeto_crear_desde_string(linea);
+
 		nodo_objeto_t *nodo_objeto = malloc(sizeof(nodo_objeto_t));
 		if (!objetos || !nodo_objeto) {
-			free(objeto);
-			free(nodo_objeto);
-			continue;
+			sala_destruir(sala);
+			fclose(archivo_objetos);
+			return NULL;
 		}
 
 		lista_t *lista_interacciones = lista_crear();
 		if (!lista_interacciones) {
-			free(objeto);
 			free(nodo_objeto);
-			continue;
+			sala_destruir(sala);
+			fclose(archivo_objetos);
+			return NULL;
 		}
 
 		nodo_objeto->en_posesion = false;
@@ -88,26 +79,32 @@ sala_t *sala_crear_desde_archivos(const char *objetos,
 
 		hash_insertar(sala->objetos, objeto->nombre, nodo_objeto, NULL);
 	}
+	fclose(archivo_objetos);
 	cantidad_objetos = hash_cantidad(sala->objetos);
 
+	FILE *archivo_interacciones = fopen(interacciones, "r");
+	if (!archivo_interacciones) {
+		sala_destruir(sala);
+		return NULL;
+	}
 	while (fgets(linea, MAX_LINEA, archivo_interacciones) != NULL) {
-		struct interaccion *interaccion =
-			interaccion_crear_desde_string(linea);
-		if (interaccion == NULL)
-			continue;
+		struct interaccion *interaccion = interaccion_crear_desde_string(linea);
+		if (interaccion == NULL){
+			fclose(archivo_interacciones);
+			sala_destruir(sala);
+			return NULL;
+		}
 
-		nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)hash_obtener(
-				sala->objetos, interaccion->objeto);
-
+		nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)hash_obtener(sala->objetos, interaccion->objeto);
 		if (!nodo_objeto) {
+			fclose(archivo_interacciones);
 			free(interaccion);
+			sala_destruir(sala);
 			continue;
 		}
 		lista_insertar(nodo_objeto->interacciones, interaccion);
 		cantidad_interacciones++;
 	}
-
-	fclose(archivo_objetos);
 	fclose(archivo_interacciones);
 
 	if (cantidad_interacciones == 0 || cantidad_objetos == 0) {
@@ -362,10 +359,15 @@ bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
 	return false;
 }
 
+
+void destruir_interaccion(void *interaccion){
+	free(interaccion);
+}
+
 void destruir_nodo_objeto(void *nodo_objeto_void)
 {
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
-	lista_destruir_todo(nodo_objeto->interacciones, free);
+	lista_destruir_todo(nodo_objeto->interacciones, destruir_interaccion);
 	free(nodo_objeto->objeto);
 	free(nodo_objeto);
 }
