@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
 #define MAX_NOMBRE 20
@@ -248,10 +247,8 @@ bool sala_escape_exitoso(sala_t *sala)
 	return sala->escape_exitoso;
 }
 
-int sala_ejecutar_interaccion_valida(sala_t *sala, struct interaccion *interaccion,  nodo_objeto_t *objeto1, nodo_objeto_t *objeto2, void (*mostrar_mensaje)(const char *mensaje, enum tipo_accion accion, void *aux), void *aux)
+int sala_ejecutar_interaccion_valida(sala_t *sala, struct interaccion *interaccion,  nodo_objeto_t *objeto1, nodo_objeto_t *objeto2)
 {
-
-
 	nodo_objeto_t *nodo_aux = hash_obtener(sala->objetos, interaccion->accion.objeto);
 
 	switch (interaccion->accion.tipo) {
@@ -277,8 +274,9 @@ int sala_ejecutar_interaccion_valida(sala_t *sala, struct interaccion *interacci
 
 	case ELIMINAR_OBJETO:
 		if(objeto1->conocido || objeto1->en_posesion){
-			if(nodo_aux){
+			if(strcmp(nodo_aux->objeto->nombre, objeto1->objeto->nombre) == 0){
 				destruir_nodo_objeto(hash_quitar(sala->objetos, objeto1->objeto->nombre));
+				objeto1 = NULL;
 			} else{
 				return 0;
 			}
@@ -297,7 +295,6 @@ int sala_ejecutar_interaccion_valida(sala_t *sala, struct interaccion *interacci
 
 	default:
 		return 0;
-		break;
 	}
 	return 1;
 }
@@ -314,7 +311,7 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 		return 0;
 
 	nodo_objeto_t *nodo_objeto1 = (nodo_objeto_t *)hash_obtener(sala->objetos, objeto1);
-	if (!nodo_objeto1 || !(nodo_objeto1->conocido || nodo_objeto1->en_posesion) )
+	if (!nodo_objeto1 || !(nodo_objeto1->conocido || nodo_objeto1->en_posesion))
 		return 0;
 
 	if(!nodo_objeto1->en_posesion && nodo_objeto1->objeto->es_asible)
@@ -329,16 +326,22 @@ int sala_ejecutar_interaccion(sala_t *sala, const char *verbo,
 
 	for (; lista_iterador_tiene_siguiente(it); lista_iterador_avanzar(it)) {
 		interaccion_actual = (struct interaccion *)lista_iterador_elemento_actual(it);
+		enum tipo_accion accion = interaccion_actual->accion.tipo;
+		char *mensaje = interaccion_actual->accion.mensaje;
 
 		if (strcmp(verbo, interaccion_actual->verbo) == 0) {
 			if (strcmp(objeto2, "") == 0 || strcmp(objeto2, interaccion_actual->objeto_parametro) == 0) {
-				int n = sala_ejecutar_interaccion_valida(sala, interaccion_actual, nodo_objeto1, nodo_objeto2, mostrar_mensaje, aux);
+				int n = sala_ejecutar_interaccion_valida(sala, interaccion_actual, nodo_objeto1, nodo_objeto2);
 				if(n == 0){
 					lista_iterador_destruir(it);
 					return 0;
+				} else if (accion == ELIMINAR_OBJETO) {
+					interacciones_ejecutadas++;
+					mostrar_mensaje(mensaje, accion, aux);
+					break;
 				}
-				mostrar_mensaje(interaccion_actual->accion.mensaje, interaccion_actual->accion.tipo, aux);
 				interacciones_ejecutadas++;
+				mostrar_mensaje(mensaje, accion, aux);
 			}
 		}
 	}
