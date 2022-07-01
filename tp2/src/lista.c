@@ -272,7 +272,7 @@ bool lista_iterador_avanzar(lista_iterador_t *iterador)
 
 void *lista_iterador_elemento_actual(lista_iterador_t *iterador)
 {
-	if (!iterador || !iterador->corriente)
+	if (!iterador || !iterador->corriente || !iterador->corriente->elemento)
 		return NULL;
 	return iterador->corriente->elemento;
 }

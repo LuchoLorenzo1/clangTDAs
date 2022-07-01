@@ -27,6 +27,7 @@ struct sala {
 	bool escape_exitoso;
 };
 
+
 sala_t *sala_crear_desde_archivos(const char *objetos, const char *interacciones)
 {
 	if (!objetos || !interacciones)
@@ -114,6 +115,25 @@ sala_t *sala_crear_desde_archivos(const char *objetos, const char *interacciones
 
 	return sala;
 }
+
+void destruir_interaccion(void *interaccion){
+	free(interaccion);
+}
+
+void destruir_nodo_objeto(void *nodo_objeto_void)
+{
+	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
+	lista_destruir_todo(nodo_objeto->interacciones, destruir_interaccion);
+	free(nodo_objeto->objeto);
+	free(nodo_objeto);
+}
+
+void sala_destruir(sala_t *sala)
+{
+	hash_destruir_todo(sala->objetos, destruir_nodo_objeto);
+	free(sala);
+}
+
 
 typedef struct vector_char_con_condicion {
 	char **nombres;
@@ -228,7 +248,7 @@ bool sala_escape_exitoso(sala_t *sala)
 	return sala->escape_exitoso;
 }
 
-int sala_ejecutar_interaccion_valida( sala_t *sala, struct interaccion *interaccion,  nodo_objeto_t *objeto1, nodo_objeto_t *objeto2, void (*mostrar_mensaje)(const char *mensaje, enum tipo_accion accion, void *aux), void *aux)
+int sala_ejecutar_interaccion_valida(sala_t *sala, struct interaccion *interaccion,  nodo_objeto_t *objeto1, nodo_objeto_t *objeto2, void (*mostrar_mensaje)(const char *mensaje, enum tipo_accion accion, void *aux), void *aux)
 {
 
 
@@ -251,16 +271,17 @@ int sala_ejecutar_interaccion_valida( sala_t *sala, struct interaccion *interacc
 		if((objeto1->conocido || objeto1->en_posesion) && (objeto2->conocido || objeto2->en_posesion)){
 			nodo_aux->conocido = objeto2->conocido;
 			nodo_aux->en_posesion = objeto2->en_posesion;
-			hash_quitar(sala->objetos, objeto2->objeto->nombre);
+			destruir_nodo_objeto(hash_quitar(sala->objetos, interaccion->objeto_parametro));
 		}
 		break;
 
 	case ELIMINAR_OBJETO:
 		if(objeto1->conocido || objeto1->en_posesion){
-			if(nodo_aux)
-				hash_quitar(sala->objetos, interaccion->accion.objeto);
-			else
+			if(nodo_aux){
+				destruir_nodo_objeto(hash_quitar(sala->objetos, objeto1->objeto->nombre));
+			} else{
 				return 0;
+			}
 		}
 		break;
 
@@ -357,23 +378,4 @@ bool sala_agarrar_objeto(sala_t *sala, const char *nombre_objeto)
 	}
 
 	return false;
-}
-
-
-void destruir_interaccion(void *interaccion){
-	free(interaccion);
-}
-
-void destruir_nodo_objeto(void *nodo_objeto_void)
-{
-	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
-	lista_destruir_todo(nodo_objeto->interacciones, destruir_interaccion);
-	free(nodo_objeto->objeto);
-	free(nodo_objeto);
-}
-
-void sala_destruir(sala_t *sala)
-{
-	hash_destruir_todo(sala->objetos, destruir_nodo_objeto);
-	free(sala);
 }
