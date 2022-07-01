@@ -4,11 +4,17 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX_NOMBRE 20
+#define MAX_OPCION 20
 #define MAX_LINEA 200
-#define MAX_VERBO 20
-#define MAX_TEXTO 200
-
+#define MAX_COMANDO 20
+#define BLANCO "\x1b[37;1m"
+#define VERDE "\x1b[32;1m"
+#define ERROR "\x1b[31;1m"
+#define AMARILLO "\x1b[33;1m"
+#define AZUL "\x1b[34;1m"
+#define NORMAL "\x1b[0m"
+#define FIN "\033[0m\n"
+#define ITEM "*"
 
 void mostrar_mensaje(const char *mensaje, enum tipo_accion accion, void *aux)
 {
@@ -20,7 +26,7 @@ void mostrar_mensaje(const char *mensaje, enum tipo_accion accion, void *aux)
 int main(int argc, char *argv[])
 {
 	if (argc != 3) {
-		printf("Los parametros nos son correctos.\n");
+		printf(ERROR "Los parametros nos son correctos.\n");
 		return -1;
 	}
 
@@ -32,10 +38,13 @@ int main(int argc, char *argv[])
 
 	printf("Bienvenido a la sala de escape! \n");
 
-	char comando[MAX_VERBO];
-	char objeto1[MAX_NOMBRE];
-	char objeto2[MAX_NOMBRE];
+	char comandos[][MAX_LINEA] = {"ayuda","agarrar","describir","listar (objetos|inventario)","[verbo] [objeto1] [objeto2]","salir"};
+	size_t cantidad_comandos = sizeof(comandos) / sizeof(comandos[0]);
+	char comando[MAX_COMANDO] = "";
+	char objeto1[MAX_OPCION] = "";
+	char objeto2[MAX_OPCION] = "";
 	char linea[MAX_LINEA];
+
 
 	// game loop
 	while (!sala_escape_exitoso(sala)) {
@@ -44,27 +53,28 @@ int main(int argc, char *argv[])
 		sscanf(linea, "%s %s %s", comando, objeto1, objeto2);
 
 		if (strcmp(comando, "ayuda") == 0) {
-
-			printf("comandos: \n * ayuda \n * agarrar \n * describir \n * listar (objetos|inventario) \n * [verbo] [objeto1] [objeto2] \n salir \n");
+			for (size_t i = 0; i < cantidad_comandos; i++) {
+				printf(AZUL ITEM AMARILLO " %s" FIN, comandos[i]);
+			}
 
 		} else if (strcmp(comando, "describir") == 0) {
 
 			char *descripcion = sala_describir_objeto(sala, objeto1);
 			if (!descripcion) {
-				printf("No conozco ese objeto \n");
+				printf(ERROR "No conozco ese objeto" FIN);
 				continue;
 			}
-			printf("%s\n", descripcion);
+			printf(AZUL "%s" FIN, descripcion);
 
 		} else if (strcmp(comando, "agarrar") == 0) {
 
 			bool agarrado = sala_agarrar_objeto(sala, objeto1);
 			if (!agarrado) {
-				printf("No podes agarrar eso\n");
+				printf(ERROR "No podes agarrar eso" FIN);
 				continue;
 			}
 
-			printf("Nuevo item adquirido: %s\n", objeto1);
+			printf(VERDE "Nuevo item adquirido: %s" FIN, objeto1);
 
 		} else if (strcmp(comando, "listar") == 0){
 
@@ -86,7 +96,7 @@ int main(int argc, char *argv[])
 				}
 			}
 			else {
-				printf("No puedo listar eso\n");
+				printf(ERROR "No puedo listar eso" FIN);
 				continue;
 			}
 
@@ -94,6 +104,7 @@ int main(int argc, char *argv[])
 				printf("%d. %s\n", i, vector_nombres[i]);
 			}
 		} else if (strcmp(comando, "salir") == 0 && strcmp(objeto1, "") == 0) {
+			printf(ERROR "TE QUEDASTE ATRAPADO PARA SIEMPRE" FIN);
 			sala_destruir(sala);
 			return 0;
 		}
