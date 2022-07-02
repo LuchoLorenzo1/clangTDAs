@@ -166,6 +166,82 @@ void pruebas_interacciones()
 	sala_destruir(sala);
 }
 
+
+void sumar_contador(const char *puntero, enum tipo_accion accion, void *contador)
+{
+	*(int *) contador += 1;
+}
+
+
+void pruebas_sala_interacciones()
+{
+
+	sala_t *sala = sala_crear_desde_archivos("ejemplo/objetos.txt", "ejemplo/interacciones.txt");
+	if(!sala)
+		return;
+
+	int contador = 0;
+	int n;
+	char *mensaje;
+	bool agarrado;
+	n = sala_ejecutar_interaccion(sala,"examinar", "habitacion", "", sumar_contador, &contador);
+	pa2m_afirmar(n == contador, "La cantidad de interacciones para una accion de tipo descubrir ejecutadas es la correcta");
+
+	contador = 0;
+	n = sala_ejecutar_interaccion(sala, "examinar", "habitacion", "", sumar_contador, &contador);
+	pa2m_afirmar(n == 0 && contador == 0, "Volver a ejecutar la misma interaccion con tipo descubrir devuelve 0. (no devuelve descubre de nuevo)");
+
+	mensaje = sala_describir_objeto(sala, "habitacion");
+	pa2m_afirmar(strcmp(mensaje, "Una habitación de la que no podes escapar") == 0, "Describir la habitacion devuelve el mensaje correcto");
+	mensaje = sala_describir_objeto(sala, "puerta-abierta");
+	pa2m_afirmar(mensaje == NULL, "Describir un objeto que no conozco devuelve NULL.");
+	mensaje = sala_describir_objeto(sala, "piedra");
+	pa2m_afirmar(mensaje == NULL, "Describir un objeto que no existe devuelve NULL.");
+
+	agarrado = sala_agarrar_objeto(sala, "pokebola");
+	pa2m_afirmar(agarrado, "Agarro un objeto que es agarrable en ese momento y devuelve true.");
+	agarrado = sala_agarrar_objeto(sala, "puerta");
+	pa2m_afirmar(!agarrado, "Agarro un objeto que conozco en ese momento pero no es agarrable y devuelve false.");
+	agarrado = sala_agarrar_objeto(sala, "puerta");
+	pa2m_afirmar(!agarrado, "Agarro un objeto que no conozco en ese momento y devuelve false.");
+	agarrado = sala_agarrar_objeto(sala, "piedra");
+	pa2m_afirmar(!agarrado, "Agarro un objeto que no existe devuelve fasle.");
+
+	contador = 0;
+	char **nombres = sala_obtener_nombre_objetos_poseidos(sala, &contador);
+	pa2m_afirmar(contador == 1, "La cantidad de objetos poseidos es 1");
+	pa2m_afirmar(strcmp(nombres[0],"pokebola") == 0, "El objeto que poseo es el que agarre");
+	free(nombres);
+
+	contador = 0;
+	char **nombres_poseidos = sala_obtener_nombre_objetos_conocidos(sala, &contador);
+	pa2m_afirmar(contador == 2, "La cantidad de objetos conocidos es 2");
+	free(nombres_poseidos);
+
+	bool ganado = sala_escape_exitoso(sala);
+	pa2m_afirmar(!ganado, "Verificar si el jugador escapó de la sala cuando no escapó devuelve false");
+
+	contador = 0;
+	n = sala_ejecutar_interaccion(sala, "abrir", "pokebola", "", sumar_contador, &contador);
+	pa2m_afirmar(n == contador, "La cantidad de interacciones para una accion de tipo descubrir y eliminar ejecutadas es la correcta");
+
+	agarrado = sala_agarrar_objeto(sala, "llave");
+	pa2m_afirmar(agarrado, "Agarro un objeto que es agarrable en ese momento y devuelve true.");
+
+	contador = 0;
+	n = sala_ejecutar_interaccion(sala, "abrir", "llave", "puerta", sumar_contador, &contador);
+	pa2m_afirmar(n == contador, "Ejecuto una interaccion valida con 2 objetos y es correcta");
+
+	contador = 0;
+	n = sala_ejecutar_interaccion(sala, "salir", "puerta-abierta", "", sumar_contador, &contador);
+	pa2m_afirmar(n == contador, "La cantidad de interacciones para una accion de tipo ganar ejecutadas es la correcta");
+
+	ganado = sala_escape_exitoso(sala);
+	pa2m_afirmar(ganado, "Verificar si el jugador escapó  cuando no escapó devuelve false");
+
+	sala_destruir(sala);
+}
+
 int main()
 {
 	pa2m_nuevo_grupo("Pruebas de creación de objetos");
@@ -182,6 +258,9 @@ int main()
 
 	pa2m_nuevo_grupo("Pruebas de interacciones");
 	pruebas_interacciones();
+
+	pa2m_nuevo_grupo("Pruebas ejecutar interacciones");
+	pruebas_sala_interacciones();
 
 	return pa2m_mostrar_reporte();
 }

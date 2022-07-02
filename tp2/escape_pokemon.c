@@ -20,7 +20,26 @@ void mostrar_mensaje(const char *mensaje, enum tipo_accion accion, void *aux)
 {
 	if(!mensaje)
 		return;
-	printf("%s\n", mensaje);
+	switch (accion)
+	{
+	case DESCUBRIR_OBJETO:
+		printf(AMARILLO "%s" FIN, mensaje);
+		break;
+	case REEMPLAZAR_OBJETO:
+		printf(AZUL "%s" FIN, mensaje);
+		break;
+	case MOSTRAR_MENSAJE:
+		printf(BLANCO "%s" FIN, mensaje);
+		break;
+	case ESCAPAR:
+		printf(VERDE "%s" FIN, mensaje);
+		break;
+	case ACCION_INVALIDA:
+		printf(ERROR "%s" FIN, mensaje);
+		break;
+	default:
+		break;
+	}
 }
 
 int main(int argc, char *argv[])
@@ -38,16 +57,33 @@ int main(int argc, char *argv[])
 
 	printf("Bienvenido a la sala de escape! \n");
 
+	puts("                                  ,\n"
+	"    _.----.        ____         ,'  _\\   ___    ___     ____\n"
+	"_,-'       `.     |    |  /`.   \\,-'    |   \\  /   |   |    \\  |`.\n"
+	"\\      __    \\    '-.  | /   `.  ___    |    \\/    |   '-.   \\ |  |\n"
+	" \\.    \\ \\   |  __  |  |/    ,','_  `.  |          | __  |    \\|  |\n"
+	"   \\    \\/   /,' _`.|      ,' / / / /   |          ,' _`.|     |  |\n"
+	"    \\     ,-'/  /   \\    ,'   | \\/ / ,`.|         /  /   \\  |     |\n"
+	"     \\    \\ |   \\_/  |   `-.  \\    `'  /|  |    ||   \\_/  | |\\    |\n"
+	"      \\    \\ \\      /       `-.`.___,-' |  |\\  /| \\      /  | |   |\n"
+	"       \\    \\ `.__,'|  |`-._    `|      |__| \\/ |  `.__,'|  | |   |\n"
+	"        \\_.-'       |__|    `-._ |              '-.|     '-.| |   |\n"
+	"                                `'                            '-._|\n");
+
 	char comandos[][MAX_LINEA] = {"ayuda","agarrar","describir","listar (objetos|inventario)","[verbo] [objeto1] [objeto2]","salir"};
 	size_t cantidad_comandos = sizeof(comandos) / sizeof(comandos[0]);
-	char comando[MAX_COMANDO] = "";
-	char objeto1[MAX_OPCION] = "";
-	char objeto2[MAX_OPCION] = "";
+	char comando[MAX_COMANDO];
+	char objeto1[MAX_OPCION];
+	char objeto2[MAX_OPCION];
 	char linea[MAX_LINEA];
 
-
 	// game loop
+	printf("\n");
 	while (!sala_escape_exitoso(sala)) {
+		strcpy(comando, "");
+		strcpy(objeto1, "");
+		strcpy(objeto2, "");
+
 		printf("> ");
 		fgets(linea, MAX_LINEA, stdin);
 		sscanf(linea, "%s %s %s", comando, objeto1, objeto2);
@@ -84,14 +120,14 @@ int main(int argc, char *argv[])
 			if(strcmp(objeto1, "objetos") == 0){
 				vector_nombres = sala_obtener_nombre_objetos_conocidos(sala, &cantidad);
 				if(!vector_nombres || cantidad == 0){
-					printf("No hay objetos conocidos\n");
+					printf(ERROR "No hay objetos conocidos" FIN);
 					continue;
 				}
 			}
 			else if(strcmp(objeto1, "inventario") == 0){
 				vector_nombres = sala_obtener_nombre_objetos_poseidos(sala, &cantidad);
 				if(!vector_nombres || cantidad == 0){
-					printf("No hay nada en el inventario\n");
+					printf(ERROR "No hay nada en el inventario" FIN);
 					continue;
 				}
 			}
@@ -109,11 +145,10 @@ int main(int argc, char *argv[])
 			return 0;
 		}
 		else {
-			sala_ejecutar_interaccion(sala, comando, objeto1, objeto2, mostrar_mensaje, NULL);
+			int n = sala_ejecutar_interaccion(sala, comando, objeto1, objeto2, mostrar_mensaje, NULL);
+			if(n == 0)
+				printf(ERROR "No puedo hacer eso!" FIN);
 		}
-		strcpy(comando, "");
-		strcpy(objeto1, "");
-		strcpy(objeto2, "");
 	}
 	sala_destruir(sala);
 	return 0;
