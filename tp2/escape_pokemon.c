@@ -7,6 +7,7 @@
 #define MAX_OPCION 20
 #define MAX_LINEA 200
 #define MAX_COMANDO 20
+#define NEGRO "\x1b[30;1m"
 #define BLANCO "\x1b[37;1m"
 #define VERDE "\x1b[32;1m"
 #define ERROR "\x1b[31;1m"
@@ -89,8 +90,9 @@ int main(int argc, char *argv[])
 		sscanf(linea, "%s %s %s", comando, objeto1, objeto2);
 
 		if (strcmp(comando, "ayuda") == 0) {
+			printf("COMANDOS\n");
 			for (size_t i = 0; i < cantidad_comandos; i++) {
-				printf(AZUL ITEM AMARILLO " %s" FIN, comandos[i]);
+				printf(NEGRO ITEM AMARILLO " %s" FIN, comandos[i]);
 			}
 
 		} else if (strcmp(comando, "describir") == 0) {
@@ -137,7 +139,7 @@ int main(int argc, char *argv[])
 			}
 
 			for (int i = 0; i < cantidad; i++) {
-				printf("%d. %s\n", i, vector_nombres[i]);
+				printf(AMARILLO "%d) %s" FIN, i+1, vector_nombres[i]);
 			}
 		} else if (strcmp(comando, "salir") == 0 && strcmp(objeto1, "") == 0) {
 			printf(ERROR "TE QUEDASTE ATRAPADO PARA SIEMPRE" FIN);

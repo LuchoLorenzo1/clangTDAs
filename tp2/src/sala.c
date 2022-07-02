@@ -1,5 +1,6 @@
 #include "hash.h"
 #include "lista.h"
+#include "auxiliares.h"
 
 #include "estructuras.h"
 #include "objeto.h"
@@ -8,23 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define MAX_NOMBRE 20
-#define MAX_LINEA 200
-#define MAX_VERBO 20
-#define MAX_TEXTO 200
-
-typedef struct nodo_objeto {
-	struct objeto *objeto;
-	lista_t *interacciones;
-	bool en_posesion;
-	bool conocido;
-} nodo_objeto_t;
-
-struct sala {
-	hash_t *objetos;
-	bool escape_exitoso;
-};
 
 
 sala_t *sala_crear_desde_archivos(const char *objetos, const char *interacciones)
@@ -115,14 +99,10 @@ sala_t *sala_crear_desde_archivos(const char *objetos, const char *interacciones
 	return sala;
 }
 
-void destruir_interaccion(void *interaccion){
-	free(interaccion);
-}
-
 void destruir_nodo_objeto(void *nodo_objeto_void)
 {
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
-	lista_destruir_todo(nodo_objeto->interacciones, destruir_interaccion);
+	lista_destruir_todo(nodo_objeto->interacciones, free);
 	free(nodo_objeto->objeto);
 	free(nodo_objeto);
 }
@@ -141,25 +121,23 @@ typedef struct vector_char_con_condicion {
 	bool conocido;
 } vector_char_t;
 
-bool agrega_nombres(const char *nombre, void *nodo_objeto_void,
-		void *vector_char_void)
+bool agrega_nombres(const char *nombre, void *nodo_objeto_void, void *vector_char_condicional_void)
 {
-	vector_char_t *vector_char = (vector_char_t *)vector_char_void;
+	vector_char_t *vector_char_condicional = (vector_char_t *)vector_char_condicional_void;
 	nodo_objeto_t *nodo_objeto = (nodo_objeto_t *)nodo_objeto_void;
 
-	if (vector_char->en_posesion && !nodo_objeto->en_posesion)
+	if (vector_char_condicional->en_posesion && !nodo_objeto->en_posesion)
 		/*  Si necesita estar en posesion, pero no lo esta, sigo con el siguiente  */
 		return true;
-	if (vector_char->conocido && !nodo_objeto->conocido)
+	if (vector_char_condicional->conocido && !nodo_objeto->conocido)
 		return true;
 
-	vector_char->nombres[vector_char->tope] = nodo_objeto->objeto->nombre;
-	vector_char->tope++;
+	vector_char_condicional->nombres[vector_char_condicional->tope] = nodo_objeto->objeto->nombre;
+	vector_char_condicional->tope++;
 	return true;
 }
 
-char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad,
-		bool conocido, bool en_posesion)
+char **sala_obtener_nombre_objetos_condicional(sala_t *sala, int *cantidad, bool conocido, bool en_posesion)
 {
 	if (!sala) {
 		if (cantidad)
