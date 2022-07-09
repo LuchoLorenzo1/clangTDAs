@@ -41,4 +41,19 @@ class Grafo:
 
 
 grafo = Grafo(5)
+
+grafo.insertar_arista(1, 3, 2)
+
 print(grafo)
+
+
+# def DFS(grafo: Grafo, vertice_inicial: int):
+#     visitados = []
+#     pila = []
+#
+#     visitados.append(vertice_inicial)
+#
+#     while pila:
+#         break
+#
+#     return visitados
