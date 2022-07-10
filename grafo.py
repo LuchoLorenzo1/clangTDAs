@@ -39,10 +39,12 @@ class Grafo:
             cadena += "]\n"
         return cadena
 
+
 class GrafoHH:
     """
     Grafo implementado con diccionarios de diccionarios
     """
+
     def __init__(self, nombresVertices):
         self.vertices = dict()
         for nombre in nombresVertices:
@@ -72,14 +74,75 @@ class GrafoHH:
         return list(vertice)
 
 
+def DFS(grafo: GrafoHH, origen, f):
+    pila = [origen]
+    visitados = [origen]
 
-# def DFS(grafo: Grafo, vertice_inicial: int):
-#     visitados = []
-#     pila = []
-#
-#     visitados.append(vertice_inicial)
-#
-#     while pila:
-#         break
-#
-#     return visitados
+    while pila:
+        vertice = pila.pop()
+        f(vertice)
+        for v in grafo.obtener_adyacencias(vertice):
+            if v not in visitados:
+                pila.append(v)
+                visitados.append(vertice)
+
+
+def BFS(grafo: GrafoHH, origen, f):
+    cola = [origen]
+    visitados = [origen]
+
+    while cola:
+        vertice = cola.pop(0)
+        f(vertice)
+        for v in grafo.obtener_adyacencias(vertice):
+            if v not in visitados:
+                cola.append(v)
+                visitados.append(v)
+
+
+def dijkstra(grafo: GrafoHH, origen):
+    if not grafo or not origen:
+        return
+
+    visitados = [origen]
+    no_visitados = list(grafo.vertices.keys())
+
+    matriz = {vertice: [inf, None] for vertice in no_visitados}
+    matriz[origen][0] = 0
+
+    while no_visitados:
+        actual = min(no_visitados, key=lambda k: matriz[k][0])
+        d_actual = matriz[actual][0]
+        for v in grafo.obtener_adyacencias(actual):
+            d = grafo.devuelve_distancia(actual, v)
+            if d + d_actual < matriz[v][0]:
+                matriz[v][0] = d + d_actual
+                matriz[v][1] = actual
+
+        visitados.append(actual)
+        no_visitados.remove(actual)
+
+    return matriz
+
+
+grafo = GrafoHH(["A", "B", "C", "D", "E", "F"])
+
+
+grafo.insertar_arista_no_dirigida("A", "B", 5)
+grafo.insertar_arista_no_dirigida("A", "D", 6)
+grafo.insertar_arista_no_dirigida("B", "C", 9)
+grafo.insertar_arista_no_dirigida("B", "D", 4)
+grafo.insertar_arista_no_dirigida("C", "E", 1)
+grafo.insertar_arista_no_dirigida("C", "F", 7)
+grafo.insertar_arista_no_dirigida("D", "F", 2)
+grafo.insertar_arista_no_dirigida("D", "E", 6)
+grafo.insertar_arista_no_dirigida("F", "E", 3)
+
+# print("DFS")
+# DFS(grafo, "1", print)
+# print("BFS")
+# BFS(grafo, "1", print)
+
+
+# print(grafo.obtener_adyacencias("E"))
+print(dijkstra(grafo, "E"))
