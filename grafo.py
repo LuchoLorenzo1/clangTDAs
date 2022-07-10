@@ -42,7 +42,8 @@ class Grafo:
 
 class GrafoHH:
     """
-    Grafo implementado con diccionarios de diccionarios
+    Grafo implementado con diccionarios de vertices.
+    diccionario de adyacencias.
     """
 
     def __init__(self, nombresVertices):
@@ -76,7 +77,7 @@ class GrafoHH:
 
 def DFS(grafo: GrafoHH, origen, f):
     pila = [origen]
-    visitados = [origen]
+    visitados = {origen}
 
     while pila:
         vertice = pila.pop()
@@ -84,12 +85,12 @@ def DFS(grafo: GrafoHH, origen, f):
         for v in grafo.obtener_adyacencias(vertice):
             if v not in visitados:
                 pila.append(v)
-                visitados.append(vertice)
+                visitados.add(v)
 
 
 def BFS(grafo: GrafoHH, origen, f):
     cola = [origen]
-    visitados = [origen]
+    visitados = {origen}
 
     while cola:
         vertice = cola.pop(0)
@@ -97,15 +98,15 @@ def BFS(grafo: GrafoHH, origen, f):
         for v in grafo.obtener_adyacencias(vertice):
             if v not in visitados:
                 cola.append(v)
-                visitados.append(v)
+                visitados.add(v)
 
 
 def dijkstra(grafo: GrafoHH, origen):
     if not grafo or not origen:
         return
 
-    visitados = [origen]
-    no_visitados = list(grafo.vertices.keys())
+    visitados = {origen}
+    no_visitados = set(grafo.vertices.keys())
 
     matriz = {vertice: [inf, None] for vertice in no_visitados}
     matriz[origen][0] = 0
@@ -119,7 +120,7 @@ def dijkstra(grafo: GrafoHH, origen):
                 matriz[v][0] = d + d_actual
                 matriz[v][1] = actual
 
-        visitados.append(actual)
+        visitados.add(actual)
         no_visitados.remove(actual)
 
     return matriz
@@ -138,11 +139,10 @@ grafo.insertar_arista_no_dirigida("D", "F", 2)
 grafo.insertar_arista_no_dirigida("D", "E", 6)
 grafo.insertar_arista_no_dirigida("F", "E", 3)
 
-# print("DFS")
-# DFS(grafo, "1", print)
-# print("BFS")
-# BFS(grafo, "1", print)
-
+print("DFS")
+DFS(grafo, "A", print)
+print("BFS")
+BFS(grafo, "A", print)
 
 # print(grafo.obtener_adyacencias("E"))
-print(dijkstra(grafo, "E"))
+# print(dijkstra(grafo, "A"))
