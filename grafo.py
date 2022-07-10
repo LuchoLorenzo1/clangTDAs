@@ -181,6 +181,31 @@ def prim(grafo: GrafoHH, origen) -> GrafoHH:
 
     return arbol_minimo
 
+def kruskal(graph: GrafoHH) -> GrafoHH:
+    """
+    returns minimum spanning tree of the graph
+    """
+    visitados = set()
+    spanning_tree = GrafoHH()
+
+
+    while no_visitados:
+
+        min = (inf, None, None)
+
+        for visitado in visitados:
+            adyacencias = grafo.obtener_adyacencias(visitado)
+            for adyacente in adyacencias:
+                if adyacente not in visitados:
+                    d = grafo.devuelve_distancia(visitado, adyacente)
+                    if d < min[0]:
+                        min = (d, visitado, adyacente)
+
+        no_visitados.remove(min[2])
+        visitados.add(min[2])
+        arbol_minimo.insertar_arista_no_dirigida(min[1], min[2], min[0])
+
+    return arbol_minimo
 
 grafo2 = GrafoHH()
 grafo2.insertar_arista_no_dirigida("1", "2", 1)
