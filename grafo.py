@@ -46,7 +46,7 @@ class GrafoHH:
     diccionario de adyacencias.
     """
 
-    def __init__(self, nombresVertices):
+    def __init__(self, nombresVertices=[]):
         self.vertices = dict()
         for nombre in nombresVertices:
             self.vertices[nombre] = {}
@@ -73,6 +73,9 @@ class GrafoHH:
     def obtener_adyacencias(self, origen: str) -> list:
         vertice = self.vertices.get(origen, {})
         return list(vertice)
+
+    def __str__(self):
+        return str(self.vertices)
 
 
 def DFS(grafo: GrafoHH, origen, f):
@@ -139,10 +142,72 @@ grafo.insertar_arista_no_dirigida("D", "F", 2)
 grafo.insertar_arista_no_dirigida("D", "E", 6)
 grafo.insertar_arista_no_dirigida("F", "E", 3)
 
-print("DFS")
-DFS(grafo, "A", print)
-print("BFS")
-BFS(grafo, "A", print)
+# print("DFS")
+# DFS(grafo, "A", print)
+# print("BFS")
+# BFS(grafo, "A", print)
 
-# print(grafo.obtener_adyacencias("E"))
 # print(dijkstra(grafo, "A"))
+
+print(grafo)
+print("-----")
+
+
+def prim(grafo: GrafoHH, origen) -> GrafoHH:
+    """
+    Devuelve spanning tree de grafo
+    """
+    visitados = {origen}
+    no_visitados = set(grafo.vertices.keys())
+    no_visitados.remove(origen)
+
+    arbol_minimo = GrafoHH()
+
+    while no_visitados:
+
+        min = (inf, None, None)
+
+        for visitado in visitados:
+            adyacencias = grafo.obtener_adyacencias(visitado)
+            for adyacente in adyacencias:
+                if adyacente not in visitados:
+                    d = grafo.devuelve_distancia(visitado, adyacente)
+                    if d < min[0]:
+                        min = (d, visitado, adyacente)
+
+        no_visitados.remove(min[2])
+        visitados.add(min[2])
+        arbol_minimo.insertar_arista_no_dirigida(min[1], min[2], min[0])
+
+    return arbol_minimo
+
+
+grafo2 = GrafoHH()
+grafo2.insertar_arista_no_dirigida("1", "2", 1)
+grafo2.insertar_arista_no_dirigida("1", "5", 7)
+grafo2.insertar_arista_no_dirigida("2", "3", 6)
+grafo2.insertar_arista_no_dirigida("2", "7", 8)
+grafo2.insertar_arista_no_dirigida("3", "4", 21)
+grafo2.insertar_arista_no_dirigida("3", "7", 2)
+grafo2.insertar_arista_no_dirigida("3", "8", 3)
+grafo2.insertar_arista_no_dirigida("3", "9", 9)
+grafo2.insertar_arista_no_dirigida("4", "5", 4)
+grafo2.insertar_arista_no_dirigida("4", "9", 3)
+grafo2.insertar_arista_no_dirigida("5", "6", 15)
+grafo2.insertar_arista_no_dirigida("5", "10", 3)
+grafo2.insertar_arista_no_dirigida("6", "10", 10)
+grafo2.insertar_arista_no_dirigida("6", "13", 7)
+grafo2.insertar_arista_no_dirigida("7", "11", 21)
+grafo2.insertar_arista_no_dirigida("7", "8", 3)
+grafo2.insertar_arista_no_dirigida("8", "11", 18)
+grafo2.insertar_arista_no_dirigida("8", "12", 4)
+grafo2.insertar_arista_no_dirigida("8", "9", 9)
+grafo2.insertar_arista_no_dirigida("9", "10", 1)
+grafo2.insertar_arista_no_dirigida("9", "12", 12)
+grafo2.insertar_arista_no_dirigida("9", "13", 14)
+grafo2.insertar_arista_no_dirigida("10", "13", 5)
+grafo2.insertar_arista_no_dirigida("11", "12", 11)
+grafo2.insertar_arista_no_dirigida("12", "13", 19)
+
+spanning_tree = prim(grafo2, "4")
+print(spanning_tree)
