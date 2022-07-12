@@ -1,3 +1,4 @@
+# from typing import Dict, List
 from math import inf
 
 
@@ -8,7 +9,12 @@ class Grafo:
     """
 
     def __init__(self, n: int):
+        """
+        n es el numero de aristas
+        """
         self.matriz = [[inf for _ in range(n)] for _ in range(n)]
+        for i in range(n):
+            self.matriz[i][i] = 0
 
     def insertar_arista(self, origen, destino, peso):
         self.matriz[origen][destino] = peso
@@ -24,11 +30,13 @@ class Grafo:
         return self.matriz[origen][destino]
 
     def obtener_adyacencias(self, o):
-        # adyacencias = []
-        # for destino in range(len(self.matriz)):
-        #     if self.matriz[origen][destino] != inf:
-        #         adyacencias.append(destino)
         return [i for i in range(len(self.matriz)) if self.matriz[o][i] != inf]
+
+    def copy(self):
+        m = []
+        for fila in self.matriz:
+            m.append(fila.copy())
+        return m
 
     def __str__(self):
         cadena = ""
@@ -38,6 +46,39 @@ class Grafo:
                 cadena += str(self.matriz[origen][destino]) + "|"
             cadena += "]\n"
         return cadena
+
+
+def floyd_warshall(grafo: Grafo):
+    """
+    Devuelve la matriz de distancias de un Grafo
+    """
+    if not grafo:
+        return
+
+    dist = grafo.copy()
+    for x in range(len(dist)):
+        for i in range(len(dist)):
+            if x == i:
+                continue
+            for j in range(len(dist)):
+                if j == i or j == x:
+                    continue
+                dist[i][j] = min(dist[i][j], dist[i][x] + dist[x][j])
+
+    return dist
+
+
+grafo = Grafo(4)
+grafo.insertar_arista(0, 1, 2)
+grafo.insertar_arista(0, 3, 2)
+grafo.insertar_arista(1, 0, 7)
+grafo.insertar_arista(1, 2, 9)
+grafo.insertar_arista(1, 3, 2)
+grafo.insertar_arista(2, 1, 1)
+grafo.insertar_arista(3, 0, 8)
+grafo.insertar_arista(3, 2, 3)
+print(grafo)
+print(floyd_warshall(grafo))
 
 
 class GrafoHH:
@@ -74,6 +115,9 @@ class GrafoHH:
         vertice = self.vertices.get(origen, {})
         return list(vertice)
 
+    def obtener_vertices(self) -> list:
+        return list(self.vertices.keys())
+
     def __str__(self):
         return str(self.vertices)
 
@@ -104,12 +148,12 @@ def BFS(grafo: GrafoHH, origen, f):
                 visitados.add(v)
 
 
-def dijkstra(grafo: GrafoHH, origen):
+def dijkstra(grafo: GrafoHH, origen) -> dict:
     if not grafo or not origen:
-        return
+        return {}
 
     visitados = {origen}
-    no_visitados = set(grafo.vertices.keys())
+    no_visitados = set(grafo.obtener_vertices())
 
     matriz = {vertice: [inf, None] for vertice in no_visitados}
     matriz[origen][0] = 0
@@ -129,28 +173,22 @@ def dijkstra(grafo: GrafoHH, origen):
     return matriz
 
 
-grafo = GrafoHH(["A", "B", "C", "D", "E", "F"])
+# graph = GrafoHH(["A", "B", "C", "D", "E", "F"])
 
-
-grafo.insertar_arista_no_dirigida("A", "B", 5)
-grafo.insertar_arista_no_dirigida("A", "D", 6)
-grafo.insertar_arista_no_dirigida("B", "C", 9)
-grafo.insertar_arista_no_dirigida("B", "D", 4)
-grafo.insertar_arista_no_dirigida("C", "E", 1)
-grafo.insertar_arista_no_dirigida("C", "F", 7)
-grafo.insertar_arista_no_dirigida("D", "F", 2)
-grafo.insertar_arista_no_dirigida("D", "E", 6)
-grafo.insertar_arista_no_dirigida("F", "E", 3)
+# graph.insertar_arista_no_dirigida("A", "B", 5)
+# graph.insertar_arista_no_dirigida("A", "D", 6)
+# graph.insertar_arista_no_dirigida("B", "C", 9)
+# graph.insertar_arista_no_dirigida("B", "D", 4)
+# graph.insertar_arista_no_dirigida("C", "E", 1)
+# graph.insertar_arista_no_dirigida("C", "F", 7)
+# graph.insertar_arista_no_dirigida("D", "F", 2)
+# graph.insertar_arista_no_dirigida("D", "E", 6)
+# graph.insertar_arista_no_dirigida("F", "E", 3)
 
 # print("DFS")
 # DFS(grafo, "A", print)
 # print("BFS")
 # BFS(grafo, "A", print)
-
-# print(dijkstra(grafo, "A"))
-
-print(grafo)
-print("-----")
 
 
 def prim(grafo: GrafoHH, origen) -> GrafoHH:
@@ -170,8 +208,8 @@ def prim(grafo: GrafoHH, origen) -> GrafoHH:
         for visitado in visitados:
             adyacencias = grafo.obtener_adyacencias(visitado)
             for adyacente in adyacencias:
+                d = grafo.devuelve_distancia(visitado, adyacente)
                 if adyacente not in visitados:
-                    d = grafo.devuelve_distancia(visitado, adyacente)
                     if d < min[0]:
                         min = (d, visitado, adyacente)
 
@@ -181,58 +219,39 @@ def prim(grafo: GrafoHH, origen) -> GrafoHH:
 
     return arbol_minimo
 
-def kruskal(graph: GrafoHH) -> GrafoHH:
-    """
-    returns minimum spanning tree of the graph
-    """
-    visitados = set()
-    spanning_tree = GrafoHH()
+
+# def kruskal(graph: GrafoHH) -> GrafoHH:
+#     """
+#     returns minimum spanning tree of the graph
+#     """
+#     spanning_tree = GrafoHH()
+#     lista = []
+#     adyacencias  = graph.vertices.items()
 
 
-    while no_visitados:
-
-        min = (inf, None, None)
-
-        for visitado in visitados:
-            adyacencias = grafo.obtener_adyacencias(visitado)
-            for adyacente in adyacencias:
-                if adyacente not in visitados:
-                    d = grafo.devuelve_distancia(visitado, adyacente)
-                    if d < min[0]:
-                        min = (d, visitado, adyacente)
-
-        no_visitados.remove(min[2])
-        visitados.add(min[2])
-        arbol_minimo.insertar_arista_no_dirigida(min[1], min[2], min[0])
-
-    return arbol_minimo
-
-grafo2 = GrafoHH()
-grafo2.insertar_arista_no_dirigida("1", "2", 1)
-grafo2.insertar_arista_no_dirigida("1", "5", 7)
-grafo2.insertar_arista_no_dirigida("2", "3", 6)
-grafo2.insertar_arista_no_dirigida("2", "7", 8)
-grafo2.insertar_arista_no_dirigida("3", "4", 21)
-grafo2.insertar_arista_no_dirigida("3", "7", 2)
-grafo2.insertar_arista_no_dirigida("3", "8", 3)
-grafo2.insertar_arista_no_dirigida("3", "9", 9)
-grafo2.insertar_arista_no_dirigida("4", "5", 4)
-grafo2.insertar_arista_no_dirigida("4", "9", 3)
-grafo2.insertar_arista_no_dirigida("5", "6", 15)
-grafo2.insertar_arista_no_dirigida("5", "10", 3)
-grafo2.insertar_arista_no_dirigida("6", "10", 10)
-grafo2.insertar_arista_no_dirigida("6", "13", 7)
-grafo2.insertar_arista_no_dirigida("7", "11", 21)
-grafo2.insertar_arista_no_dirigida("7", "8", 3)
-grafo2.insertar_arista_no_dirigida("8", "11", 18)
-grafo2.insertar_arista_no_dirigida("8", "12", 4)
-grafo2.insertar_arista_no_dirigida("8", "9", 9)
-grafo2.insertar_arista_no_dirigida("9", "10", 1)
-grafo2.insertar_arista_no_dirigida("9", "12", 12)
-grafo2.insertar_arista_no_dirigida("9", "13", 14)
-grafo2.insertar_arista_no_dirigida("10", "13", 5)
-grafo2.insertar_arista_no_dirigida("11", "12", 11)
-grafo2.insertar_arista_no_dirigida("12", "13", 19)
-
-spanning_tree = prim(grafo2, "4")
-print(spanning_tree)
+# grafo_numeros = GrafoHH()
+# grafo_numeros.insertar_arista_no_dirigida("1", "2", 1)
+# grafo_numeros.insertar_arista_no_dirigida("1", "5", 7)
+# grafo_numeros.insertar_arista_no_dirigida("2", "3", 6)
+# grafo_numeros.insertar_arista_no_dirigida("2", "7", 8)
+# grafo_numeros.insertar_arista_no_dirigida("3", "4", 21)
+# grafo_numeros.insertar_arista_no_dirigida("3", "7", 2)
+# grafo_numeros.insertar_arista_no_dirigida("3", "8", 3)
+# grafo_numeros.insertar_arista_no_dirigida("3", "9", 9)
+# grafo_numeros.insertar_arista_no_dirigida("4", "5", 4)
+# grafo_numeros.insertar_arista_no_dirigida("4", "9", 3)
+# grafo_numeros.insertar_arista_no_dirigida("5", "6", 15)
+# grafo_numeros.insertar_arista_no_dirigida("5", "10", 3)
+# grafo_numeros.insertar_arista_no_dirigida("6", "10", 10)
+# grafo_numeros.insertar_arista_no_dirigida("6", "13", 7)
+# grafo_numeros.insertar_arista_no_dirigida("7", "11", 21)
+# grafo_numeros.insertar_arista_no_dirigida("7", "8", 3)
+# grafo_numeros.insertar_arista_no_dirigida("8", "11", 18)
+# grafo_numeros.insertar_arista_no_dirigida("8", "12", 4)
+# grafo_numeros.insertar_arista_no_dirigida("8", "9", 9)
+# grafo_numeros.insertar_arista_no_dirigida("9", "10", 1)
+# grafo_numeros.insertar_arista_no_dirigida("9", "12", 12)
+# grafo_numeros.insertar_arista_no_dirigida("9", "13", 14)
+# grafo_numeros.insertar_arista_no_dirigida("10", "13", 5)
+# grafo_numeros.insertar_arista_no_dirigida("11", "12", 11)
+# grafo_numeros.insertar_arista_no_dirigida("12", "13", 19)
