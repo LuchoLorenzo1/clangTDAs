@@ -68,17 +68,17 @@ def floyd_warshall(grafo: Grafo):
     return dist
 
 
-grafo = Grafo(4)
-grafo.insertar_arista(0, 1, 2)
-grafo.insertar_arista(0, 3, 2)
-grafo.insertar_arista(1, 0, 7)
-grafo.insertar_arista(1, 2, 9)
-grafo.insertar_arista(1, 3, 2)
-grafo.insertar_arista(2, 1, 1)
-grafo.insertar_arista(3, 0, 8)
-grafo.insertar_arista(3, 2, 3)
-print(grafo)
-print(floyd_warshall(grafo))
+# grafo = Grafo(4)
+# grafo.insertar_arista(0, 1, 2)
+# grafo.insertar_arista(0, 3, 2)
+# grafo.insertar_arista(1, 0, 7)
+# grafo.insertar_arista(1, 2, 9)
+# grafo.insertar_arista(1, 3, 2)
+# grafo.insertar_arista(2, 1, 1)
+# grafo.insertar_arista(3, 0, 8)
+# grafo.insertar_arista(3, 2, 3)
+# print(grafo)
+# print(floyd_warshall(grafo))
 
 
 class GrafoHH:
